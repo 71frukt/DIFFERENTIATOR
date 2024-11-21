@@ -83,6 +83,7 @@ char *NodeValToStr    (TreeElem_t val, NodeType node_type, char *res_str);
 void  GetStrTreeData  (Node *start_node, char *dest_str);
 void  NodeValFromStr  (char *dest_str, Node *node);
 void  GetTreeFromFile (Tree *tree, const char *source_file_name);
+Node *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
 Node *GetNodeFamily   (Tree *tree, FILE *source_file);
 
 #endif

@@ -194,7 +194,7 @@ void GetTreeFromFile(Tree *tree, const char *source_file_name)
     fclose(source_file);
 }
 
-Node *GetNodeFamily(Tree *tree, FILE *source_file)
+Node *GetNodeFamily_prefix(Tree *tree, FILE *source_file)
 {
     DIFF_DUMP(tree);
 
@@ -210,9 +210,9 @@ Node *GetNodeFamily(Tree *tree, FILE *source_file)
         if (cur_node->type == OP)
         {
             fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
-            Node *left  = GetNodeFamily(tree, source_file);
+            Node *left  = GetNodeFamily_prefix(tree, source_file);
             fprintf(stderr, "cursor before right = %ld\n", ftell(source_file));
-            Node *right  = GetNodeFamily(tree, source_file);
+            Node *right  = GetNodeFamily_prefix(tree, source_file);
 
             cur_node->left  = left;
             cur_node->right = right;
@@ -223,7 +223,7 @@ Node *GetNodeFamily(Tree *tree, FILE *source_file)
         //     fseek(source_file, -1L, SEEK_CUR);
             
         // fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
-        //     Node *left  = GetNodeFamily(tree, source_file);
+        //     Node *left  = GetNodeFamily_prefix(tree, source_file);
         //     cur_node->left  = left;
         // }
         
@@ -246,5 +246,44 @@ Node *GetNodeFamily(Tree *tree, FILE *source_file)
     {
         fprintf(stderr, "doshel do ret.\n");
         return NULL;
+    }
+}
+
+Node *GetNodeFamily(Tree *tree, FILE *source_file)
+{
+    DIFF_DUMP(tree);
+
+    fscanf(source_file, "%*[ ]");
+
+    if (getc(source_file) == '(')
+    {
+        // Node *op = NewNode(tree, OP, POISON_VAL, NULL, NULL);
+fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
+        Node *left  = GetNodeFamily(tree, source_file);
+fprintf(stderr, "cursor before op = %ld\n", ftell(source_file));
+        Node *op    = GetNodeFamily(tree, source_file);
+fprintf(stderr, "cursor before right = %ld\n", ftell(source_file));
+        Node *right = GetNodeFamily(tree, source_file);
+
+        op->left  = left;
+        op->right = right;
+
+        fscanf(source_file, "%*[ ]");
+        getc(source_file);  // съесть ')'
+        return op;
+    }
+
+    else        // это NUM или VAR
+    {
+        fseek(source_file, -1L, SEEK_CUR);
+
+        char node_val_str[LABEL_LENGTH] = {};
+
+        fscanf(source_file, "%[^( )]", node_val_str);
+
+        Node *cur_node = NewNode(tree, POISON_TYPE, POISON_VAL, NULL, NULL);
+        NodeValFromStr(node_val_str, cur_node);
+
+        return cur_node;
     }
 }
