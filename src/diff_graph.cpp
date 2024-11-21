@@ -12,7 +12,7 @@ void DrawGraph(Tree *tree, char *dest_picture_path)
 
     FILE *dot_file = fopen(TMP_DOTFILE_NAME, "w");
 
-    fprintf(dot_file, "digraph G{           \n"   
+    fprintf(dot_file, "digraph G{           \n" 
                         "bgcolor = \"%s\";  \n" , BACKGROUND_COLOR);
 
     InitNodesInDot(tree, dot_file);
@@ -37,52 +37,18 @@ void InitNodesInDot(Tree *tree, FILE *dot_file)
         char node_val_str[LABEL_LENGTH] = {};
         NodeValToStr(cur_node->value, cur_node->type, node_val_str);
 
-        fprintf(dot_file, "%s%p [shape = \"record\", label = \"{%s | <%s> %s | <%s> %s } }\"]\n",
-            NODE_NAME_PREFIX, cur_node, node_val_str, LEFT_MARK, LEFT_MARK, LEFT_MARK, LEFT_MARK);
+        if (cur_node->type == OP)
+            fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"{%s | { <%s> %s | <%s> %s } }\"]\n",
+                NODE_NAME_PREFIX, cur_node, OP_NODE_SHAPE, OP_NODE_COLOR, node_val_str, LEFT_MARK, LEFT_MARK, RIGHT_MARK, RIGHT_MARK);
+
+        else if (cur_node->type == VAR)
+            fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"%s\"]\n",
+                NODE_NAME_PREFIX, cur_node, VAR_NODE_SHAPE, VAR_NODE_COLOR, node_val_str);
+
+        else    // if type == NUM
+            fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"%s\"]\n",
+                NODE_NAME_PREFIX, cur_node, NUM_NODE_SHAPE, NUM_NODE_COLOR, node_val_str);
     }
-}
-
-char *NodeValToStr(TreeElem_t val, NodeType node_type, char *res_str)
-{
-    assert(res_str);
-
-    if (node_type == NUM)
-        sprintf(res_str, TREE_ELEM_SPECIFIER, val);
-    
-    else if (node_type == VAR)                          
-        sprintf(res_str, "%c", 'x' + val);
-
-    else 
-    {
-        char operation_ch = 0;
-
-        switch(val)
-        {
-            case ADD:
-                operation_ch = ADD_MARK;
-                break;
-            
-            case SUB:
-                operation_ch = SUB_MARK;
-                break;
-
-            case MUL:
-                operation_ch = MUL_MARK;
-                break;
-
-            case DIV:
-                operation_ch = DIV_MARK;
-                break;
-
-            default:
-                fprintf(stderr, "unknown operation numbered %d in NodeValToStr()\n", val);
-                break; 
-        }
-
-        sprintf(res_str, "%c", operation_ch);
-    }
-
-    return res_str;
 }
 
 void MakeLinksInDot(Tree *tree, FILE *dot_file)

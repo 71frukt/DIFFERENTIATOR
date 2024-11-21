@@ -47,7 +47,7 @@ char *GetFilePath(const char *name, const char *folder, char *path)
     return path;
 }
 
-void TreeDump(Tree *tree, const char *file, int line, const char *func)
+void DiffDump(Tree *tree, const char *file, int line, const char *func)
 {
     assert(tree);
     assert(file);
@@ -55,7 +55,7 @@ void TreeDump(Tree *tree, const char *file, int line, const char *func)
 
     static size_t drawn_graphs_num = 0;
 
-    fprintf(LogFile, "   TREE_DUMP called from %s:%d  (%s)\n  {\n", file, line, func);
+    fprintf(LogFile, "   DIFF_DUMP called from %s:%d  (%s)\n  {\n", file, line, func);
 
     char picture_path[PATH_NAME_LEN] = {};
     char picture_name[PATH_NAME_LEN] = {};

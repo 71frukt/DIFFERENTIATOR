@@ -8,12 +8,21 @@
 
 #define BACKGROUND_COLOR  "#FFF3D1"
 
+#define VAR_NODE_COLOR    "aquamarine"
+#define VAR_NODE_SHAPE    "square"
+
+#define NUM_NODE_COLOR    "pink"
+#define NUM_NODE_SHAPE    "oval"
+
+#define OP_NODE_COLOR     "azure"
+#define OP_NODE_SHAPE     "record"
+
+
 const int GRAPH_IMG_WIDTH = 20;     // (%)
 const int CMD_COMMAND_LEN = 100;
 
 void  DrawGraph        (Tree *tree, char *dest_picture_path);
 void  InitNodesInDot   (Tree *tree, FILE *dot_file);
-char *NodeValToStr     (TreeElem_t val, NodeType node_type, char *res_str);
 void  MakeLinksInDot   (Tree *tree, FILE *dot_file);
 void  MakeGraphPicture (const char *dotfile_path, const char *picture_path);
 
