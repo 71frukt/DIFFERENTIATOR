@@ -18,20 +18,7 @@ const TreeElem_t POISON_VAL    = 0xDEB11;
 const char *const LEFT_MARK  = "L";
 const char *const RIGHT_MARK = "R";
 
-#define MARK  _MARK
-
-#define ADD_MARK  "+"
-#define SUB_MARK  "-"
-#define MUL_MARK  "*"
-#define DIV_MARK  "/"
-
-enum Operation
-{
-    ADD,
-    SUB,
-    MUL,
-    DIV
-};
+#include "operations.h"
 
 enum NodeType
 {
@@ -85,5 +72,8 @@ void  NodeValFromStr  (char *dest_str, Node *node);
 void  GetTreeFromFile (Tree *tree, const char *source_file_name);
 Node *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
 Node *GetNodeFamily   (Tree *tree, FILE *source_file);
+const char *OperationToTex(int node_op);
+const char *GetTexTreeData(Node *start_node, char *dest_str);
+bool IsPrefixOperation(int op);
 
 #endif

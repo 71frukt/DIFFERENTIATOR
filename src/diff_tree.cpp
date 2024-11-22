@@ -96,28 +96,26 @@ char *NodeValToStr(TreeElem_t val, NodeType node_type, char *res_str)
     {
         char operation_ch = 0;
 
+        #define _CASE(operation)                        \
+        {                                               \
+            case operation:                             \
+                operation_ch = *operation##_SYMBOL;     \
+                break;                                  \
+        }
+
         switch(val)
         {
-            case ADD:
-                operation_ch = *ADD_MARK;
-                break;
-            
-            case SUB:
-                operation_ch = *SUB_MARK;
-                break;
-
-            case MUL:
-                operation_ch = *MUL_MARK;
-                break;
-
-            case DIV:
-                operation_ch = *DIV_MARK;
-                break;
+            _CASE(ADD);
+            _CASE(SUB);
+            _CASE(MUL);
+            _CASE(DIV);
 
             default:
                 fprintf(stderr, "unknown operation numbered %d in NodeValToStr()\n", val);
                 break; 
         }
+
+        #undef _CASE
 
         sprintf(res_str, "%c", operation_ch);
     }
@@ -142,15 +140,15 @@ void NodeValFromStr(char *dest_str, Node *node)
     }
 
     else                                                        // is OP
-    {
+    {       // TODO: to switch/case
         #define _COMPARE_OP(operation)                      \
         {                                                   \
-            const char op_ch = operation##_MARK[0];         \
+            const char op_ch = operation##_SYMBOL[0];       \
                                                             \
-            if (dest_str[0] == op_ch)               \
+            if (dest_str[0] == op_ch)                       \
             {                                               \
             fprintf(stderr, "op_ch = %c\n", op_ch);         \
-                node->value = operation;                        \
+                node->value = operation;                    \
             }                                               \
         }
 
@@ -163,6 +161,30 @@ void NodeValFromStr(char *dest_str, Node *node)
 
         #undef _COMPARE_OP
     }
+}
+
+const char *OperationToTex(int node_op)
+{
+    #define _CASE(operation)                                \
+    {                                                       \
+        case operation:                                     \
+            return operation##_TEX;                         \
+    }                                                       
+
+    switch (node_op)
+    {
+        _CASE(ADD);
+        _CASE(SUB);
+        _CASE(MUL);
+        _CASE(DIV);
+    
+        default:
+            fprintf(stderr, "unknown operation in OperationToTex() numbered %d\n", node_op);
+            return NULL;
+    }
+
+    #undef _CASE
+ 
 }
 
 void GetStrTreeData(Node *start_node, char *dest_str)
@@ -185,6 +207,48 @@ void GetStrTreeData(Node *start_node, char *dest_str)
 
         sprintf(dest_str + strlen(dest_str), ")");
     }
+}
+
+const char *GetTexTreeData(Node *start_node, char *dest_str)
+{
+    char node_val_str[LABEL_LENGTH] = {};
+    NodeValToStr(start_node->value, start_node->type, node_val_str);
+
+    if (start_node->type != OP)
+        sprintf(dest_str + strlen(dest_str), "{%s}", node_val_str);
+
+    else
+    {
+        const char *op_tex = OperationToTex((int) start_node->value);
+        sprintf(dest_str + strlen(dest_str), "(");
+
+        if (IsPrefixOperation((int) start_node->value))
+        {
+            sprintf(dest_str + strlen(dest_str), "%s ", op_tex);
+
+            GetTexTreeData(start_node->left,  dest_str + strlen(dest_str));
+            GetTexTreeData(start_node->right, dest_str + strlen(dest_str));
+        }
+
+        else
+        {
+            GetTexTreeData(start_node->left, dest_str);
+
+            sprintf(dest_str + strlen(dest_str), "%s ", op_tex);
+
+            GetTexTreeData(start_node->right, dest_str + strlen(dest_str));
+        }    
+    }
+
+    return dest_str;
+}
+
+bool IsPrefixOperation(int op)
+{
+    if (op == DIV)
+        return true;
+    else
+        return false;
 }
 
 void GetTreeFromFile(Tree *tree, const char *source_file_name)
