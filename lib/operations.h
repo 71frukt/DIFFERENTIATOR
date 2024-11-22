@@ -31,8 +31,8 @@ struct Operation
     const char *symbol;
     const char *tex_code;
     TreeElem_t (*op_func) (TreeElem_t arg1, TreeElem_t arg2);
-    const FuncType type;
-    const FuncEntryForm form;
+    const FuncType type;                                                // UNARY / BINARY
+    const FuncEntryForm form;                                           // IS_PREFIX / IS_INFIX
 };
 
 
@@ -65,7 +65,7 @@ const OperationsArr Operations =
         { .num = MUL, .symbol = "*"  , .tex_code = "\\cdot", .op_func = Mul, BINARY, IS_INFIX  },
         { .num = DIV, .symbol = "/"  , .tex_code = "\\frac", .op_func = Div, BINARY, IS_PREFIX },
         { .num = DEG, .symbol = "^"  , .tex_code = "^",      .op_func = Deg, BINARY, IS_INFIX  },
-        { .num = TAN, .symbol = "tan", .tex_code = "\\tan",  .op_func = Tan,  UNARY, IS_INFIX  }
+        { .num = TAN, .symbol = "tan", .tex_code = "\\tan",  .op_func = Tan,  UNARY, IS_PREFIX  }
     }
 };
 

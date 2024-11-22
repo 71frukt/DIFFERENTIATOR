@@ -131,6 +131,8 @@ void NodeValFromStr(char *dest_str, Node *node)
 
 void GetStrTreeData(Node *start_node, char *dest_str)
 {
+    assert(start_node);
+
     char node_val_str[LABEL_LENGTH] = {};
     NodeValToStr(start_node->value, start_node->type, node_val_str);
 
@@ -139,15 +141,31 @@ void GetStrTreeData(Node *start_node, char *dest_str)
 
     else
     {
-        sprintf(dest_str + strlen(dest_str), "(");
+        const Operation *cur_op = GetOperationByNum(start_node->value);
 
-        GetStrTreeData(start_node->left, dest_str);
+        if (cur_op->type == BINARY)
+        {
+            sprintf(dest_str + strlen(dest_str), "(");
 
-        sprintf(dest_str + strlen(dest_str), " %s ", node_val_str);
+            GetStrTreeData(start_node->left, dest_str);
 
-        GetStrTreeData(start_node->right, dest_str);
+            sprintf(dest_str + strlen(dest_str), " %s ", node_val_str);
 
-        sprintf(dest_str + strlen(dest_str), ")");
+            GetStrTreeData(start_node->right, dest_str);
+
+            sprintf(dest_str + strlen(dest_str), ")");
+        }
+
+        else
+        {
+            sprintf(dest_str + strlen(dest_str), "%s", node_val_str);
+
+            sprintf(dest_str + strlen(dest_str), "(");
+
+            GetStrTreeData(start_node->left, dest_str);
+
+            sprintf(dest_str + strlen(dest_str), ") ");
+        }
     }
 }
 
@@ -202,7 +220,7 @@ Node *GetNodeFamily(Tree *tree, FILE *source_file)
 
     fscanf(source_file, "%*[ ]");
 
-    if (getc(source_file) == '(')
+    if (getc(source_file) == '(')       // это бинарная функция
     {
         // Node *op = NewNode(tree, OP, POISON_VAL, NULL, NULL);
 // fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
@@ -220,7 +238,7 @@ Node *GetNodeFamily(Tree *tree, FILE *source_file)
         return op;
     }
 
-    else        // это NUM или VAR
+    else
     {
         fseek(source_file, -1L, SEEK_CUR);
 
@@ -228,8 +246,28 @@ Node *GetNodeFamily(Tree *tree, FILE *source_file)
 
         fscanf(source_file, "%[^( )]", node_val_str);
 
-        Node *cur_node = NewNode(tree, POISON_TYPE, POISON_VAL, NULL, NULL);
-        NodeValFromStr(node_val_str, cur_node);
+        const Operation *cur_op = GetOperationBySymbol(node_val_str);
+
+        Node *cur_node = NULL;
+        if (cur_op != NULL && cur_op->type == UNARY)     // это унарная операция
+        {
+fprintf(stderr, "hui, cur_op = %s\n", cur_op->symbol);
+            getc(source_file);  // съесть '('
+
+            cur_node = NewNode(tree, OP, cur_op->num, NULL, NULL);
+
+            Node *arg = GetNodeFamily(tree, source_file);
+            cur_node->left  = arg;
+            cur_node->right = arg;
+
+            getc(source_file);  // съесть ')'
+        }
+
+        else    // это VAR, NUM или бинарная операция
+        {
+            cur_node = NewNode(tree, POISON_TYPE, POISON_VAL, NULL, NULL);
+            NodeValFromStr(node_val_str, cur_node);
+        }        
 
         return cur_node;
     }

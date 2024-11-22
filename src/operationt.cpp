@@ -19,14 +19,16 @@ const Operation *GetOperationByNum(int num)
 
 const Operation *GetOperationBySymbol(char *sym)
 {
+    assert(sym);
+
     for (size_t i = 0; i < Operations.size; i++)
     {
         // if (sym == Operations.data[i].symbol)
-        if (strstr(sym, Operations.data[i].symbol))
+        if (strcmp(sym, Operations.data[i].symbol) == 0)
             return &Operations.data[i];
     }
 
-    fprintf(stderr, "unknown operation in GetOperationBySym() = '%s'\n", sym);
+    // fprintf(stderr, "unknown operation in GetOperationBySym() = '%s'\n", sym);
     return NULL;
 }
 

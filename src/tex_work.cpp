@@ -38,14 +38,24 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
 
         if (cur_op->form == IS_PREFIX)
         {
+            if (need_brackets) 
+                sprintf(dest_str + strlen(dest_str), "\\left(");
+
             sprintf(dest_str + strlen(dest_str), " %s ", op_tex);
 
             sprintf(dest_str + strlen(dest_str), "{"); 
             GetTexTreeData(start_node->left,  dest_str + strlen(dest_str), param1_brackets);
-            sprintf(dest_str + strlen(dest_str), "} {");
+            sprintf(dest_str + strlen(dest_str), "} ");
 
-            GetTexTreeData(start_node->right, dest_str + strlen(dest_str), param2_brackets);
-            sprintf(dest_str + strlen(dest_str), "}");
+            if (cur_op->type == BINARY)
+            {
+                sprintf(dest_str + strlen(dest_str), "{"); 
+                GetTexTreeData(start_node->right, dest_str + strlen(dest_str), param2_brackets);
+                sprintf(dest_str + strlen(dest_str), "}");
+            }
+
+            if (need_brackets)
+                sprintf(dest_str + strlen(dest_str), "\\right)");
         }
 
         else
@@ -92,6 +102,12 @@ void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
             *param_1 = false;
             *param_2 = false;
         }
+    }
+
+    else if ((int) op_node->value == TAN)
+    {
+        if (op_node->left->type == OP)
+            *param_1 = true;
     }
 
     else
