@@ -6,10 +6,10 @@
 
 const char *OperationToTex(int node_op)
 {
-    for (size_t i = 0; i < OperationsArr.size; i++)
+    for (size_t i = 0; i < Operations.size; i++)
     {
-        if (node_op == OperationsArr.data[i].num)
-            return OperationsArr.data[i].tex_code;
+        if (node_op == Operations.data[i].num)
+            return Operations.data[i].tex_code;
     }
 
     fprintf(stderr, "unknown operation in OperationToTex() numbered %d\n", node_op);    // если не нашли
@@ -22,19 +22,21 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
 
     char node_val_str[LABEL_LENGTH] = {};
     NodeValToStr(start_node->value, start_node->type, node_val_str);
-
+    
     if (start_node->type != OP)
         sprintf(dest_str + strlen(dest_str), "%s", node_val_str);
 
     else
     {
-        const char *op_tex = OperationToTex((int) start_node->value);
+        const Operation *cur_op = GetOperationByNum(start_node->value);
 
+        const char *op_tex = OperationToTex((int) start_node->value);
+    
         bool param1_brackets = true;
         bool param2_brackets = true;
         ParamsNeedBrackets(start_node, &param1_brackets, &param2_brackets);
 
-        if (IsPrefixOperation((int) start_node->value))
+        if (cur_op->form == IS_PREFIX)
         {
             sprintf(dest_str + strlen(dest_str), " %s ", op_tex);
 
@@ -67,23 +69,6 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
     }
 
     return dest_str;
-}
-
-bool IsPrefixOperation(int op)
-{
-    for (size_t i = 0; i < OperationsArr.size; i++)
-    {
-        if (op == OperationsArr.data[i].num)
-        {
-            if (OperationsArr.data[i].form == IS_PREFIX)
-                return true;
-            else
-                return false;
-        }
-    }
-
-    fprintf(stderr, "unknown operation in IsPrefixOperation() numbered %d\n", op);
-    return false;
 }
 
 void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)

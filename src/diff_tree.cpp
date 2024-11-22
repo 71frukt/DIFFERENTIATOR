@@ -96,18 +96,9 @@ char *NodeValToStr(TreeElem_t val, NodeType node_type, char *res_str)
 
     else 
     {
-        char operation_ch = 0;
+        const Operation *cur_op = GetOperationByNum(val);
 
-        for (size_t i = 0; i < OperationsArr.size; i++)
-        {
-            if (val == OperationsArr.data[i].num)
-            {
-                operation_ch = OperationsArr.data[i].symbol;
-                break; 
-            }
-        }
-
-        sprintf(res_str, "%c", operation_ch);
+        sprintf(res_str, "%s", cur_op->symbol);
     }
 
     return res_str;
@@ -132,18 +123,9 @@ void NodeValFromStr(char *dest_str, Node *node)
     else                                                        // is OP
     {
         node->type = OP;
-
-        for (size_t i = 0; i < OperationsArr.size; i++)
-        {
-            if (dest_str[0] == OperationsArr.data[i].symbol)
-            {
-                node->value = OperationsArr.data[i].num;
-                break;
-            }
-        }
-
-        if (node->value == POISON_VAL)                                                      // если ничего не нашли
-            fprintf(stderr, "unknown operation in OperationToTex() = '%s'\n", dest_str);
+        
+        const Operation *cur_op = GetOperationBySymbol(dest_str);
+        node->value = cur_op->num;
     }
 }
 
@@ -191,6 +173,7 @@ Node *GetNodeFamily_prefix(Tree *tree, FILE *source_file)
 
         if (cur_node->type == OP)
         {
+
     // fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
             Node *left  = GetNodeFamily_prefix(tree, source_file);
     // fprintf(stderr, "cursor before right = %ld\n", ftell(source_file));
@@ -199,24 +182,6 @@ Node *GetNodeFamily_prefix(Tree *tree, FILE *source_file)
             cur_node->left  = left;
             cur_node->right = right;
         }
-
-        // if (getc(source_file) != ')')
-        // {
-        //     fseek(source_file, -1L, SEEK_CUR);
-            
-        // fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
-        //     Node *left  = GetNodeFamily_prefix(tree, source_file);
-        //     cur_node->left  = left;
-        // }
-        
-        // if (getc(source_file) != ')')
-        // {
-        //     fseek(source_file, -1L, SEEK_CUR);
-            
-        // fprintf(stderr, "cursor before right = %ld\n", ftell(source_file));
-        //     Node *right  = GetNodeFamily(tree, source_file);
-        //     cur_node->right  = right;
-        // }
 
         getc(source_file);   // съесть ')'
 
