@@ -109,6 +109,7 @@ char *NodeValToStr(TreeElem_t val, NodeType node_type, char *res_str)
             _CASE(SUB);
             _CASE(MUL);
             _CASE(DIV);
+            _CASE(DEG);
 
             default:
                 fprintf(stderr, "unknown operation numbered %d in NodeValToStr()\n", val);
@@ -158,33 +159,10 @@ void NodeValFromStr(char *dest_str, Node *node)
         _COMPARE_OP(SUB);
         _COMPARE_OP(MUL);
         _COMPARE_OP(DIV);
+        _COMPARE_OP(DEG);
 
         #undef _COMPARE_OP
     }
-}
-
-const char *OperationToTex(int node_op)
-{
-    #define _CASE(operation)                                \
-    {                                                       \
-        case operation:                                     \
-            return operation##_TEX;                         \
-    }                                                       
-
-    switch (node_op)
-    {
-        _CASE(ADD);
-        _CASE(SUB);
-        _CASE(MUL);
-        _CASE(DIV);
-    
-        default:
-            fprintf(stderr, "unknown operation in OperationToTex() numbered %d\n", node_op);
-            return NULL;
-    }
-
-    #undef _CASE
- 
 }
 
 void GetStrTreeData(Node *start_node, char *dest_str)
@@ -193,7 +171,7 @@ void GetStrTreeData(Node *start_node, char *dest_str)
     NodeValToStr(start_node->value, start_node->type, node_val_str);
 
     if (start_node->type != OP)
-        sprintf(dest_str + strlen(dest_str), "(%s)", node_val_str);
+        sprintf(dest_str + strlen(dest_str), "%s", node_val_str);
 
     else
     {
@@ -209,48 +187,6 @@ void GetStrTreeData(Node *start_node, char *dest_str)
     }
 }
 
-const char *GetTexTreeData(Node *start_node, char *dest_str)
-{
-    char node_val_str[LABEL_LENGTH] = {};
-    NodeValToStr(start_node->value, start_node->type, node_val_str);
-
-    if (start_node->type != OP)
-        sprintf(dest_str + strlen(dest_str), "{%s}", node_val_str);
-
-    else
-    {
-        const char *op_tex = OperationToTex((int) start_node->value);
-        sprintf(dest_str + strlen(dest_str), "(");
-
-        if (IsPrefixOperation((int) start_node->value))
-        {
-            sprintf(dest_str + strlen(dest_str), "%s ", op_tex);
-
-            GetTexTreeData(start_node->left,  dest_str + strlen(dest_str));
-            GetTexTreeData(start_node->right, dest_str + strlen(dest_str));
-        }
-
-        else
-        {
-            GetTexTreeData(start_node->left, dest_str);
-
-            sprintf(dest_str + strlen(dest_str), "%s ", op_tex);
-
-            GetTexTreeData(start_node->right, dest_str + strlen(dest_str));
-        }    
-    }
-
-    return dest_str;
-}
-
-bool IsPrefixOperation(int op)
-{
-    if (op == DIV)
-        return true;
-    else
-        return false;
-}
-
 void GetTreeFromFile(Tree *tree, const char *source_file_name)
 {
     FILE *source_file = fopen(source_file_name, "r");
@@ -260,22 +196,22 @@ void GetTreeFromFile(Tree *tree, const char *source_file_name)
 
 Node *GetNodeFamily_prefix(Tree *tree, FILE *source_file)
 {
-    DIFF_DUMP(tree);
+    // DIFF_DUMP(tree);
 
     char node_val_str[LABEL_LENGTH] = {};
 
     if (fscanf(source_file, "(%[^( )]", node_val_str) == 1)
     {
-        fprintf(stderr, "in cycle, node_val_str = '%s'\n", node_val_str);
+    // fprintf(stderr, "in cycle, node_val_str = '%s'\n", node_val_str);
 
         Node *cur_node = NewNode(tree, POISON_TYPE, POISON_VAL, NULL, NULL);
         NodeValFromStr(node_val_str, cur_node);
 
         if (cur_node->type == OP)
         {
-            fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
+    // fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
             Node *left  = GetNodeFamily_prefix(tree, source_file);
-            fprintf(stderr, "cursor before right = %ld\n", ftell(source_file));
+    // fprintf(stderr, "cursor before right = %ld\n", ftell(source_file));
             Node *right  = GetNodeFamily_prefix(tree, source_file);
 
             cur_node->left  = left;
@@ -315,18 +251,18 @@ Node *GetNodeFamily_prefix(Tree *tree, FILE *source_file)
 
 Node *GetNodeFamily(Tree *tree, FILE *source_file)
 {
-    DIFF_DUMP(tree);
+    // DIFF_DUMP(tree);
 
     fscanf(source_file, "%*[ ]");
 
     if (getc(source_file) == '(')
     {
         // Node *op = NewNode(tree, OP, POISON_VAL, NULL, NULL);
-fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
+// fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
         Node *left  = GetNodeFamily(tree, source_file);
-fprintf(stderr, "cursor before op = %ld\n", ftell(source_file));
+// fprintf(stderr, "cursor before op = %ld\n", ftell(source_file));
         Node *op    = GetNodeFamily(tree, source_file);
-fprintf(stderr, "cursor before right = %ld\n", ftell(source_file));
+// fprintf(stderr, "cursor before right = %ld\n", ftell(source_file));
         Node *right = GetNodeFamily(tree, source_file);
 
         op->left  = left;

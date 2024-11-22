@@ -70,10 +70,13 @@ char *NodeValToStr    (TreeElem_t val, NodeType node_type, char *res_str);
 void  GetStrTreeData  (Node *start_node, char *dest_str);
 void  NodeValFromStr  (char *dest_str, Node *node);
 void  GetTreeFromFile (Tree *tree, const char *source_file_name);
-Node *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
 Node *GetNodeFamily   (Tree *tree, FILE *source_file);
-const char *OperationToTex(int node_op);
-const char *GetTexTreeData(Node *start_node, char *dest_str);
-bool IsPrefixOperation(int op);
+Node *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
+
+// tex
+const char *OperationToTex     (int node_op);
+const char *GetTexTreeData     (Node *start_node, char *dest_str, bool need_brackets);
+bool        IsPrefixOperation  (int op);
+void        ParamsNeedBrackets (int operation, bool *param_1, bool *param_2);
 
 #endif

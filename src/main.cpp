@@ -28,17 +28,22 @@ int main()
 
     // Node *div = NewNode(&tree, OP,    DIV,   add,  sub);
 
-    // char data[100] = {};
-    // GetStrTreeData(tree.root_ptr, data);
 
-    // fprintf(stderr, "%s\n", data);
-
-
-    char *source = "(/(+(x)(3))(-(1000)(7)))";
 
     GetTreeFromFile(&tree, "file.txt");
+    DIFF_DUMP(&tree);
 
     DIFF_DUMP(&tree);
+
+    char str[100] = {};
+    GetStrTreeData(tree.root_ptr, str);
+    fprintf(stderr, "str = %s\n\n", str);
+
+
+    char tex[100] = {};
+    GetTexTreeData(tree.root_ptr, tex, true);
+    fprintf(stderr, "tex = %s\n\n", tex);
+
 
     TreeDtor(&tree);
     fprintf(stderr, "END!\n");
