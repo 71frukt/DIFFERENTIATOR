@@ -2,8 +2,12 @@
 #include "diff_tree.h"
 #include "diff_debug.h"
 
-int main()
+FILE *OutputFile = NULL;  // TODO: change
+
+int main(const int argc, const char *argv[])
 {
+    OutputFile = GetOutputFile(argc, argv);
+
     fprintf(stderr, "START!\n");
 
     Tree tree = {};

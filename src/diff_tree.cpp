@@ -8,6 +8,8 @@
 #include "diff_debug.h"
 #include "diff_graph.h"
 
+extern FILE *OutputFile;
+
 void TreeCtor(Tree *tree, size_t start_capacity)
 { 
     assert(tree);
@@ -141,27 +143,31 @@ void NodeValFromStr(char *dest_str, Node *node)
     }
 
     else                                                        // is OP
-    {       // TODO: to switch/case
-        #define _COMPARE_OP(operation)                      \
+    {
+        #define EXPAND(...)  __VA_ARGS__
+        #define _CASE(operation)                            \
         {                                                   \
-            const char op_ch = operation##_SYMBOL[0];       \
-                                                            \
-            if (dest_str[0] == op_ch)                       \
-            {                                               \
-            fprintf(stderr, "op_ch = %c\n", op_ch);         \
+            case TO_STR(EXPAND(operation##_SYMBOL))[0]:                     \
                 node->value = operation;                    \
-            }                                               \
+                break;                                      \
         }
 
         node->type = OP;
 
-        _COMPARE_OP(ADD);
-        _COMPARE_OP(SUB);
-        _COMPARE_OP(MUL);
-        _COMPARE_OP(DIV);
-        _COMPARE_OP(DEG);
+        switch (dest_str[0])
+        {
+            _CASE(ADD);
+            _CASE(SUB);
+            _CASE(MUL);
+            _CASE(DIV);
+            _CASE(DEG);
 
-        #undef _COMPARE_OP
+            default:
+                fprintf(stderr, "unknown operation in OperationToTex() = '%s'\n", dest_str);
+                break;
+        }
+
+        #undef _CASE
     }
 }
 
@@ -286,4 +292,24 @@ Node *GetNodeFamily(Tree *tree, FILE *source_file)
 
         return cur_node;
     }
+}
+
+FILE *GetOutputFile(const int argc, const char *argv[])
+{
+    if (argc < 2)
+        OutputFile = fopen(BASE_OUTPUT_FILE_NAME, "w");
+    
+    else
+        OutputFile = fopen(argv[1], "w");
+
+    fprintf(OutputFile, "");
+
+    atexit(CloseOutputFile);
+
+    return OutputFile;
+}
+
+void CloseOutputFile()
+{
+    fclose(OutputFile);
 }

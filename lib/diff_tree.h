@@ -18,6 +18,8 @@ const TreeElem_t POISON_VAL    = 0xDEB11;
 const char *const LEFT_MARK  = "L";
 const char *const RIGHT_MARK = "R";
 
+const char *const BASE_OUTPUT_FILE_NAME = "dest_file.tex";
+
 #include "operations.h"
 
 enum NodeType
@@ -78,5 +80,8 @@ const char *OperationToTex     (int node_op);
 const char *GetTexTreeData     (Node *start_node, char *dest_str, bool need_brackets);
 bool        IsPrefixOperation  (int op);
 void        ParamsNeedBrackets (int operation, bool *param_1, bool *param_2);
+
+FILE *GetOutputFile   (const int argc, const char *argv[]);
+void  CloseOutputFile ();
 
 #endif
