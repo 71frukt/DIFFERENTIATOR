@@ -79,7 +79,7 @@ Node *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
 const char *OperationToTex     (int node_op);
 const char *GetTexTreeData     (Node *start_node, char *dest_str, bool need_brackets);
 bool        IsPrefixOperation  (int op);
-void        ParamsNeedBrackets (int operation, bool *param_1, bool *param_2);
+void        ParamsNeedBrackets (Node *op_node, bool *param_1, bool *param_2);
 
 FILE *GetOutputFile   (const int argc, const char *argv[]);
 void  CloseOutputFile ();

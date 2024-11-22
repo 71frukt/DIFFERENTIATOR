@@ -45,7 +45,7 @@ int main(const int argc, const char *argv[])
 
 
     char tex[100] = {};
-    GetTexTreeData(tree.root_ptr, tex, true);
+    GetTexTreeData(tree.root_ptr, tex, false);
     fprintf(stderr, "tex = %s\n\n", tex);
 
 

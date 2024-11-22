@@ -98,27 +98,14 @@ char *NodeValToStr(TreeElem_t val, NodeType node_type, char *res_str)
     {
         char operation_ch = 0;
 
-        #define _CASE(operation)                        \
-        {                                               \
-            case operation:                             \
-                operation_ch = *operation##_SYMBOL;     \
-                break;                                  \
-        }
-
-        switch(val)
+        for (size_t i = 0; i < OperationsArr.size; i++)
         {
-            _CASE(ADD);
-            _CASE(SUB);
-            _CASE(MUL);
-            _CASE(DIV);
-            _CASE(DEG);
-
-            default:
-                fprintf(stderr, "unknown operation numbered %d in NodeValToStr()\n", val);
+            if (val == OperationsArr.data[i].num)
+            {
+                operation_ch = OperationsArr.data[i].symbol;
                 break; 
+            }
         }
-
-        #undef _CASE
 
         sprintf(res_str, "%c", operation_ch);
     }
@@ -144,30 +131,19 @@ void NodeValFromStr(char *dest_str, Node *node)
 
     else                                                        // is OP
     {
-        #define EXPAND(...)  __VA_ARGS__
-        #define _CASE(operation)                            \
-        {                                                   \
-            case TO_STR(EXPAND(operation##_SYMBOL))[0]:                     \
-                node->value = operation;                    \
-                break;                                      \
-        }
-
         node->type = OP;
 
-        switch (dest_str[0])
+        for (size_t i = 0; i < OperationsArr.size; i++)
         {
-            _CASE(ADD);
-            _CASE(SUB);
-            _CASE(MUL);
-            _CASE(DIV);
-            _CASE(DEG);
-
-            default:
-                fprintf(stderr, "unknown operation in OperationToTex() = '%s'\n", dest_str);
+            if (dest_str[0] == OperationsArr.data[i].symbol)
+            {
+                node->value = OperationsArr.data[i].num;
                 break;
+            }
         }
 
-        #undef _CASE
+        if (node->value == POISON_VAL)                                                      // если ничего не нашли
+            fprintf(stderr, "unknown operation in OperationToTex() = '%s'\n", dest_str);
     }
 }
 
@@ -302,7 +278,7 @@ FILE *GetOutputFile(const int argc, const char *argv[])
     else
         OutputFile = fopen(argv[1], "w");
 
-    fprintf(OutputFile, "");
+    // fprintf(OutputFile, "");
 
     atexit(CloseOutputFile);
 

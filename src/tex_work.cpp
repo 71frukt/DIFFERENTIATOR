@@ -6,26 +6,14 @@
 
 const char *OperationToTex(int node_op)
 {
-    #define _CASE(operation)                                \
-    {                                                       \
-        case operation:                                     \
-            return operation##_TEX;                         \
-    }                                                       
-
-    switch (node_op)
+    for (size_t i = 0; i < OperationsArr.size; i++)
     {
-        _CASE(ADD);
-        _CASE(SUB);
-        _CASE(MUL);
-        _CASE(DIV);
-        _CASE(DEG);
-    
-        default:
-            fprintf(stderr, "unknown operation in OperationToTex() numbered %d\n", node_op);
-            return NULL;
+        if (node_op == OperationsArr.data[i].num)
+            return OperationsArr.data[i].tex_code;
     }
 
-    #undef _CASE
+    fprintf(stderr, "unknown operation in OperationToTex() numbered %d\n", node_op);    // если не нашли
+    return NULL;
 }
 
 const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
@@ -44,7 +32,7 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
 
         bool param1_brackets = true;
         bool param2_brackets = true;
-        ParamsNeedBrackets((int) start_node->value, &param1_brackets, &param2_brackets);
+        ParamsNeedBrackets(start_node, &param1_brackets, &param2_brackets);
 
         if (IsPrefixOperation((int) start_node->value))
         {
@@ -83,29 +71,47 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
 
 bool IsPrefixOperation(int op)
 {
-    if (op == DIV)
-        return true;
-    else
-        return false;
+    for (size_t i = 0; i < OperationsArr.size; i++)
+    {
+        if (op == OperationsArr.data[i].num)
+        {
+            if (OperationsArr.data[i].form == IS_PREFIX)
+                return true;
+            else
+                return false;
+        }
+    }
+
+    fprintf(stderr, "unknown operation in IsPrefixOperation() numbered %d\n", op);
+    return false;
 }
 
-void ParamsNeedBrackets(int operation, bool *param_1, bool *param_2)
+void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
 {
-    if (operation == DIV)
+    if ((int) op_node->value == DEG)
+    {
+        *param_1 = true;
+        *param_2 = false;
+    }
+
+    else if ((int) op_node->value == MUL)
+    {
+        if (op_node->type == OP && ((int) op_node->left->value  == ADD || (int) op_node->left->value  == SUB))
+            *param_1 = true;
+
+        if (op_node->type == OP && ((int) op_node->right->value == ADD || (int) op_node->right->value == SUB))
+            *param_2 = true;
+
+        else
+        {
+            *param_1 = false;
+            *param_2 = false;
+        }
+    }
+
+    else
     {
         *param_1 = false;
         *param_2 = false;
-    }
-
-    else if (operation == DEG)
-    {
-        *param_1 = true;
-        *param_2 = false;
-    }
-
-    else
-    {
-        *param_1 = true;
-        *param_2 = true;
     }
 }
