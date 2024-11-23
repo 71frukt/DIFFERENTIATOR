@@ -6,10 +6,10 @@
 
 const char *OperationToTex(int node_op)
 {
-    for (size_t i = 0; i < Operations.size; i++)
+    for (size_t i = 0; i < OPERATIONS_NUM; i++)
     {
-        if (node_op == Operations.data[i].num)
-            return Operations.data[i].tex_code;
+        if (node_op == Operations[i].num)
+            return Operations[i].tex_code;
     }
 
     fprintf(stderr, "unknown operation in OperationToTex() numbered %d\n", node_op);    // если не нашли
@@ -104,7 +104,13 @@ void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
         }
     }
 
-    else if (IsGeometricFunc((int) op_node->value))
+    else if (IsTrigonometric((int) op_node->value))
+    {
+        if (op_node->left->type == OP)
+            *param_1 = true;
+    }
+
+    else if ((int) op_node->value == DIF)
     {
         if (op_node->left->type == OP)
             *param_1 = true;
@@ -117,7 +123,7 @@ void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
     }
 }
 
-bool IsGeometricFunc(int op)
+bool IsTrigonometric(int op)
 {
     if (op == SIN || op == TAN)
         return true;

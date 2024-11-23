@@ -44,33 +44,27 @@ enum Operation_enum
     MUL,
     DIV,
     DEG,
+
     SIN,
-    TAN
+    TAN,
+
+    DIF
 };
 
-const int OPERATIONS_NUM = 7;
+const int OPERATIONS_NUM = 8;
 
-struct OperationsArr
+const Operation Operations[OPERATIONS_NUM] = 
 {
-    const size_t size;
+    { .num = ADD, .symbol = "+",   .tex_code = "+",      .op_func = Add, BINARY, IS_INFIX  },
+    { .num = SUB, .symbol = "-",   .tex_code = "-",      .op_func = Sub, BINARY, IS_INFIX  },
+    { .num = MUL, .symbol = "*",   .tex_code = "\\cdot", .op_func = Mul, BINARY, IS_INFIX  },
+    { .num = DIV, .symbol = "/",   .tex_code = "\\frac", .op_func = Div, BINARY, IS_PREFIX },
+    { .num = DEG, .symbol = "^",   .tex_code = "^",      .op_func = Deg, BINARY, IS_INFIX  },
 
-    const Operation data[OPERATIONS_NUM];
-};
+    { .num = SIN, .symbol = "sin", .tex_code = "\\sin",  .op_func = Sin, UNARY, IS_PREFIX },
+    { .num = TAN, .symbol = "tan", .tex_code = "\\tan",  .op_func = Tan, UNARY, IS_PREFIX },
 
-const OperationsArr Operations = 
-{
-    .size = OPERATIONS_NUM,
-    
-    .data = {
-        { .num = ADD, .symbol = "+"  , .tex_code = "+",      .op_func = Add, BINARY, IS_INFIX  },
-        { .num = SUB, .symbol = "-"  , .tex_code = "-",      .op_func = Sub, BINARY, IS_INFIX  },
-        { .num = MUL, .symbol = "*"  , .tex_code = "\\cdot", .op_func = Mul, BINARY, IS_INFIX  },
-        { .num = DIV, .symbol = "/"  , .tex_code = "\\frac", .op_func = Div, BINARY, IS_PREFIX },
-        { .num = DEG, .symbol = "^"  , .tex_code = "^",      .op_func = Deg, BINARY, IS_INFIX  },
-
-        { .num = SIN, .symbol = "sin", .tex_code = "\\sin",  .op_func = Sin,  UNARY, IS_PREFIX },
-        { .num = TAN, .symbol = "tan", .tex_code = "\\tan",  .op_func = Tan,  UNARY, IS_PREFIX }
-    }
+    { .num = DIF, .symbol = "d",   .tex_code = "\\dd",   .op_func = NULL, UNARY, IS_PREFIX}
 };
 
 const Operation *GetOperationByNum    (int num);

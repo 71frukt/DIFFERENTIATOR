@@ -7,10 +7,10 @@
 
 const Operation *GetOperationByNum(int num)
 {
-    for (size_t i = 0; i < Operations.size; i++)
+    for (size_t i = 0; i < OPERATIONS_NUM; i++)
     {
-        if (num == Operations.data[i].num)
-            return &Operations.data[i];
+        if (num == Operations[i].num)
+            return &Operations[i];
     }
 
     fprintf(stderr, "unknown operation in GetOperationByNum() numbered %d\n", num);
@@ -21,11 +21,10 @@ const Operation *GetOperationBySymbol(char *sym)
 {
     assert(sym);
 
-    for (size_t i = 0; i < Operations.size; i++)
+    for (size_t i = 0; i < OPERATIONS_NUM; i++)
     {
-        // if (sym == Operations.data[i].symbol)
-        if (strcmp(sym, Operations.data[i].symbol) == 0)
-            return &Operations.data[i];
+        if (strcmp(sym, Operations[i].symbol) == 0)
+            return &Operations[i];
     }
 
     // fprintf(stderr, "unknown operation in GetOperationBySym() = '%s'\n", sym);
