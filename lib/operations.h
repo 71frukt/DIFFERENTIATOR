@@ -11,6 +11,7 @@ TreeElem_t Mul(TreeElem_t arg1, TreeElem_t arg2);
 TreeElem_t Div(TreeElem_t arg1, TreeElem_t arg2);
 TreeElem_t Deg(TreeElem_t arg1, TreeElem_t arg2);
 
+TreeElem_t Sin(TreeElem_t arg1, TreeElem_t arg2);
 TreeElem_t Tan(TreeElem_t arg1, TreeElem_t arg2);
 
 enum FuncEntryForm
@@ -43,10 +44,11 @@ enum Operation_enum
     MUL,
     DIV,
     DEG,
+    SIN,
     TAN
 };
 
-const int OPERATIONS_NUM = 6;
+const int OPERATIONS_NUM = 7;
 
 struct OperationsArr
 {
@@ -65,7 +67,9 @@ const OperationsArr Operations =
         { .num = MUL, .symbol = "*"  , .tex_code = "\\cdot", .op_func = Mul, BINARY, IS_INFIX  },
         { .num = DIV, .symbol = "/"  , .tex_code = "\\frac", .op_func = Div, BINARY, IS_PREFIX },
         { .num = DEG, .symbol = "^"  , .tex_code = "^",      .op_func = Deg, BINARY, IS_INFIX  },
-        { .num = TAN, .symbol = "tan", .tex_code = "\\tan",  .op_func = Tan,  UNARY, IS_PREFIX  }
+
+        { .num = SIN, .symbol = "sin", .tex_code = "\\sin",  .op_func = Sin,  UNARY, IS_PREFIX },
+        { .num = TAN, .symbol = "tan", .tex_code = "\\tan",  .op_func = Tan,  UNARY, IS_PREFIX }
     }
 };
 

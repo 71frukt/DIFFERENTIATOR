@@ -82,5 +82,6 @@ void        ParamsNeedBrackets (Node *op_node, bool *param_1, bool *param_2);
 
 FILE *GetOutputFile   (const int argc, const char *argv[]);
 void  CloseOutputFile ();
+bool  IsGeometricFunc (int op);
 
 #endif

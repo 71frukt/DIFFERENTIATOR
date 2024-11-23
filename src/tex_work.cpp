@@ -104,7 +104,7 @@ void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
         }
     }
 
-    else if ((int) op_node->value == TAN)
+    else if (IsGeometricFunc((int) op_node->value))
     {
         if (op_node->left->type == OP)
             *param_1 = true;
@@ -115,4 +115,13 @@ void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
         *param_1 = false;
         *param_2 = false;
     }
+}
+
+bool IsGeometricFunc(int op)
+{
+    if (op == SIN || op == TAN)
+        return true;
+    
+    else
+        return false;
 }

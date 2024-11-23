@@ -58,6 +58,12 @@ TreeElem_t Deg(TreeElem_t arg1, TreeElem_t arg2)
     return arg1 ^ arg2;
 }
 
+TreeElem_t Sin(TreeElem_t arg1, TreeElem_t arg2)
+{
+    assert(arg2 == POISON_VAL);
+    return (TreeElem_t) sin(arg1);
+}
+
 TreeElem_t Tan(TreeElem_t arg1, TreeElem_t arg2)
 {
     assert(arg2 == POISON_VAL);
