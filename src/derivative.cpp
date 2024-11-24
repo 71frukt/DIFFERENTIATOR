@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "operations.h"
 #include "derivative.h"
 
 Node *TakeDifferential(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
@@ -16,12 +17,8 @@ Node *TakeDifferential(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
     else
     {
-        if (expr_node->value == ADD)
-        {
-            Node *left  = TakeDifferential(expr_tree, expr_node->left,  solv_tree);
-            Node *right = TakeDifferential(expr_tree, expr_node->right, solv_tree);
+        const Operation *cur_op = GetOperationByNum((int) expr_node->value);
 
-            return NewNode(solv_tree, OP, ADD, left, right);
-        }
+        return cur_op->diff_func(expr_tree, expr_node, solv_tree);
     }
 }

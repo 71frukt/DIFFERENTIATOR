@@ -18,10 +18,6 @@ const TreeElem_t POISON_VAL    = 0xDEB11;
 const char *const LEFT_MARK  = "L";
 const char *const RIGHT_MARK = "R";
 
-const char *const BASE_OUTPUT_FILE_NAME = "dest_file.tex";
-
-#include "operations.h"
-
 #ifdef DIFF_DEBUG
 #define ON_DIFF_DEBUG(...)  __VA_ARGS__
 #else
@@ -84,13 +80,6 @@ Node *GetNodeFamily   (Tree *tree, FILE *source_file);
 Node *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
 Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node);
 
-// tex
-const char *OperationToTex     (int node_op);
-const char *GetTexTreeData     (Node *start_node, char *dest_str, bool need_brackets);
-void        ParamsNeedBrackets (Node *op_node, bool *param_1, bool *param_2);
-
-FILE *GetOutputFile   (const int argc, const char *argv[]);
-void  CloseOutputFile ();
 bool  IsTrigonometric (int op);
 
 #endif

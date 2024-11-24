@@ -6,10 +6,10 @@
 #include <assert.h>
 
 #include "diff_tree.h"
+#include "operations.h"
 #include "diff_debug.h"
 #include "diff_graph.h"
 
-extern FILE *OutputFile;
 
 void TreeCtor(Tree *tree, size_t start_capacity ON_DIFF_DEBUG(, const char *name))
 { 
@@ -306,24 +306,4 @@ Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node)
     }
 
     return pasted_node;
-}
-
-FILE *GetOutputFile(const int argc, const char *argv[])
-{
-    if (argc < 2)
-        OutputFile = fopen(BASE_OUTPUT_FILE_NAME, "w");
-    
-    else
-        OutputFile = fopen(argv[1], "w");
-
-    // fprintf(OutputFile, "");
-
-    atexit(CloseOutputFile);
-
-    return OutputFile;
-}
-
-void CloseOutputFile()
-{
-    fclose(OutputFile);
 }

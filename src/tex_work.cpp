@@ -3,6 +3,10 @@
 #include <assert.h>
 
 #include "diff_tree.h"
+#include "tex_work.h"
+#include "operations.h"
+
+extern FILE *OutputFile;
 
 const char *OperationToTex(int node_op)
 {
@@ -23,6 +27,12 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
     char node_val_str[LABEL_LENGTH] = {};
     NodeValToStr(start_node->value, start_node->type, node_val_str);
     
+    bool param1_brackets = false;
+    bool param2_brackets = false;
+    ParamsNeedBrackets(start_node, &param1_brackets, &param2_brackets);
+
+    IN_BRACKETS (need_brackets, dest_str, 
+
     if (start_node->type != OP)
         sprintf(dest_str + strlen(dest_str), "%s", node_val_str);
 
@@ -32,14 +42,8 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
 
         const char *op_tex = OperationToTex((int) start_node->value);
     
-        bool param1_brackets = true;
-        bool param2_brackets = true;
-        ParamsNeedBrackets(start_node, &param1_brackets, &param2_brackets);
-
         if (cur_op->form == IS_PREFIX)
         {
-            if (need_brackets) 
-                sprintf(dest_str + strlen(dest_str), "\\left(");
 
             sprintf(dest_str + strlen(dest_str), " %s ", op_tex);
 
@@ -54,14 +58,12 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
                 sprintf(dest_str + strlen(dest_str), "}");
             }
 
-            if (need_brackets)
-                sprintf(dest_str + strlen(dest_str), "\\right)");
         }
 
         else
         {
-            if (need_brackets) 
-                sprintf(dest_str + strlen(dest_str), "\\left(");
+            // if (need_brackets) 
+            //     sprintf(dest_str + strlen(dest_str), "\\left(");
 
             sprintf(dest_str + strlen(dest_str), "{"); 
 
@@ -73,40 +75,54 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
 
             sprintf(dest_str + strlen(dest_str), "}");
 
-            if (need_brackets)
-                sprintf(dest_str + strlen(dest_str), "\\right)");
+            // if (need_brackets)
+            //     sprintf(dest_str + strlen(dest_str), "\\right)");
         }    
     }
+
+    );
 
     return dest_str;
 }
 
 void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
 {
+    if (op_node->type != OP)
+        return;
+
     if ((int) op_node->value == DEG)
     {
-        *param_1 = true;
+        if (op_node->left->type == OP || (op_node->left->type == NUM && op_node->left->value < 0))
+            *param_1 = true;
+        else 
+            *param_1 = false;
+
         *param_2 = false;
     }
 
     else if ((int) op_node->value == MUL)
     {
-        if (op_node->type == OP && ((int) op_node->left->value  == ADD || (int) op_node->left->value  == SUB))
+        if ((int) op_node->left->type == OP && ((int) op_node->left->value == ADD || (int) op_node->left->value == SUB))
             *param_1 = true;
 
-        if (op_node->type == OP && ((int) op_node->right->value == ADD || (int) op_node->right->value == SUB))
+        if ((int) op_node->right->type == OP && ((int) op_node->right->value == ADD || (int) op_node->right->value == SUB))
             *param_2 = true;
 
-        else
-        {
-            *param_1 = false;
-            *param_2 = false;
-        }
+        if ((int) op_node->left->type == NUM && op_node->left->value < 0)
+            *param_1 = true;
+
+        if ((int) op_node->right->type == NUM && op_node->right->value < 0)
+            *param_2 = true; 
+
+        // fprintf(stderr, "1 = %d, 2 = %d\n", *param_1, *param_2);
     }
 
     else if (IsTrigonometric((int) op_node->value))
     {
         if (op_node->left->type == OP)
+            *param_1 = true;
+
+        if (op_node->left->type == NUM && op_node->left->value < 0)
             *param_1 = true;
     }
 
@@ -125,9 +141,35 @@ void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
 
 bool IsTrigonometric(int op)
 {
-    if (op == SIN || op == TAN)
+    if (op == SIN || op == COS || op == TAN)
         return true;
     
     else
         return false;
+}
+
+FILE *GetOutputFile(const int argc, const char *argv[])
+{
+    if (argc < 2)
+        OutputFile = fopen(TEX_FOLDER BASE_OUTPUT_FILE_NAME, "w");
+    
+    else
+        OutputFile = fopen(argv[1], "w");
+
+    fprintf(OutputFile, "\\documentclass[a4paper, 12pt]{article}    \n"
+
+                        "\\usepackage[utf8x]{inputenc}              \n"
+                        "\\usepackage[english,russian]{babel}       \n"
+                        "\\usepackage{cmap}                         \n"
+                        "\\begin{document}                          \n"); 
+
+    atexit(CloseOutputFile);
+
+    return OutputFile;
+}
+
+void CloseOutputFile()
+{
+    fprintf(OutputFile, "\\end{document}\n");
+    fclose(OutputFile);
 }
