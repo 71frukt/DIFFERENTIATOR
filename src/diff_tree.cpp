@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <sys/stat.h>
 #include <assert.h>
 
 #include "diff_tree.h"
@@ -10,7 +11,7 @@
 
 extern FILE *OutputFile;
 
-void TreeCtor(Tree *tree, size_t start_capacity)
+void TreeCtor(Tree *tree, size_t start_capacity ON_DIFF_DEBUG(, const char *name))
 { 
     assert(tree);
     assert(start_capacity > 0);
@@ -20,12 +21,23 @@ void TreeCtor(Tree *tree, size_t start_capacity)
 
     TreeRecalloc(tree, start_capacity);
 
+    ON_DIFF_DEBUG(
+        tree->name = name;
+
+        char path[PATH_NAME_LEN] = {};
+        GetFilePath(name, LOGS_FOLDER GRAPH_FOLDER, path);
+
+        mkdir(path);
+    );
+
     DIFF_DUMP(tree);
 }
 
 void TreeDtor(Tree *tree)
 {
     assert(tree);
+
+    DIFF_DUMP(tree);
 
     for (size_t i = 0; i < tree->alloc_marks.size; i++)
         free(tree->alloc_marks.data[i]);
@@ -35,7 +47,10 @@ void TreeDtor(Tree *tree)
     tree->capacity = 0;
     tree->size     = 0;
 
-    ON_DIFF_DEBUG( remove(TMP_DOTFILE_NAME) );
+    ON_DIFF_DEBUG( 
+        tree->name = NULL;
+        remove(TMP_DOTFILE_NAME);
+    );
 }
 
 void TreeRecalloc(Tree *tree, size_t new_capacity)
@@ -271,6 +286,26 @@ fprintf(stderr, "hui, cur_op = %s\n", cur_op->symbol);
 
         return cur_node;
     }
+}
+
+Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node)
+{
+    Node *pasted_node = NULL;
+
+    if (coping_node->type == NUM || coping_node->type == VAR)
+    {
+        pasted_node = NewNode(dest_tree, coping_node->type, coping_node->value, NULL, NULL);
+    }
+
+    else
+    {
+        pasted_node = NewNode(dest_tree, OP, coping_node->value, NULL, NULL);
+
+        pasted_node->left  = TreeCopyPaste(source_tree, dest_tree, coping_node->left);
+        pasted_node->right = TreeCopyPaste(source_tree, dest_tree, coping_node->right);
+    }
+
+    return pasted_node;
 }
 
 FILE *GetOutputFile(const int argc, const char *argv[])

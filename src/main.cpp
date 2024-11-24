@@ -1,6 +1,8 @@
 #include <stdio.h>
+
 #include "diff_tree.h"
 #include "diff_debug.h"
+#include "derivative.h"
 
 FILE *OutputFile = NULL;  // TODO: change
 
@@ -10,46 +12,29 @@ int main(const int argc, const char *argv[])
 
     fprintf(stderr, "START!\n");
 
-    Tree tree = {};
+    Tree orig = {};
     
-    TreeCtor(&tree, START_TREE_SIZE);
+    TreeCtor(&orig, START_TREE_SIZE, "orig_expression");
 
-    // Node *x   = NewNode(&tree, VAR, VAR_X, NULL, NULL);
-
-    // DIFF_DUMP(&tree);
-
-    // Node *n1  = NewNode(&tree, NUM,    3,   NULL, NULL);
-    // DIFF_DUMP(&tree);
-
-    // Node *add = NewNode(&tree, OP,    ADD,     x,   n1);
-    // DIFF_DUMP(&tree);
-
-    // Node *n2  = NewNode(&tree, NUM,  1000,  NULL, NULL);
-
-    // Node *n3  = NewNode(&tree, NUM,     7,  NULL, NULL);
-
-    // Node *sub = NewNode(&tree, OP,    SUB,   n2,    n3);
-
-    // Node *div = NewNode(&tree, OP,    DIV,   add,  sub);
-
-
-
-    GetTreeFromFile(&tree, "file.txt");
-    DIFF_DUMP(&tree);
-
-    DIFF_DUMP(&tree);
+    GetTreeFromFile(&orig, "file.txt");
+    DIFF_DUMP(&orig);
 
     char str[100] = {};
-    GetStrTreeData(tree.root_ptr, str);
+    GetStrTreeData(orig.root_ptr, str);
     fprintf(stderr, "str = %s\n\n", str);
 
-
     char tex[100] = {};
-    GetTexTreeData(tree.root_ptr, tex, false);
+    GetTexTreeData(orig.root_ptr, tex, false);
     fprintf(stderr, "tex = %s\n\n", tex);
 
+    Tree solving = {};
+    TreeCtor(&solving, START_TREE_SIZE, "solving");
 
-    TreeDtor(&tree);
+    TakeDifferential(&orig, orig.root_ptr, &solving);
+
+    TreeDtor(&solving);
+    TreeDtor(&orig);
+
     fprintf(stderr, "END!\n");
     return 0;
 }

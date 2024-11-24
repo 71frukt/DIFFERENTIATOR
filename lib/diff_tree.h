@@ -22,6 +22,12 @@ const char *const BASE_OUTPUT_FILE_NAME = "dest_file.tex";
 
 #include "operations.h"
 
+#ifdef DIFF_DEBUG
+#define ON_DIFF_DEBUG(...)  __VA_ARGS__
+#else
+#define ON_DIFF_DEBUG(...)
+#endif
+
 enum NodeType
 {
     POISON_TYPE,
@@ -62,9 +68,11 @@ struct Tree
     size_t size;
 
     tree_alloc_marks_t alloc_marks;
+
+    ON_DIFF_DEBUG(const char *name);
 };
 
-void  TreeCtor        (Tree *tree, size_t start_capacity);
+void  TreeCtor        (Tree *tree, size_t start_capacity ON_DIFF_DEBUG(, const char *name));
 void  TreeDtor        (Tree *tree);
 void  TreeRecalloc    (Tree *tree, size_t new_capacity);
 Node *NewNode         (Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right);
@@ -74,6 +82,7 @@ void  NodeValFromStr  (char *dest_str, Node *node);
 void  GetTreeFromFile (Tree *tree, const char *source_file_name);
 Node *GetNodeFamily   (Tree *tree, FILE *source_file);
 Node *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
+Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node);
 
 // tex
 const char *OperationToTex     (int node_op);
