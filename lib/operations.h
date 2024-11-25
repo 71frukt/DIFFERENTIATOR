@@ -9,8 +9,10 @@ TreeElem_t Add(TreeElem_t arg1, TreeElem_t arg2);
 TreeElem_t Sub(TreeElem_t arg1, TreeElem_t arg2);
 TreeElem_t Mul(TreeElem_t arg1, TreeElem_t arg2);
 TreeElem_t Div(TreeElem_t arg1, TreeElem_t arg2);
+
 TreeElem_t Deg(TreeElem_t arg1, TreeElem_t arg2);
 TreeElem_t Ln (TreeElem_t arg1, TreeElem_t arg2);
+TreeElem_t Log(TreeElem_t arg1, TreeElem_t arg2);
 
 TreeElem_t Sin(TreeElem_t arg1, TreeElem_t arg2);
 TreeElem_t Cos(TreeElem_t arg1, TreeElem_t arg2);
@@ -22,8 +24,10 @@ Node *DiffAdd(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffMul(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffSub(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffDiv(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
+
 Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffLn (Tree *expr_tree, Node *expr_node, Tree *solv_tree);
+Node *DiffLog(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 
 Node *DiffSin(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffCos(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
@@ -46,8 +50,11 @@ struct Operation
     const int    num;
     const char  *symbol;
     const char  *tex_code;
+
     const FuncType type;                                                // UNARY / BINARY
-    const FuncEntryForm form;                                           // PREFIX / INFIX
+
+    const FuncEntryForm life_form;                                           // PREFIX / INFIX
+    const FuncEntryForm tex_form;
 
     TreeElem_t  (*op_func)   (TreeElem_t arg1, TreeElem_t arg2);
     Node*       (*diff_func) (Tree *expr_tree, Node *expr_node, Tree *solv_tree);
@@ -61,7 +68,9 @@ enum Operation_enum
     MUL,
     DIV,
     DEG,
+
     LN,
+    LOG,
 
     SIN,
     COS,
@@ -70,24 +79,24 @@ enum Operation_enum
     DIF
 };
 
-const int OPERATIONS_NUM = 10;
+const int OPERATIONS_NUM = 11;
 
 const Operation Operations[OPERATIONS_NUM] = 
-{
-    { .num = ADD, .symbol = "+",   .tex_code = "+",      BINARY, INFIX,  .op_func = Add, .diff_func = DiffAdd },
-    { .num = SUB, .symbol = "-",   .tex_code = "-",      BINARY, INFIX,  .op_func = Sub, .diff_func = DiffSub },
-    { .num = MUL, .symbol = "*",   .tex_code = "\\cdot", BINARY, INFIX,  .op_func = Mul, .diff_func = DiffMul },
-    { .num = DIV, .symbol = "/",   .tex_code = "\\frac", BINARY, PREFIX, .op_func = Div, .diff_func = DiffDiv },
-    { .num = DEG, .symbol = "^",   .tex_code = "^",      BINARY, INFIX,  .op_func = Deg, .diff_func = DiffDeg },
+{                                                              // life   tex
+    { .num = ADD, .symbol = "+",   .tex_code = "+",      BINARY, INFIX,  INFIX,  .op_func = Add, .diff_func = DiffAdd },
+    { .num = SUB, .symbol = "-",   .tex_code = "-",      BINARY, INFIX,  INFIX,  .op_func = Sub, .diff_func = DiffSub },
+    { .num = MUL, .symbol = "*",   .tex_code = "\\cdot", BINARY, INFIX,  INFIX,  .op_func = Mul, .diff_func = DiffMul },
+    { .num = DIV, .symbol = "/",   .tex_code = "\\frac", BINARY, INFIX,  PREFIX, .op_func = Div, .diff_func = DiffDiv },
+    { .num = DEG, .symbol = "^",   .tex_code = "^",      BINARY, INFIX,  INFIX,  .op_func = Deg, .diff_func = DiffDeg },
 
-    
-    { .num = LN,  .symbol = "ln",  .tex_code = "\\ln",   UNARY,  PREFIX, .op_func = Ln,  .diff_func = DiffLn  },
- 
-    { .num = SIN, .symbol = "sin", .tex_code = "\\sin",  UNARY,  PREFIX, .op_func = Sin, .diff_func = DiffSin },
-    { .num = COS, .symbol = "cos", .tex_code = "\\cos",  UNARY,  PREFIX, .op_func = Cos, .diff_func = DiffCos },
-    { .num = TAN, .symbol = "tan", .tex_code = "\\tan",  UNARY,  PREFIX, .op_func = Tan, .diff_func = DiffTan },
+    { .num = LN,  .symbol = "ln",  .tex_code = "\\ln",   UNARY,  INFIX,  PREFIX, .op_func = Ln,  .diff_func = DiffLn  },
+    { .num = LOG, .symbol = "log", .tex_code = "\\log_", BINARY, PREFIX, PREFIX, .op_func = Log, .diff_func = DiffLog },
 
-    { .num = DIF, .symbol = "d",   .tex_code = "\\dd",   UNARY,  PREFIX, .op_func = NULL }
+    { .num = SIN, .symbol = "sin", .tex_code = "\\sin",  UNARY,  PREFIX, PREFIX, .op_func = Sin, .diff_func = DiffSin },
+    { .num = COS, .symbol = "cos", .tex_code = "\\cos",  UNARY,  PREFIX, PREFIX, .op_func = Cos, .diff_func = DiffCos },
+    { .num = TAN, .symbol = "tan", .tex_code = "\\tan",  UNARY,  PREFIX, PREFIX, .op_func = Tan, .diff_func = DiffTan },
+
+    { .num = DIF, .symbol = "d",   .tex_code = "\\dd",   UNARY,  PREFIX, PREFIX, .op_func = NULL }
 };
 
 const Operation *GetOperationByNum    (int num);

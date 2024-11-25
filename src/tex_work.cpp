@@ -42,9 +42,8 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
 
         const char *op_tex = OperationToTex((int) start_node->value);
     
-        if (cur_op->form == PREFIX)
+        if (cur_op->tex_form == PREFIX)
         {
-
             sprintf(dest_str + strlen(dest_str), " %s ", op_tex);
 
             sprintf(dest_str + strlen(dest_str), "{"); 
@@ -57,7 +56,6 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
                 GetTexTreeData(start_node->right, dest_str + strlen(dest_str), param2_brackets);
                 sprintf(dest_str + strlen(dest_str), "}");
             }
-
         }
 
         else

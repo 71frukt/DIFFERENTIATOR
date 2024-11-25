@@ -80,6 +80,11 @@ TreeElem_t Ln(TreeElem_t arg1, TreeElem_t arg2)
     return (TreeElem_t) log(arg1);
 }
 
+TreeElem_t Log(TreeElem_t arg1, TreeElem_t arg2)
+{
+    return (TreeElem_t) (log(arg1) / log(arg2));
+}
+
 Node *DiffAdd(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 {
     Node *left  = TakeDifferential(expr_tree, expr_node->left,  solv_tree);
@@ -251,4 +256,47 @@ Node *DiffLn(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
     Node *diff_arg = TakeDifferential(expr_tree, arg, solv_tree);
 
     return NewNode(solv_tree, OP, MUL, diff_ln, diff_arg);
+}
+
+Node *DiffLog(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
+{
+    Node *arg = expr_node->left;
+    Node *degree = expr_node->right;
+
+    Node *arg_cpy    = TreeCopyPaste(expr_tree, solv_tree, arg);
+    Node *degree_cpy = TreeCopyPaste(expr_tree, solv_tree, degree);
+
+    
+    if (!SubtreeContainsVar(degree))
+    {
+        Node *ln_of_degree = NewNode(solv_tree, OP, LN,  degree_cpy, degree_cpy);
+        Node *denominator  = NewNode(solv_tree, OP, MUL, arg_cpy, ln_of_degree);
+
+        Node *fraction     = NewNode(solv_tree, OP, DIV, NewNode(solv_tree, NUM, 1, NULL, NULL), denominator);
+
+        Node *degree_diff = TakeDifferential(expr_tree, degree, solv_tree);
+
+        return NewNode(solv_tree, OP, MUL, fraction, degree_diff);
+    }
+
+    else
+    {
+        Tree tmp_expr_tree = {};
+        fprintf(stderr, "ctor\n");
+        TreeCtor(&tmp_expr_tree, START_TREE_SIZE ON_DIFF_DEBUG(, "tmp_expr_deg_log"));
+
+        Node *tmp_arg_cpy    = TreeCopyPaste(expr_tree, &tmp_expr_tree, arg); 
+        Node *tmp_degree_cpy = TreeCopyPaste(expr_tree, &tmp_expr_tree, degree);
+
+        Node *tmp_expr_numerator   = NewNode(&tmp_expr_tree, OP, LN, tmp_arg_cpy,    tmp_arg_cpy);
+        Node *tmp_expr_denominator = NewNode(&tmp_expr_tree, OP, LN, tmp_degree_cpy, tmp_degree_cpy);
+
+        Node *tmp_expr = NewNode(&tmp_expr_tree, OP, DIV, tmp_expr_numerator, tmp_expr_denominator);
+
+        Node *res_diff = TakeDifferential(&tmp_expr_tree, tmp_expr, solv_tree);
+
+        TreeDtor(&tmp_expr_tree);
+
+        return res_diff;
+    }
 }

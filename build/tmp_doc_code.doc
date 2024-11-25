@@ -1,0 +1,24 @@
+digraph G{           
+bgcolor = "#FFF3D1";  
+node_000001dafcca8520 [shape = "oval", style = filled, fillcolor = "pink", label = "99"]
+node_000001dafcca8538 [shape = "record", style = filled, fillcolor = "azure", label = "{/ | { <L> L | <R> R } }"]
+node_000001dafcca8550 [shape = "oval", style = filled, fillcolor = "pink", label = "14"]
+node_000001dafcca8568 [shape = "record", style = filled, fillcolor = "azure", label = "{* | { <L> L | <R> R } }"]
+node_000001dafcca8580 [shape = "oval", style = filled, fillcolor = "pink", label = "7"]
+node_000001dafcca8598 [shape = "record", style = filled, fillcolor = "azure", label = "{+ | { <L> L | <R> R } }"]
+node_000001dafcca85b0 [shape = "oval", style = filled, fillcolor = "pink", label = "8"]
+node_000001dafcca85c8 [shape = "record", style = filled, fillcolor = "azure", label = "{* | { <L> L | <R> R } }"]
+node_000001dafcca85e0 [shape = "oval", style = filled, fillcolor = "pink", label = "69"]
+node_000001dafcca85f8 [shape = "record", style = filled, fillcolor = "azure", label = "{/ | { <L> L | <R> R } }"]
+node_000001dafcca8610 [shape = "oval", style = filled, fillcolor = "pink", label = "2"]
+node_000001dafcca8538: <L> -> node_000001dafcca8520
+node_000001dafcca8538: <R> -> node_000001dafcca8550
+node_000001dafcca8568: <L> -> node_000001dafcca8538
+node_000001dafcca8568: <R> -> node_000001dafcca8580
+node_000001dafcca8598: <L> -> node_000001dafcca8568
+node_000001dafcca8598: <R> -> node_000001dafcca85c8
+node_000001dafcca85c8: <L> -> node_000001dafcca85b0
+node_000001dafcca85c8: <R> -> node_000001dafcca85f8
+node_000001dafcca85f8: <L> -> node_000001dafcca85e0
+node_000001dafcca85f8: <R> -> node_000001dafcca8610
+} 

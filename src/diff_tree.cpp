@@ -231,11 +231,9 @@ Node *GetNodeFamily_prefix(Tree *tree, FILE *source_file)
 
 Node *GetNodeFamily(Tree *tree, FILE *source_file)
 {
-    // DIFF_DUMP(tree);
-
     fscanf(source_file, "%*[ ]");
 
-    if (getc(source_file) == '(')       // это бинарная функция
+    if (getc(source_file) == '(')       // это бинарная инфиксная функция
     {
         // Node *op = NewNode(tree, OP, POISON_VAL, NULL, NULL);
 // fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
@@ -258,27 +256,38 @@ Node *GetNodeFamily(Tree *tree, FILE *source_file)
         fseek(source_file, -1L, SEEK_CUR);
 
         char node_val_str[LABEL_LENGTH] = {};
-
-        fscanf(source_file, "%[^( )]", node_val_str);
+        fscanf(source_file, "%[^( ) ,]", node_val_str);
 
         const Operation *cur_op = GetOperationBySymbol(node_val_str);
 
         Node *cur_node = NULL;
-        if (cur_op != NULL && cur_op->type == UNARY)     // это унарная операция
+        if (cur_op != NULL && cur_op->life_form == PREFIX)     // это префиксная операция
         {
-fprintf(stderr, "hui, cur_op = %s\n", cur_op->symbol);
             getc(source_file);  // съесть '('
-
             cur_node = NewNode(tree, OP, cur_op->num, NULL, NULL);
 
-            Node *arg = GetNodeFamily(tree, source_file);
-            cur_node->left  = arg;
-            cur_node->right = arg;
+            if (cur_op->type == UNARY)
+            {
+                Node *arg = GetNodeFamily(tree, source_file);
+                cur_node->left  = arg;
+                cur_node->right = arg;
+            }
+
+            else    // BINARY
+            {
+                Node *arg_1 = GetNodeFamily(tree, source_file);
+                fscanf(source_file, "%*[ ,]");      // съесть ','
+
+                Node *arg_2 = GetNodeFamily(tree, source_file);
+
+                cur_node->left  = arg_1;
+                cur_node->right = arg_2;
+            }
 
             getc(source_file);  // съесть ')'
         }
 
-        else    // это VAR, NUM или бинарная операция
+        else    // это VAR, NUM или символ бинарной инфиксной операции
         {
             cur_node = NewNode(tree, POISON_TYPE, POISON_VAL, NULL, NULL);
             NodeValFromStr(node_val_str, cur_node);
@@ -286,6 +295,8 @@ fprintf(stderr, "hui, cur_op = %s\n", cur_op->symbol);
 
         return cur_node;
     }
+
+    DIFF_DUMP(tree);
 }
 
 Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node)
