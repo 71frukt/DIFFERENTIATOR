@@ -142,7 +142,10 @@ Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
     Node *degree = expr_node->right;
     Node *basis = expr_node->left;
 
-    if ((SubtreeContainsVar(degree->left) || SubtreeContainsVar(degree->right)))
+    bool basis_cont_var  = SubtreeContainsVar(basis);
+    bool degree_cont_var = SubtreeContainsVar(degree);
+
+    if (basis_cont_var && degree_cont_var)                // f(x) ^ g(x)
     {
         Node *expr_cpy = TreeCopyPaste(expr_tree, solv_tree, expr_node);
 
@@ -164,7 +167,7 @@ Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
         return NewNode(solv_tree, OP, MUL, expr_cpy, arg_diff);      
     }
 
-    else
+    else if (basis_cont_var && !degree_cont_var)          // f(x) ^ a
     {
         Node *basis_cpy = TreeCopyPaste(expr_tree, solv_tree, basis);
 
@@ -176,6 +179,22 @@ Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
         Node *basis_diff = TakeDifferential(expr_tree, basis, solv_tree);
 
         return NewNode(solv_tree, OP, MUL, func_diff, basis_diff);
+    }
+
+    else if (!basis_cont_var && degree_cont_var)         // a ^ g(x)
+    {
+        Node *expr_cpy   = TreeCopyPaste(expr_tree, solv_tree, expr_node);
+        Node *degree_cpy = TreeCopyPaste(expr_tree, solv_tree, degree);
+
+        Node *ln_of_deg  = NewNode(solv_tree, OP, LN, degree_cpy, degree_cpy);
+
+        return NewNode(solv_tree, OP, MUL, expr_cpy, ln_of_deg);
+    }
+
+
+    else                                                                        // a ^ b
+    {
+        return NewNode(solv_tree, NUM, 0, NULL, NULL);
     }
 }
 
