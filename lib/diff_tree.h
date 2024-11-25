@@ -81,5 +81,6 @@ Node *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
 Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node);
 
 bool  IsTrigonometric (int op);
+bool  SubtreeContainsVar(Node *cur_node);
 
 #endif

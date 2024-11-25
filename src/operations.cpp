@@ -74,6 +74,11 @@ TreeElem_t Tan(TreeElem_t arg1, TreeElem_t arg2)
     return (TreeElem_t) tan(arg1);
 }
 
+TreeElem_t Ln(TreeElem_t arg1, TreeElem_t arg2)
+{
+    assert(arg1 == arg2);
+    return (TreeElem_t) log(arg1);
+}
 
 Node *DiffAdd(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 {
@@ -131,6 +136,21 @@ Node *DiffDiv(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
     return NewNode(solv_tree, OP, DIV, solv_numerator, solv_denominator);
 }
 
+/*
+Node *DegDiff(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
+{
+    if (SubtreeContainsVar(expr_node))
+    {
+
+    }
+
+    else
+    {
+        
+    }
+}
+*/
+
 Node *DiffSin(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 {
     Node *arg = expr_node->left;
@@ -170,4 +190,17 @@ Node *DiffTan(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
     Node *diff_arg = TakeDifferential(expr_tree, arg, solv_tree);
 
     return NewNode(solv_tree, OP, MUL, diff_tan, diff_arg);
+}
+
+Node *DiffLn(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
+{
+    Node *arg = expr_node->left;
+    Node *arg_cpy = TreeCopyPaste(expr_tree, solv_tree, arg);
+
+    Node *numerator =  NewNode(solv_tree, NUM, 1, NULL, NULL);
+    Node *diff_ln = NewNode(solv_tree, OP, DIV, numerator, arg_cpy);
+
+    Node *diff_arg = TakeDifferential(expr_tree, arg, solv_tree);
+
+    return NewNode(solv_tree, OP, MUL, diff_ln, diff_arg);
 }

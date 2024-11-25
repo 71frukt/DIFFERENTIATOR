@@ -10,6 +10,7 @@ TreeElem_t Sub(TreeElem_t arg1, TreeElem_t arg2);
 TreeElem_t Mul(TreeElem_t arg1, TreeElem_t arg2);
 TreeElem_t Div(TreeElem_t arg1, TreeElem_t arg2);
 TreeElem_t Deg(TreeElem_t arg1, TreeElem_t arg2);
+TreeElem_t Ln (TreeElem_t arg1, TreeElem_t arg2);
 
 TreeElem_t Sin(TreeElem_t arg1, TreeElem_t arg2);
 TreeElem_t Cos(TreeElem_t arg1, TreeElem_t arg2);
@@ -21,6 +22,7 @@ Node *DiffAdd(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffMul(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffSub(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffDiv(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
+Node *DiffLn (Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 
 Node *DiffSin(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffCos(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
@@ -58,6 +60,7 @@ enum Operation_enum
     MUL,
     DIV,
     DEG,
+    LN,
 
     SIN,
     COS,
@@ -66,7 +69,7 @@ enum Operation_enum
     DIF
 };
 
-const int OPERATIONS_NUM = 9;
+const int OPERATIONS_NUM = 10;
 
 const Operation Operations[OPERATIONS_NUM] = 
 {
@@ -74,7 +77,8 @@ const Operation Operations[OPERATIONS_NUM] =
     { .num = SUB, .symbol = "-",   .tex_code = "-",      BINARY, IS_INFIX,  .op_func = Sub, .diff_func = DiffSub },
     { .num = MUL, .symbol = "*",   .tex_code = "\\cdot", BINARY, IS_INFIX,  .op_func = Mul, .diff_func = DiffMul },
     { .num = DIV, .symbol = "/",   .tex_code = "\\frac", BINARY, IS_PREFIX, .op_func = Div, .diff_func = DiffDiv },
-    { .num = DEG, .symbol = "^",   .tex_code = "^",      BINARY, IS_INFIX,  .op_func = Deg  },
+    { .num = DEG, .symbol = "^",   .tex_code = "^",      BINARY, IS_INFIX,  .op_func = Deg/*, .diff_func = DegDiff */},
+    { .num = LN,  .symbol = "ln",  .tex_code = "\\ln",   UNARY,  IS_PREFIX, .op_func = Ln , .diff_func = DiffLn  },
  
     { .num = SIN, .symbol = "sin", .tex_code = "\\sin",  UNARY,  IS_PREFIX, .op_func = Sin, .diff_func = DiffSin },
     { .num = COS, .symbol = "cos", .tex_code = "\\cos",  UNARY,  IS_PREFIX, .op_func = Cos, .diff_func = DiffCos },

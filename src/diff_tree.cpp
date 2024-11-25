@@ -307,3 +307,26 @@ Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node)
 
     return pasted_node;
 }
+
+bool SubtreeContainsVar(Node *cur_node)
+{
+    if (cur_node->type == VAR)
+        return true;
+    
+    else if (cur_node->type == NUM)
+        return false;
+
+    else        // if OP
+    {
+        bool left_subtree_cont_var = SubtreeContainsVar(cur_node->left);
+
+        const Operation *cur_op = GetOperationByNum((int) cur_node->value);
+
+        bool right_subtree_cont_var = false;
+
+        if (cur_op->type == BINARY)
+            right_subtree_cont_var = SubtreeContainsVar(cur_node->right);
+
+        return (left_subtree_cont_var || right_subtree_cont_var);
+    }
+}
