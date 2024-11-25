@@ -136,20 +136,49 @@ Node *DiffDiv(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
     return NewNode(solv_tree, OP, DIV, solv_numerator, solv_denominator);
 }
 
-/*
-Node *DegDiff(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
-{
-    if (SubtreeContainsVar(expr_node))
-    {
 
+Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
+{
+    Node *degree = expr_node->right;
+    Node *basis = expr_node->left;
+
+    if ((SubtreeContainsVar(degree->left) || SubtreeContainsVar(degree->right)))
+    {
+        Node *expr_cpy = TreeCopyPaste(expr_tree, solv_tree, expr_node);
+
+        Tree tmp_expr_tree = {};
+        fprintf(stderr, "ctor\n");
+        TreeCtor(&tmp_expr_tree, START_TREE_SIZE ON_DIFF_DEBUG(, "tmp_expr_deg_diff"));
+
+        Node *tmp_degree_cpy = TreeCopyPaste(expr_tree, &tmp_expr_tree, degree);
+        Node *tmp_basis_cpy  = TreeCopyPaste(expr_tree, &tmp_expr_tree, basis);
+
+        Node *tmp_ln_of_basis = NewNode(&tmp_expr_tree, OP, LN, tmp_basis_cpy, tmp_basis_cpy);
+
+        Node *res_tmp_expr_tree = NewNode(&tmp_expr_tree, OP, MUL, tmp_degree_cpy, tmp_ln_of_basis);
+
+        Node *arg_diff = TakeDifferential(&tmp_expr_tree, res_tmp_expr_tree, solv_tree);
+
+        TreeDtor(&tmp_expr_tree);
+
+        return NewNode(solv_tree, OP, MUL, expr_cpy, arg_diff);      
     }
 
     else
     {
-        
+        Node *basis_cpy = TreeCopyPaste(expr_tree, solv_tree, basis);
+
+        Node *degree_cpy = TreeCopyPaste(expr_tree, solv_tree, degree);
+
+        Node *deg_sub_one = NewNode(solv_tree, OP, SUB, degree_cpy, NewNode(solv_tree, NUM, 1, NULL, NULL));
+
+        Node *func_diff = NewNode(solv_tree, OP, MUL, deg_sub_one, basis_cpy);
+        Node *basis_diff = TakeDifferential(expr_tree, basis, solv_tree);
+
+        return NewNode(solv_tree, OP, MUL, func_diff, basis_diff);
     }
 }
-*/
+
 
 Node *DiffSin(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 {

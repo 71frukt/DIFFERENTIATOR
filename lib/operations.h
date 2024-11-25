@@ -22,6 +22,7 @@ Node *DiffAdd(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffMul(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffSub(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffDiv(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
+Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 Node *DiffLn (Tree *expr_tree, Node *expr_node, Tree *solv_tree);
 
 Node *DiffSin(Tree *expr_tree, Node *expr_node, Tree *solv_tree);
@@ -77,7 +78,7 @@ const Operation Operations[OPERATIONS_NUM] =
     { .num = SUB, .symbol = "-",   .tex_code = "-",      BINARY, IS_INFIX,  .op_func = Sub, .diff_func = DiffSub },
     { .num = MUL, .symbol = "*",   .tex_code = "\\cdot", BINARY, IS_INFIX,  .op_func = Mul, .diff_func = DiffMul },
     { .num = DIV, .symbol = "/",   .tex_code = "\\frac", BINARY, IS_PREFIX, .op_func = Div, .diff_func = DiffDiv },
-    { .num = DEG, .symbol = "^",   .tex_code = "^",      BINARY, IS_INFIX,  .op_func = Deg/*, .diff_func = DegDiff */},
+    { .num = DEG, .symbol = "^",   .tex_code = "^",      BINARY, IS_INFIX,  .op_func = Deg, .diff_func = DiffDeg },
     { .num = LN,  .symbol = "ln",  .tex_code = "\\ln",   UNARY,  IS_PREFIX, .op_func = Ln , .diff_func = DiffLn  },
  
     { .num = SIN, .symbol = "sin", .tex_code = "\\sin",  UNARY,  IS_PREFIX, .op_func = Sin, .diff_func = DiffSin },

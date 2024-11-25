@@ -310,6 +310,9 @@ Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node)
 
 bool SubtreeContainsVar(Node *cur_node)
 {
+    if (cur_node == NULL)
+        return false;
+
     if (cur_node->type == VAR)
         return true;
     
