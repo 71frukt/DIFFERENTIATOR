@@ -31,6 +31,9 @@ Node *SimplifyConstants(Tree *tree, Node *cur_node)
 
                 cur_node->type = NUM;
                 cur_node->value = new_val;
+
+                RemoveNode(tree, left);
+                RemoveNode(tree, right);
             }
 
             else if (cur_op->num == DIV)
@@ -39,16 +42,13 @@ Node *SimplifyConstants(Tree *tree, Node *cur_node)
             }
         }
 
-        else if (cur_node->value == MUL)
+        else if (cur_node->value == MUL)                        // количество вершин сохраняется
         {
-                
             bool left_is_fraction  = (left->type == OP  && left->value  == DIV);
             bool right_is_fraction = (right->type == OP && right->value == DIV);
 
             if (left_is_fraction && (!right_is_fraction && right->type == NUM))
             {
-                fprintf(stderr, "pipao\n");
-                
                 cur_node->value = DIV;
                 cur_node->left->value = MUL;
 
@@ -70,6 +70,17 @@ Node *SimplifyConstants(Tree *tree, Node *cur_node)
 
                 cur_node->left  = right;
                 cur_node->right = left;
+            }
+
+            else if (left_is_fraction && right_is_fraction)
+            {
+                cur_node->value = DIV;
+                left->value     = MUL;
+                right->value    = MUL;
+
+                TreeElem_t tmp_for_numerator = left->right->value;
+                left->right->value = right->left->value;
+                right->left->value = tmp_for_numerator;
             }
         }        
 

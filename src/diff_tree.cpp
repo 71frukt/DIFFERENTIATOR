@@ -97,6 +97,18 @@ Node *NewNode(Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right
     return new_node;
 }
 
+void RemoveNode(Tree *tree, Node *node)
+{
+    assert(tree);
+    assert(node);
+
+    node->left = NULL;
+    node->right = NULL;
+    node->value = 0;
+
+    tree->size--;
+}
+
 char *NodeValToStr(TreeElem_t val, NodeType node_type, char *res_str)
 {
 // fprintf(stderr, "called NodeValToStr(), val = %d\n", val);
