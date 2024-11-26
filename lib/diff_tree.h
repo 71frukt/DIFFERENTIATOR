@@ -5,7 +5,8 @@
 
 #define DIFF_DEBUG
 
-typedef int TreeElem_t;
+typedef int  TreeElem_t;
+#define IS_INT_TREE  true
 #define TREE_ELEM_SPECIFIER  "%d"
 
 
@@ -72,7 +73,7 @@ void  TreeCtor        (Tree *tree, size_t start_capacity ON_DIFF_DEBUG(, const c
 void  TreeDtor        (Tree *tree);
 void  TreeRecalloc    (Tree *tree, size_t new_capacity);
 Node *NewNode         (Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right);
-void  RemoveNode      (Tree *tree, Node *node);
+void  RemoveNode      (Tree *tree, Node **node);
 char *NodeValToStr    (TreeElem_t val, NodeType node_type, char *res_str);
 void  GetStrTreeData  (Node *start_node, char *dest_str);
 void  NodeValFromStr  (char *dest_str, Node *node);

@@ -53,7 +53,7 @@ TreeElem_t Div(TreeElem_t arg1, TreeElem_t arg2)
 
 TreeElem_t Deg(TreeElem_t arg1, TreeElem_t arg2)
 {
-    return arg1 ^ arg2;
+    return (TreeElem_t) pow(arg1, arg2);
 }
 
 TreeElem_t Sin(TreeElem_t arg1, TreeElem_t arg2)
@@ -103,6 +103,36 @@ Node *DiffSub(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
 Node *DiffMul(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 {
+    bool left_arg_const_var  = SubtreeContainsVar(expr_node->left);
+    bool right_arg_const_var = SubtreeContainsVar(expr_node->right);
+
+    if (!left_arg_const_var && !right_arg_const_var)
+    {
+        return NewNode(solv_tree, NUM, 0, NULL, NULL);
+    }
+
+    else if (left_arg_const_var xor right_arg_const_var)     // один из множителей - константа
+    {
+        Node *num_node = NULL;
+        Node *var_node = NULL;
+
+        if (left_arg_const_var)
+        {
+            var_node = expr_node->left;
+            num_node = TreeCopyPaste(expr_tree, solv_tree, expr_node->right);
+        }
+        
+        else
+        {
+            var_node = expr_node->right;
+            num_node = TreeCopyPaste(expr_tree, solv_tree, expr_node->left);
+        }
+
+        Node *var_node_diff = TakeDifferential(expr_tree, var_node, solv_tree);
+
+        return NewNode(solv_tree, OP, MUL, num_node, var_node_diff);
+    }
+
     Node *add_node  = NewNode(solv_tree, OP, ADD, NULL, NULL);
 
     Node *left_mul  = NewNode(solv_tree, OP, MUL, NULL, NULL);
@@ -260,8 +290,8 @@ Node *DiffLn(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
 Node *DiffLog(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 {
-    Node *arg = expr_node->left;
-    Node *degree = expr_node->right;
+    Node *degree = expr_node->left;
+    Node *arg    = expr_node->right;
 
     Node *arg_cpy    = TreeCopyPaste(expr_tree, solv_tree, arg);
     Node *degree_cpy = TreeCopyPaste(expr_tree, solv_tree, degree);

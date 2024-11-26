@@ -49,7 +49,7 @@ void TreeDtor(Tree *tree)
 
     ON_DIFF_DEBUG( 
         tree->name = NULL;
-        remove(TMP_DOTFILE_NAME);
+        // remove(TMP_DOTFILE_NAME);
     );
 }
 
@@ -97,16 +97,22 @@ Node *NewNode(Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right
     return new_node;
 }
 
-void RemoveNode(Tree *tree, Node *node)
+void RemoveNode(Tree *tree, Node **node)
 {
     assert(tree);
     assert(node);
 
-    node->left = NULL;
-    node->right = NULL;
-    node->value = 0;
+//     Node *last_node = tree->node_ptrs[tree->size - 1];
+// fprintf(stderr, "pizdeq\n");
+//     *node = *last_node;
+// fprintf(stderr, "huila\n");
 
-    tree->size--;
+    (*node)->left = NULL;
+    (*node)->right = NULL;
+    (*node)->value = 0;
+    node = NULL;
+    
+    // tree->size--;
 }
 
 char *NodeValToStr(TreeElem_t val, NodeType node_type, char *res_str)

@@ -34,7 +34,7 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
     IN_BRACKETS (need_brackets, dest_str, 
 
     if (start_node->type != OP)
-        sprintf(dest_str + strlen(dest_str), "%s", node_val_str);
+        sprintf(dest_str + strlen(dest_str), "{%s}", node_val_str);
 
     else
     {

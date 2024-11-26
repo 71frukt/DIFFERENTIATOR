@@ -53,8 +53,8 @@ struct Operation
 
     const FuncType type;                                                // UNARY / BINARY
 
-    const FuncEntryForm life_form;                                           // PREFIX / INFIX
-    const FuncEntryForm tex_form;
+    const FuncEntryForm life_form;                                      // PREFIX / INFIX ג נואכüםמסעט
+    const FuncEntryForm tex_form;                                       // PREFIX / INFIX ג עוץו
 
     TreeElem_t  (*op_func)   (TreeElem_t arg1, TreeElem_t arg2);
     Node*       (*diff_func) (Tree *expr_tree, Node *expr_node, Tree *solv_tree);
