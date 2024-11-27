@@ -35,11 +35,11 @@ int main(const int argc, const char *argv[])
     fprintf(OutputFile, "simpl 1 \\[ %s \\]\n\n", tex1);
     fprintf(stderr, "simpl 1 \\[ %s \\]\n\n", tex1);
 
-    SimplifyExpr(&orig);
-    char tex2[TEX_EXPRESSION_LEN] = {};
-    GetTexTreeData(orig.root_ptr, tex2, false);
-    fprintf(OutputFile, "simp2 \\[ %s \\]\n\n", tex2);
-    fprintf(stderr, "simp2 \\[ %s \\]\n\n", tex2);
+    // SimplifyExpr(&orig);
+    // char tex2[TEX_EXPRESSION_LEN] = {};
+    // GetTexTreeData(orig.root_ptr, tex2, false);
+    // fprintf(OutputFile, "simp2 \\[ %s \\]\n\n", tex2);
+    // fprintf(stderr, "simp2 \\[ %s \\]\n\n", tex2);
 
     fprintf(stderr, "before diff\n");
 

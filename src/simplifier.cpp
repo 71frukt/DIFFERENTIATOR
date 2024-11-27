@@ -11,7 +11,7 @@ void SimplifyExpr(Tree *expr_tree)
     fprintf(stderr, "rabotaet yproshalka\n");
     DIFF_DUMP(expr_tree);
 
-    VarsToTheRight(expr_tree->root_ptr);
+    // TakeOutConsts(expr_tree->root_ptr);
 
     SimplifyConstants(expr_tree, expr_tree->root_ptr);
 
@@ -22,6 +22,8 @@ Node *SimplifyConstants(Tree *tree, Node *cur_node)
 {
     assert(tree);
     assert(cur_node);
+
+    // DIFF_DUMP(tree);
 
 fprintf(stderr, "type = %d, val = %d\n", cur_node->type, cur_node->value);
 
@@ -36,7 +38,7 @@ fprintf(stderr, "type = %d, val = %d\n", cur_node->type, cur_node->value);
         const Operation *cur_op = GetOperationByNum((int) cur_node->value);
         assert(cur_op);
 
-        if (cur_op->num == ADD || cur_op->num == SUB || cur_op->num == MUL || (cur_op->num == DEG && CanCalcDeg(right_arg->value)))
+        if (cur_op->num == ADD || cur_op->num == SUB || cur_op->num == MUL || (cur_op->num == DEG && CanCalcDeg(right_arg)))
         {
             TreeElem_t new_val = cur_op->op_func(left_arg->value, right_arg->value);
 
@@ -55,16 +57,18 @@ fprintf(stderr, "type = %d, val = %d\n", cur_node->type, cur_node->value);
 
     if (cur_node->value == DIV)
     {
-        SimplifyFraction(tree, cur_node, left_arg, right_arg);
+        TakeOutConsts(cur_node);
+
+        if (cur_node->value == DIV)
+            SimplifyFraction(tree, cur_node, left_arg, right_arg);
     }
 
     else if (cur_node->value == MUL)
     {
-        if (MulByFraction(cur_node, left_arg, right_arg))       // если есть умножение на дробь
-        {
-            RearrangeEdgesOfVars(cur_node);                     // a * (b * x)  =>  (a * b) * x
+        TakeOutConsts(cur_node);                                                            // a * (b * x)  =>  (a * b) * x
+
+        if (cur_node->value == MUL && MulByFraction(cur_node, left_arg, right_arg))         // если есть умножение на дробь
             SimplifyConstants(tree, cur_node);
-        }
     }        
 
     return cur_node;
@@ -77,57 +81,36 @@ Node *SimplifyFraction(Tree *tree, Node *op_node, Node *numerator, Node *denomin
     assert(denominator);
 
     if (numerator->type == NUM && numerator->value == 0)
+        return FractionBecomesZero(tree, op_node);
+
+    bool numerator_is_int   = IS_INT_VAL(numerator);
+    bool denominator_is_int = IS_INT_VAL(denominator);
+
+    bool can_calc = ((!numerator_is_int || !denominator_is_int) && (numerator->type == NUM && denominator->type == NUM)) ||                                                               // они double
+                   ((numerator_is_int  &&  denominator_is_int)  && (numerator->value % denominator->value) == 0);                // или делятся нацело
+
+    if (numerator->type == NUM && denominator->type == NUM && can_calc)
     {
-        if (denominator->type == NUM && denominator->value == 0)
-        {
-            fprintf(stderr, "%p\n", op_node);
-
-            fprintf(stderr, "Warning: uncertainty type of '0/0'\n");
-            return op_node;
-        }
-
+        TreeElem_t new_val = numerator->value / denominator->value;
+        
         RemoveNode(tree, &op_node->left);
         RemoveNode(tree, &op_node->right);
 
         op_node->left  = NULL;
         op_node->right = NULL;
 
-        op_node->type  = NUM;
-        op_node->value = 0;
-
-        return op_node;
+        op_node->type = NUM;
+        op_node->value = new_val;
     }
 
-    bool numerator_is_int   = (numerator->type   == NUM && (int) numerator->value   == numerator->value);
-    bool denominator_is_int = (denominator->type == NUM && (int) denominator->value == denominator->value);
-
-    if ((!numerator_is_int || !denominator_is_int) || 
-        ((numerator_is_int && denominator_is_int) && (numerator->value % denominator->value) == 0))         // числитель или знаменатель не целые или делятся нацело
+    else if ((numerator->type   == OP && numerator->value   == DIV)
+          || (denominator->type == OP && denominator->value == DIV))
     {
-        if (numerator->type == NUM && denominator->type == NUM)
-        {
-            TreeElem_t new_val = numerator->value / denominator->value;
-            
-            RemoveNode(tree, &op_node->left);
-            RemoveNode(tree, &op_node->right);
-
-            op_node->left  = NULL;
-            op_node->right = NULL;
-
-            op_node->type = NUM;
-            op_node->value = new_val;
-        }
-
-        else if ((numerator->type   == OP && numerator->value   == DIV)
-              || (denominator->type == OP && denominator->value == DIV))
-        {
-            FlipDenominator(op_node);
-            DIFF_DUMP(tree);
-            SimplifyConstants(tree, op_node);
-        }
+        FlipDenominator(op_node);
+        SimplifyConstants(tree, op_node);
     }
 
-    else    // и числитель, и знаменатель целые
+    else if (numerator_is_int && denominator_is_int)   // и числитель, и знаменатель целые
     {
         TreeElem_t start_val = MIN(numerator->value, denominator->value) / 2;
 
@@ -231,49 +214,98 @@ bool MulByFraction(Node *mul_node, Node *left_arg, Node *right_arg)
     return exists_mul_by_frac;
 }
 
-Node *VarsToTheRight(Node *cur_node)
+Node *ComplexToTheRight(Node *mul_node)
 {
-    assert(cur_node);
+    assert(mul_node);
+    assert(mul_node->left);
+    assert(mul_node->right);
+    assert(mul_node->type == OP && mul_node->value == MUL);
 
-    if (cur_node->type != OP)
-        return cur_node;
-
-    Node *left_arg  = VarsToTheRight(cur_node->left);
-    Node *right_arg = VarsToTheRight(cur_node->right);
-
-    if (SubtreeContainsVar(left_arg) && !SubtreeContainsVar(right_arg) && cur_node->value == MUL)
+    if (IsComplex(mul_node->left) && !IsComplex(mul_node->right))
     {
-        cur_node->left  = right_arg;
-        cur_node->right = left_arg;
-    }
-
-    return cur_node;
-}
-
-Node *RearrangeEdgesOfVars(Node *mul_node)                     // a * (b * x)  =>  (a * b) * x
-{
-    if (mul_node == NULL || !(mul_node->type == OP && mul_node->value == MUL))
-        return mul_node;
-
-    Node *left_arg  = RearrangeEdgesOfVars(mul_node->left);
-    Node *right_arg = RearrangeEdgesOfVars(mul_node->right); 
-
-    if (right_arg == NULL || !(right_arg->type == OP && right_arg->value == MUL))
-        return mul_node;
-
-    if (!SubtreeContainsVar(left_arg)        && SubtreeContainsVar(right_arg) &&
-        !SubtreeContainsVar(right_arg->left) && SubtreeContainsVar(right_arg->right))
-    {
-        mul_node->right = right_arg->right;
-        mul_node->left  = right_arg;
-
-        right_arg->right = left_arg;
+        Node *tmp_node  = mul_node->left;
+        mul_node->left  = mul_node->right;
+        mul_node->right = tmp_node;
     }
 
     return mul_node;
 }
 
-bool CanCalcDeg(TreeElem_t degree_val)
+Node *TakeOutConsts(Node *cur_node)                     // a * (b * x)  =>  (a * b) * x
+{                                                       // (a * x) / b  =>  (a / b) * x
+    if (cur_node == NULL || !(cur_node->type == OP && (cur_node->value == MUL || cur_node->value == DIV)))
+        return cur_node;
+
+    if (cur_node->value == MUL)
+        ComplexToTheRight(cur_node);
+
+    Node *left_arg  = TakeOutConsts(cur_node->left);
+    Node *right_arg = TakeOutConsts(cur_node->right); 
+
+    if (cur_node->value == MUL)
+    {
+        if (right_arg->type != OP || right_arg->value != MUL)
+            return cur_node;
+
+        if (!IsComplex(left_arg)        && IsComplex(right_arg) &&
+            !IsComplex(right_arg->left) && IsComplex(right_arg->right))
+        {
+            cur_node->right = right_arg->right;
+            cur_node->left  = right_arg;
+
+            right_arg->right = left_arg;
+        }
+    }
+
+    else
+    {
+        if (left_arg->type != OP || left_arg->value != MUL)
+            return cur_node;
+
+        if (IsComplex(left_arg)       && !IsComplex(right_arg) && 
+           !IsComplex(left_arg->left) && IsComplex(left_arg->right))
+        {
+            cur_node->right = left_arg->right;
+            left_arg->right = right_arg;
+
+            left_arg->value = DIV;
+            cur_node->value = MUL;
+        }
+    }
+
+    return cur_node;
+}
+
+bool CanCalcDeg(Node *degree_node)
 {
-    return ((IS_INT_TREE && IS_INT_VAL(degree_val) && degree_val > 0) || !IS_INT_TREE);
+    return ((IS_INT_TREE && IS_INT_VAL(degree_node) && degree_node->value > 0) || !IS_INT_TREE);
+}
+
+Node *FractionBecomesZero(Tree *tree, Node *div_node)
+{
+    Node *denominator = div_node->right;
+
+    if (denominator->type == NUM && denominator->value == 0)
+    {
+        fprintf(stderr, "%p\n", div_node);
+
+        fprintf(stderr, "Warning: uncertainty type of '0/0'\n");
+        return div_node;
+    }
+
+    RemoveNode(tree, &div_node->left);
+    RemoveNode(tree, &div_node->right);
+
+    div_node->left  = NULL;
+    div_node->right = NULL;
+
+    div_node->type  = NUM;
+    div_node->value = 0;
+
+    return div_node;
+}
+
+bool IsComplex(Node *node)
+{
+    return (SubtreeContainsVar(node) || (node->type == OP && node->value != DIV));      // дроби выносим как множители
 }
