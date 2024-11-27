@@ -18,6 +18,8 @@ FILE *OpenLogFile()
 
     FILE *logfile = fopen(logfile_path, "w");
 
+    setvbuf(logfile, NULL, _IONBF, 0);
+
     fprintf(logfile, "<html>                                                                                                            \n"
                             "\t<head>                                                                                                   \n"
                             "\t<title>Tree Logs</title>                                                                                 \n"
@@ -66,7 +68,7 @@ void DiffDump(Tree *tree, const char *file, int line, const char *func)
     
     DrawGraph(tree, picture_name);
 
-    fprintf(LogFile, "<img src = %s%s%lld.png width = \"%d%%\" style=\"margin-left: 3%%\">\n", GRAPH_FOLDER, GRAPH_NAME_PREFIX, drawn_graphs_num, GRAPH_IMG_WIDTH);
+    fprintf(LogFile, "<img src = %s%s/%s%lld.png width = \"%d%%\" style=\"margin-left: 3%%\">\n", GRAPH_FOLDER, tree->name, GRAPH_NAME_PREFIX, drawn_graphs_num, GRAPH_IMG_WIDTH);
     // fprintf(stderr,  "<img src = %s%s%d.png width = \"%d%%\" style=\"margin-left: 3%%\">\n", GRAPH_FOLDER, GRAPH_NAME_PREFIX, drawn_graphs_num, GRAPH_IMG_WIDTH);
 
     fprintf(LogFile, "\n  }\n\n");

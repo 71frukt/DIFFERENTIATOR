@@ -101,6 +101,7 @@ void RemoveNode(Tree *tree, Node **node)
 {
     assert(tree);
     assert(node);
+    assert(*node);
 
     (*node)->left  = NULL;
     (*node)->right = NULL;
@@ -362,7 +363,7 @@ bool SubtreeContComplicOperation(Node *cur_node)
     if (cur_node->type == VAR || cur_node->type == NUM)
         return false;
     
-    else if (cur_node->type == OP && cur_node->value != MUL && cur_node->value != DIV)        // дроби выносим как множители
+    else if (cur_node->type == OP && cur_node->value != MUL && cur_node->value != DIV)        // дроби и произведения выносим как множители
         return true;
 
     else

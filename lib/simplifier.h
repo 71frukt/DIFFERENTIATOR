@@ -11,6 +11,7 @@ bool  MulByFraction       (Node *mul_node, Node *left_arg, Node *right_arg);
 Node *ComplexToTheRight   (Node *cur_node);
 Node *TakeOutConsts       (Tree *tree, Node *cur_node);                     // a * (b * x)  =>  (a * b) * x
 void  FlipDenominator     (Node *fraction_node);
+void  ExpandBrackets      (Tree *tree, Node *mul_node);
 bool  CanCalcDeg          (Node *degree_node);
 
 void  SubToAdd            (Tree *tree);
