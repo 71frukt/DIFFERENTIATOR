@@ -5,6 +5,9 @@
 #include "diff_tree.h"
 #include "diff_debug.h"
 #include "diff_graph.h"
+#include "tex_work.h"
+
+extern FILE *OutputFile;
 
 FILE *LogFile = OpenLogFile();
 
@@ -67,6 +70,14 @@ void DiffDump(Tree *tree, const char *file, int line, const char *func)
     // fprintf(stderr,  "<img src = %s%s%d.png width = \"%d%%\" style=\"margin-left: 3%%\">\n", GRAPH_FOLDER, GRAPH_NAME_PREFIX, drawn_graphs_num, GRAPH_IMG_WIDTH);
 
     fprintf(LogFile, "\n  }\n\n");
+
+    if (tree->root_ptr != NULL)
+    {
+        char tex[TEX_EXPRESSION_LEN] = {};
+            
+        GetTexTreeData(tree->root_ptr, tex, false);
+        fprintf(OutputFile, "tex %lld \\[ %s \\]\n\n", drawn_graphs_num, tex);
+    }
 
     drawn_graphs_num++;
 }

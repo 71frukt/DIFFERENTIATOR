@@ -9,9 +9,12 @@ Node *SimplifyConstants   (Tree *tree, Node *cur_node);
 Node *SimplifyFraction    (Tree *tree, Node *op_node, Node *numerator, Node *denominator);
 bool  MulByFraction       (Node *mul_node, Node *left_arg, Node *right_arg);
 Node *ComplexToTheRight   (Node *cur_node);
-Node *TakeOutConsts       (Node *mul_node);                     // a * (b * x)  =>  (a * b) * x
+Node *TakeOutConsts       (Tree *tree, Node *cur_node);                     // a * (b * x)  =>  (a * b) * x
 void  FlipDenominator     (Node *fraction_node);
 bool  CanCalcDeg          (Node *degree_node);
+
+void  SubToAdd            (Tree *tree);
+void  AddToSub            (Tree *tree);                                       // 8 + (-1) * x  =>  8 - x
 
 Node *FractionBecomesZero (Tree *tree, Node *div_node);
 bool IsComplex(Node *node);

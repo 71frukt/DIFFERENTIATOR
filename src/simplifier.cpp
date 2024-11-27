@@ -11,9 +11,13 @@ void SimplifyExpr(Tree *expr_tree)
     fprintf(stderr, "rabotaet yproshalka\n");
     DIFF_DUMP(expr_tree);
 
-    // TakeOutConsts(expr_tree->root_ptr);
+    SubToAdd(expr_tree);
+
+    TakeOutConsts(expr_tree, expr_tree->root_ptr);
 
     SimplifyConstants(expr_tree, expr_tree->root_ptr);
+
+    AddToSub(expr_tree);
 
     DIFF_DUMP(expr_tree);
 }
@@ -23,7 +27,7 @@ Node *SimplifyConstants(Tree *tree, Node *cur_node)
     assert(tree);
     assert(cur_node);
 
-    // DIFF_DUMP(tree);
+    DIFF_DUMP(tree);
 
 fprintf(stderr, "type = %d, val = %d\n", cur_node->type, cur_node->value);
 
@@ -55,9 +59,12 @@ fprintf(stderr, "type = %d, val = %d\n", cur_node->type, cur_node->value);
         }
     }
 
+    if (OpNodeIsCommutativity(cur_node))
+        ComplexToTheRight(cur_node);
+
     if (cur_node->value == DIV)
     {
-        TakeOutConsts(cur_node);
+        TakeOutConsts(tree, cur_node);
 
         if (cur_node->value == DIV)
             SimplifyFraction(tree, cur_node, left_arg, right_arg);
@@ -65,7 +72,7 @@ fprintf(stderr, "type = %d, val = %d\n", cur_node->type, cur_node->value);
 
     else if (cur_node->value == MUL)
     {
-        TakeOutConsts(cur_node);                                                            // a * (b * x)  =>  (a * b) * x
+        TakeOutConsts(tree, cur_node);                                                            // a * (b * x)  =>  (a * b) * x
 
         if (cur_node->value == MUL && MulByFraction(cur_node, left_arg, right_arg))         // если есть умножение на дробь
             SimplifyConstants(tree, cur_node);
@@ -87,7 +94,7 @@ Node *SimplifyFraction(Tree *tree, Node *op_node, Node *numerator, Node *denomin
     bool denominator_is_int = IS_INT_VAL(denominator);
 
     bool can_calc = ((!numerator_is_int || !denominator_is_int) && (numerator->type == NUM && denominator->type == NUM)) ||                                                               // они double
-                   ((numerator_is_int  &&  denominator_is_int)  && (numerator->value % denominator->value) == 0);                // или делятся нацело
+                     ((numerator_is_int &&  denominator_is_int) && (numerator->value % denominator->value) == 0);                // или делятся нацело
 
     if (numerator->type == NUM && denominator->type == NUM && can_calc)
     {
@@ -176,7 +183,10 @@ bool MulByFraction(Node *mul_node, Node *left_arg, Node *right_arg)
     bool left_is_fraction  = (left_arg->type == OP  && left_arg->value  == DIV);
     bool right_is_fraction = (right_arg->type == OP && right_arg->value == DIV);
 
-    if (left_is_fraction && !right_is_fraction)
+    bool left_is_complex  = IsComplex(left_arg);
+    bool right_is_complex = IsComplex(right_arg);
+
+    if (left_is_fraction && !right_is_fraction && !right_is_complex)
     {
         mul_node->value = DIV;
         mul_node->left->value = MUL;
@@ -185,7 +195,7 @@ bool MulByFraction(Node *mul_node, Node *left_arg, Node *right_arg)
         left_arg->right = right_arg;
     }
 
-    else if (right_is_fraction && !left_is_fraction)
+    else if (right_is_fraction && !left_is_fraction && !left_is_complex)
     {
         mul_node->value = DIV;
 
@@ -214,33 +224,35 @@ bool MulByFraction(Node *mul_node, Node *left_arg, Node *right_arg)
     return exists_mul_by_frac;
 }
 
-Node *ComplexToTheRight(Node *mul_node)
+Node *ComplexToTheRight(Node *cur_node)
 {
-    assert(mul_node);
-    assert(mul_node->left);
-    assert(mul_node->right);
-    assert(mul_node->type == OP && mul_node->value == MUL);
+    assert(cur_node);
+    assert(cur_node->left);
+    assert(cur_node->right);
+    assert(OpNodeIsCommutativity(cur_node));
 
-    if (IsComplex(mul_node->left) && !IsComplex(mul_node->right))
+    if (IsComplex(cur_node->left) && !IsComplex(cur_node->right))
     {
-        Node *tmp_node  = mul_node->left;
-        mul_node->left  = mul_node->right;
-        mul_node->right = tmp_node;
+        Node *tmp_node  = cur_node->left;
+        cur_node->left  = cur_node->right;
+        cur_node->right = tmp_node;
     }
 
-    return mul_node;
+    return cur_node;
 }
 
-Node *TakeOutConsts(Node *cur_node)                     // a * (b * x)  =>  (a * b) * x
-{                                                       // (a * x) / b  =>  (a / b) * x
-    if (cur_node == NULL || !(cur_node->type == OP && (cur_node->value == MUL || cur_node->value == DIV)))
+Node *TakeOutConsts(Tree *tree, Node *cur_node)                     // a * (b * x)  =>  (a * b) * x
+{                                                                   // (a * x) / b  =>  (a / b) * x
+    bool is_suitable_op =  (cur_node->type == OP && (cur_node->value == MUL || cur_node->value == DIV));
+
+    if (cur_node == NULL || !is_suitable_op)
         return cur_node;
 
     if (cur_node->value == MUL)
         ComplexToTheRight(cur_node);
 
-    Node *left_arg  = TakeOutConsts(cur_node->left);
-    Node *right_arg = TakeOutConsts(cur_node->right); 
+    Node *left_arg  = TakeOutConsts(tree, cur_node->left);
+    Node *right_arg = TakeOutConsts(tree, cur_node->right); 
 
     if (cur_node->value == MUL)
     {
@@ -270,6 +282,8 @@ Node *TakeOutConsts(Node *cur_node)                     // a * (b * x)  =>  (a *
 
             left_arg->value = DIV;
             cur_node->value = MUL;
+
+            SimplifyConstants(tree, cur_node);
         }
     }
 
@@ -305,7 +319,55 @@ Node *FractionBecomesZero(Tree *tree, Node *div_node)
     return div_node;
 }
 
+void SubToAdd(Tree *tree)                                           // 8 - x  =>  8 + (-1) * x
+{
+    assert(tree);
+
+    for (size_t i = 0; i < tree->size; i++)
+    {
+        Node *cur_node = tree->node_ptrs[i];
+
+        if (cur_node == NULL)
+            continue;
+
+        if (cur_node->type == OP && cur_node->value == SUB)
+        {
+            Node *minus = NewNode(tree, NUM, -1, NULL, NULL);
+            cur_node->right = NewNode(tree, OP, MUL, minus, cur_node->right);
+            cur_node->value = ADD;
+        }
+    }
+}
+
+void AddToSub(Tree *tree)                                       // 8 + (-1) * x  =>  8 - x
+{
+    assert(tree);
+
+    for (size_t i = 0; i < tree->size; i++)
+    {
+        Node *cur_node = tree->node_ptrs[i];
+
+        if (cur_node == NULL)
+            continue;
+        
+        if (cur_node->type == OP && cur_node->value == ADD)
+        {
+            Node *arg_2 = cur_node->right;
+
+            if (arg_2->type == OP && arg_2->value == MUL && arg_2->left->type == NUM && arg_2->left->value == -1)
+            {
+
+                cur_node->value = SUB;
+                cur_node->right = arg_2->right;
+
+                RemoveNode(tree, &arg_2->left);
+                RemoveNode(tree, &arg_2);
+            }
+        }
+    }
+}
+
 bool IsComplex(Node *node)
 {
-    return (SubtreeContainsVar(node) || (node->type == OP && node->value != DIV));      // дроби выносим как множители
+    return (SubtreeContainsVar(node) || SubtreeContComplicOperation(node));
 }

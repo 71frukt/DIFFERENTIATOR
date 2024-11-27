@@ -84,5 +84,7 @@ Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node);
 
 bool  IsTrigonometric    (int op);
 bool  SubtreeContainsVar (Node *cur_node);
+bool  SubtreeContComplicOperation(Node *cur_node);
+bool  OpNodeIsCommutativity(Node *op_node);
 
 #endif

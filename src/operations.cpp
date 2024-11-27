@@ -30,7 +30,6 @@ const Operation *GetOperationBySymbol(char *sym)
     return NULL;
 }
 
-
 TreeElem_t Add(TreeElem_t arg1, TreeElem_t arg2)
 {
     return arg1 + arg2;

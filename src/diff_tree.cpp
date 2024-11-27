@@ -91,7 +91,7 @@ Node *NewNode(Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right
     new_node->left  = left;
     new_node->right = right;
 
-    tree->root_ptr = new_node;
+    // tree->root_ptr = new_node;      // TODO ????
     tree->size++;
 
     return new_node;
@@ -102,17 +102,11 @@ void RemoveNode(Tree *tree, Node **node)
     assert(tree);
     assert(node);
 
-//     Node *last_node = tree->node_ptrs[tree->size - 1];
-// fprintf(stderr, "pizdeq\n");
-//     *node = *last_node;
-// fprintf(stderr, "huila\n");
-
-    (*node)->left = NULL;
+    (*node)->left  = NULL;
     (*node)->right = NULL;
+    (*node)->type  = NUM;
     (*node)->value = 0;
-    node = NULL;
-    
-    // tree->size--;
+    *node = NULL;
 }
 
 char *NodeValToStr(TreeElem_t val, NodeType node_type, char *res_str)
@@ -361,4 +355,38 @@ bool SubtreeContainsVar(Node *cur_node)
 
         return (left_subtree_cont_var || right_subtree_cont_var);
     }
+}
+
+bool SubtreeContComplicOperation(Node *cur_node)
+{
+    if (cur_node->type == VAR || cur_node->type == NUM)
+        return false;
+    
+    else if (cur_node->type == OP && cur_node->value != MUL && cur_node->value != DIV)        // дроби выносим как множители
+        return true;
+
+    else
+    {
+        bool left_subtree_cont_complic_op = SubtreeContComplicOperation(cur_node->left);
+
+        const Operation *cur_op = GetOperationByNum((int) cur_node->value);
+
+        bool right_subtree_cont_complic_op = false;
+
+        if (cur_op->type == BINARY)
+            right_subtree_cont_complic_op = SubtreeContComplicOperation(cur_node->right);
+
+        return (left_subtree_cont_complic_op || right_subtree_cont_complic_op);
+    }
+}
+
+
+bool OpNodeIsCommutativity(Node *op_node)
+{
+    assert(op_node);
+
+    if (op_node->type == OP && (op_node->value == ADD || op_node->value == MUL))
+        return true;
+    
+    else return false;
 }

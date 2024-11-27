@@ -60,9 +60,6 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
 
         else
         {
-            // if (need_brackets) 
-            //     sprintf(dest_str + strlen(dest_str), "\\left(");
-
             sprintf(dest_str + strlen(dest_str), "{"); 
 
             GetTexTreeData(start_node->left, dest_str, param1_brackets);
@@ -72,9 +69,6 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
             GetTexTreeData(start_node->right, dest_str + strlen(dest_str), param2_brackets);
 
             sprintf(dest_str + strlen(dest_str), "}");
-
-            // if (need_brackets)
-            //     sprintf(dest_str + strlen(dest_str), "\\right)");
         }    
     }
 
@@ -88,7 +82,15 @@ void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
     if (op_node->type != OP)
         return;
 
-    if ((int) op_node->value == DEG)
+    if (op_node->value == SUB)
+    {
+        if (op_node->right->type == OP && (op_node->right->value == ADD || op_node->right->value == SUB))
+            *param_2 = true;
+
+        *param_1 = false;
+    }
+
+    else if (op_node->value == DEG)
     {
         if (op_node->left->type == OP || (op_node->left->type == NUM && op_node->left->value < 0))
             *param_1 = true;
@@ -98,24 +100,22 @@ void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
         *param_2 = false;
     }
 
-    else if ((int) op_node->value == MUL)
+    else if (op_node->value == MUL)
     {
-        if ((int) op_node->left->type == OP && ((int) op_node->left->value == ADD || (int) op_node->left->value == SUB))
+        if (op_node->left->type == OP && (op_node->left->value == ADD || op_node->left->value == SUB))
             *param_1 = true;
 
-        if ((int) op_node->right->type == OP && ((int) op_node->right->value == ADD || (int) op_node->right->value == SUB))
+        if (op_node->right->type == OP && (op_node->right->value == ADD || op_node->right->value == SUB))
             *param_2 = true;
 
-        if ((int) op_node->left->type == NUM && op_node->left->value < 0)
+        if (op_node->left->type == NUM && op_node->left->value < 0)
             *param_1 = true;
 
-        if ((int) op_node->right->type == NUM && op_node->right->value < 0)
+        if (op_node->right->type == NUM && op_node->right->value < 0)
             *param_2 = true; 
-
-        // fprintf(stderr, "1 = %d, 2 = %d\n", *param_1, *param_2);
     }
 
-    else if (IsTrigonometric((int) op_node->value))
+    else if (IsTrigonometric(op_node->value))
     {
         if (op_node->left->type == OP)
             *param_1 = true;
@@ -124,7 +124,7 @@ void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
             *param_1 = true;
     }
 
-    else if ((int) op_node->value == DIF)
+    else if (op_node->value == DIF)
     {
         if (op_node->left->type == OP)
             *param_1 = true;
