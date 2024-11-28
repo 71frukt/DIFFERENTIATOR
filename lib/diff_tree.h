@@ -18,6 +18,7 @@ const TreeElem_t POISON_VAL    = 0xDEB11;
 
 const char *const LEFT_MARK  = "L";
 const char *const RIGHT_MARK = "R";
+const char *const POISON_TYPE_MARK = "#POISON";
 
 #ifdef DIFF_DEBUG
 #define ON_DIFF_DEBUG(...)  __VA_ARGS__
@@ -74,7 +75,7 @@ void  TreeDtor        (Tree *tree);
 void  TreeRecalloc    (Tree *tree, size_t new_capacity);
 Node *NewNode         (Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right);
 void  RemoveNode      (Tree *tree, Node **node);
-char *NodeValToStr    (TreeElem_t val, NodeType node_type, char *res_str);
+char *NodeValToStr    (Node *node, char *res_str);
 void  GetStrTreeData  (Node *start_node, char *dest_str);
 void  NodeValFromStr  (char *dest_str, Node *node);
 void  GetTreeFromFile (Tree *tree, const char *source_file_name);

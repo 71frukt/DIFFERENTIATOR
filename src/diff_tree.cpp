@@ -30,7 +30,7 @@ void TreeCtor(Tree *tree, size_t start_capacity ON_DIFF_DEBUG(, const char *name
         mkdir(path);
     );
 
-    DIFF_DUMP(tree);
+    // DIFF_DUMP(tree);
 }
 
 void TreeDtor(Tree *tree)
@@ -105,29 +105,32 @@ void RemoveNode(Tree *tree, Node **node)
 
     (*node)->left  = NULL;
     (*node)->right = NULL;
-    (*node)->type  = NUM;
+    (*node)->type  = POISON_TYPE;
     (*node)->value = 0;
     *node = NULL;
 }
 
-char *NodeValToStr(TreeElem_t val, NodeType node_type, char *res_str)
+char *NodeValToStr(Node *node, char *res_str)
 {
 // fprintf(stderr, "called NodeValToStr(), val = %d\n", val);
-
+    assert(node);
     assert(res_str);
 
-    if (node_type == NUM)
-        sprintf(res_str, TREE_ELEM_SPECIFIER, val);
+    if (node->type == NUM)
+        sprintf(res_str, TREE_ELEM_SPECIFIER, node->value);
     
-    else if (node_type == VAR)
-        sprintf(res_str, "%c", 'a' + val);
+    else if (node->type == VAR)
+        sprintf(res_str, "%c", 'a' + node->value);
 
-    else 
+    else if (node->type == OP)
     {
-        const Operation *cur_op = GetOperationByNum(val);
+        const Operation *cur_op = GetOperationByNode(node);
 
         sprintf(res_str, "%s", cur_op->symbol);
     }
+
+    else    // POISON_TYPE
+        sprintf(res_str, "%s", POISON_TYPE_MARK);
 
     return res_str;
 }
@@ -162,14 +165,14 @@ void GetStrTreeData(Node *start_node, char *dest_str)
     assert(start_node);
 
     char node_val_str[LABEL_LENGTH] = {};
-    NodeValToStr(start_node->value, start_node->type, node_val_str);
+    NodeValToStr(start_node, node_val_str);
 
     if (start_node->type != OP)
         sprintf(dest_str + strlen(dest_str), "%s", node_val_str);
 
     else
     {
-        const Operation *cur_op = GetOperationByNum(start_node->value);
+        const Operation *cur_op = GetOperationByNode(start_node);
 
         if (cur_op->type == BINARY)
         {
@@ -347,7 +350,7 @@ bool SubtreeContainsVar(Node *cur_node)
     {
         bool left_subtree_cont_var = SubtreeContainsVar(cur_node->left);
 
-        const Operation *cur_op = GetOperationByNum((int) cur_node->value);
+        const Operation *cur_op = GetOperationByNode(cur_node);
 
         bool right_subtree_cont_var = false;
 
@@ -360,6 +363,8 @@ bool SubtreeContainsVar(Node *cur_node)
 
 bool SubtreeContComplicOperation(Node *cur_node)
 {
+    assert(cur_node);
+
     if (cur_node->type == VAR || cur_node->type == NUM)
         return false;
     
@@ -370,7 +375,7 @@ bool SubtreeContComplicOperation(Node *cur_node)
     {
         bool left_subtree_cont_complic_op = SubtreeContComplicOperation(cur_node->left);
 
-        const Operation *cur_op = GetOperationByNum((int) cur_node->value);
+        const Operation *cur_op = GetOperationByNode(cur_node);
 
         bool right_subtree_cont_complic_op = false;
 

@@ -6,11 +6,16 @@
 #include "operations.h"
 #include "derivative.h"
 
-const Operation *GetOperationByNum(int num)
+const Operation *GetOperationByNode(Node *node)
 {
+    assert(node);
+
+    if (node->type != OP)
+        return NULL;
+
     for (size_t i = 0; i < OPERATIONS_NUM; i++)
     {
-        if (num == Operations[i].num)
+        if ((int) node->value == Operations[i].num)
             return &Operations[i];
     }
 

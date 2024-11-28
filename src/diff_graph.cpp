@@ -16,7 +16,6 @@ void DrawGraph(Tree *tree, char *dest_picture_path)
                         "bgcolor = \"%s\";  \n" , BACKGROUND_COLOR);
 
     InitNodesInDot(tree, dot_file);
-
     MakeLinksInDot(tree, dot_file);
 
     fprintf(dot_file, "} \n");
@@ -30,12 +29,16 @@ void DrawGraph(Tree *tree, char *dest_picture_path)
 
 void InitNodesInDot(Tree *tree, FILE *dot_file)
 {
+    assert(tree);
+    assert(dot_file);
+
     for (size_t i = 0; i < tree->size; i++)
     {
         Node *cur_node = tree->node_ptrs[i];
 
         char node_val_str[LABEL_LENGTH] = {};
-        NodeValToStr(cur_node->value, cur_node->type, node_val_str);
+
+        NodeValToStr(cur_node, node_val_str);
 
         if (cur_node->type == OP)
             fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"{%s | { <%s> %s | <%s> %s } }\"]\n",
@@ -45,7 +48,7 @@ void InitNodesInDot(Tree *tree, FILE *dot_file)
             fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"%s\"]\n",
                 NODE_NAME_PREFIX, cur_node, VAR_NODE_SHAPE, VAR_NODE_COLOR, node_val_str);
 
-        else    // if type == NUM
+        else if (cur_node->type == NUM)
             fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"%s\"]\n",
                 NODE_NAME_PREFIX, cur_node, NUM_NODE_SHAPE, NUM_NODE_COLOR, node_val_str);
     }

@@ -1,12 +1,20 @@
 digraph G{           
 bgcolor = "#FFF3D1";  
-node_00000221e4961480 [shape = "oval", style = filled, fillcolor = "pink", label = "0"]
-node_00000221e4961498 [shape = "oval", style = filled, fillcolor = "pink", label = "0"]
-node_00000221e49614b0 [shape = "oval", style = filled, fillcolor = "pink", label = "0"]
-node_00000221e49614c8 [shape = "record", style = filled, fillcolor = "azure", label = "{/ | { <L> L | <R> R } }"]
-node_00000221e49614e0 [shape = "oval", style = filled, fillcolor = "pink", label = "11"]
-node_00000221e49614f8 [shape = "oval", style = filled, fillcolor = "pink", label = "210"]
-node_00000221e4961510 [shape = "oval", style = filled, fillcolor = "pink", label = "0"]
-node_00000221e49614c8: <L> -> node_00000221e49614f8
-node_00000221e49614c8: <R> -> node_00000221e49614e0
+node_0000021bc13165d8 [shape = "oval", style = filled, fillcolor = "pink", label = "3"]
+node_0000021bc1316638 [shape = "record", style = filled, fillcolor = "azure", label = "{+ | { <L> L | <R> R } }"]
+node_0000021bc1316650 [shape = "oval", style = filled, fillcolor = "pink", label = "19"]
+node_0000021bc1316668 [shape = "record", style = filled, fillcolor = "azure", label = "{/ | { <L> L | <R> R } }"]
+node_0000021bc1316680 [shape = "oval", style = filled, fillcolor = "pink", label = "3"]
+node_0000021bc1316698 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
+node_0000021bc13166b0 [shape = "oval", style = filled, fillcolor = "pink", label = "2"]
+node_0000021bc13166c8 [shape = "record", style = filled, fillcolor = "azure", label = "{/ | { <L> L | <R> R } }"]
+node_0000021bc13166e0 [shape = "oval", style = filled, fillcolor = "pink", label = "5"]
+node_0000021bc1316638: <L> -> node_0000021bc13165d8
+node_0000021bc1316638: <R> -> node_0000021bc1316668
+node_0000021bc1316668: <L> -> node_0000021bc1316650
+node_0000021bc1316668: <R> -> node_0000021bc1316698
+node_0000021bc1316698: <L> -> node_0000021bc1316680
+node_0000021bc1316698: <R> -> node_0000021bc13166c8
+node_0000021bc13166c8: <L> -> node_0000021bc13166b0
+node_0000021bc13166c8: <R> -> node_0000021bc13166e0
 } 

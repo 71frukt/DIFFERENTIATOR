@@ -61,9 +61,7 @@ void DiffDump(Tree *tree, const char *file, int line, const char *func)
     static size_t drawn_graphs_num = 0;
 
     fprintf(LogFile, "   Tree '%s' DIFF_DUMP called from %s:%d  (%s)\n  {\n", tree->name, file, line, func);
-
     char picture_name[PATH_NAME_LEN] = {};
-
     sprintf(picture_name, "%s%s%s/%s%lld.png",LOGS_FOLDER, GRAPH_FOLDER, tree->name, GRAPH_NAME_PREFIX, drawn_graphs_num);
     
     DrawGraph(tree, picture_name);

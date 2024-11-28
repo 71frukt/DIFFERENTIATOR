@@ -21,8 +21,8 @@ int main(const int argc, const char *argv[])
     TreeCtor(&orig, START_TREE_SIZE, "orig_expression");
 
     GetTreeFromFile(&orig, "file.txt");
+fprintf(stderr, "point1\n");
     DIFF_DUMP(&orig);
-
     char tex[TEX_EXPRESSION_LEN] = {};
     GetTexTreeData(orig.root_ptr, tex, false);
     fprintf(OutputFile, "orig \\[ %s \\]\n\n", tex);

@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "diff_tree.h"
+#include "simplifier.h"
 
 
 TreeElem_t Add(TreeElem_t arg1, TreeElem_t arg2);
@@ -56,8 +57,9 @@ struct Operation
     const FuncEntryForm life_form;                                      // PREFIX / INFIX ג נואכüםמסעט
     const FuncEntryForm tex_form;                                       // PREFIX / INFIX ג עוץו
 
-    TreeElem_t  (*op_func)   (TreeElem_t arg1, TreeElem_t arg2);
-    Node*       (*diff_func) (Tree *expr_tree, Node *expr_node, Tree *solv_tree);
+    TreeElem_t  (*op_func)     (TreeElem_t arg1, TreeElem_t arg2);
+    Node*       (*diff_func)   (Tree *expr_tree, Node *expr_node, Tree *solv_tree);
+    Node *      (*simply_func) (Tree *tree, Node *cur_node);
 };
 
 
@@ -83,11 +85,11 @@ const int OPERATIONS_NUM = 11;
 
 const Operation Operations[OPERATIONS_NUM] = 
 {                                                              // life   tex
-    { .num = ADD, .symbol = "+",   .tex_code = "+",      BINARY, INFIX,  INFIX,  .op_func = Add, .diff_func = DiffAdd },
-    { .num = SUB, .symbol = "-",   .tex_code = "-",      BINARY, INFIX,  INFIX,  .op_func = Sub, .diff_func = DiffSub },
-    { .num = MUL, .symbol = "*",   .tex_code = "\\cdot", BINARY, INFIX,  INFIX,  .op_func = Mul, .diff_func = DiffMul },
-    { .num = DIV, .symbol = "/",   .tex_code = "\\frac", BINARY, INFIX,  PREFIX, .op_func = Div, .diff_func = DiffDiv },
-    { .num = DEG, .symbol = "^",   .tex_code = "^",      BINARY, INFIX,  INFIX,  .op_func = Deg, .diff_func = DiffDeg },
+    { .num = ADD, .symbol = "+",   .tex_code = "+",      BINARY, INFIX,  INFIX,  .op_func = Add, .diff_func = DiffAdd, .simply_func = SimplifyAdd  },
+    { .num = SUB, .symbol = "-",   .tex_code = "-",      BINARY, INFIX,  INFIX,  .op_func = Sub, .diff_func = DiffSub, .simply_func = SimplifySub  },
+    { .num = MUL, .symbol = "*",   .tex_code = "\\cdot", BINARY, INFIX,  INFIX,  .op_func = Mul, .diff_func = DiffMul, .simply_func = SimplifyMul  },
+    { .num = DIV, .symbol = "/",   .tex_code = "\\frac", BINARY, INFIX,  PREFIX, .op_func = Div, .diff_func = DiffDiv, .simply_func = SimplifyDiv  },
+    { .num = DEG, .symbol = "^",   .tex_code = "^",      BINARY, INFIX,  INFIX,  .op_func = Deg, .diff_func = DiffDeg, .simply_func = SimplifyDeg  },
 
     { .num = LN,  .symbol = "ln",  .tex_code = "\\ln",   UNARY,  INFIX,  PREFIX, .op_func = Ln,  .diff_func = DiffLn  },
     { .num = LOG, .symbol = "log", .tex_code = "\\log_", BINARY, PREFIX, PREFIX, .op_func = Log, .diff_func = DiffLog },
@@ -99,7 +101,7 @@ const Operation Operations[OPERATIONS_NUM] =
     { .num = DIF, .symbol = "d",   .tex_code = "\\dd",   UNARY,  PREFIX, PREFIX, .op_func = NULL }
 };
 
-const Operation *GetOperationByNum    (int num);
+const Operation *GetOperationByNode   (Node *node);
 const Operation *GetOperationBySymbol (char *sym);
 
 #endif

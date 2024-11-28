@@ -17,7 +17,7 @@ Node *TakeDifferential(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
     else
     {
-        const Operation *cur_op = GetOperationByNum((int) expr_node->value);
+        const Operation *cur_op = GetOperationByNode(expr_node);
 
         return cur_op->diff_func(expr_tree, expr_node, solv_tree);
     }

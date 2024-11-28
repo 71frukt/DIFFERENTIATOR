@@ -25,7 +25,7 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
     assert(start_node);
 
     char node_val_str[LABEL_LENGTH] = {};
-    NodeValToStr(start_node->value, start_node->type, node_val_str);
+    NodeValToStr(start_node, node_val_str);
     
     bool param1_brackets = false;
     bool param2_brackets = false;
@@ -38,7 +38,7 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
 
     else
     {
-        const Operation *cur_op = GetOperationByNum(start_node->value);
+        const Operation *cur_op = GetOperationByNode(start_node);
 
         const char *op_tex = OperationToTex((int) start_node->value);
     
@@ -82,7 +82,17 @@ void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
     if (op_node->type != OP)
         return;
 
-    if (op_node->value == SUB)
+    if (op_node->value == ADD)
+    {
+        Node *arg2 = op_node->right;
+
+        if (arg2->type == NUM && arg2->value < 0)
+            *param_2 = true;
+
+        *param_1 = false;
+    }
+
+    else if (op_node->value == SUB)
     {
         if (op_node->right->type == OP && (op_node->right->value == ADD || op_node->right->value == SUB))
             *param_2 = true;
@@ -153,6 +163,8 @@ FILE *GetOutputFile(const int argc, const char *argv[])
     
     else
         OutputFile = fopen(argv[1], "w");
+
+    setvbuf(OutputFile, NULL, _IONBF, 0);
 
     fprintf(OutputFile, "\\documentclass[a4paper, 12pt]{article}    \n"
 
