@@ -16,10 +16,30 @@ void SimplifyExpr(Tree *expr_tree)
     SubToAdd(expr_tree);
     VarsToGeneralform(expr_tree);                   // x --> 1 * x ^ 1
 
+fprintf(LogFile, "\n\nafter VarsToGeneralform()\n\n");
+    DIFF_DUMP(expr_tree);
+
     SimplifyConstants(expr_tree, expr_tree->root_ptr);
+fprintf(LogFile, "\n\nafter SimplifyConstants()\n\n");
+    DIFF_DUMP(expr_tree);
+
+
+    // SimplVarsAdd(expr_tree, expr_tree->root_ptr);
+fprintf(LogFile, "\n\nafter SimplVarsAdd()\n\n");
+    DIFF_DUMP(expr_tree);
+
+
 
     VarsToNormalForm(expr_tree);
+fprintf(LogFile, "\n\nafter VarsToNormalForm()\n\n");
+    DIFF_DUMP(expr_tree);
+
+
+
     AddToSub(expr_tree);
+fprintf(LogFile, "\n\nafter AddToSub()\n\n");
+    DIFF_DUMP(expr_tree);
+
 
     DIFF_DUMP(expr_tree);
 }
@@ -38,6 +58,9 @@ Node *SimplifyConstants(Tree *tree, Node *cur_node)
 
 Node *SimplNumsAdd(Tree *tree, Node *add_node)
 {
+    fprintf(LogFile, "start of SimplNumsAdd()\n");
+    DIFF_DUMP(tree);
+
     SimplifyArgs(tree, add_node);
 
     if (add_node->left->type == NUM && add_node->right->type == NUM)
@@ -66,6 +89,9 @@ Node *SimplNumsAdd(Tree *tree, Node *add_node)
     TakeOutConstsInAdd(tree, add_node);              // a + (b + x)  =>  (a + b) + x
     SimplifyConstants(tree, add_node->left);
 
+    fprintf(LogFile, "end of SimplNumsAdd()\n");
+    DIFF_DUMP(tree);
+
     return add_node;
 }
 
@@ -86,7 +112,8 @@ Node *SimplNumsSub(Tree *tree, Node *sub_node)
 
 Node *SimplNumsMul(Tree *tree, Node *mul_node)
 {
-    fprintf(stderr, "start of calc mul\n");
+    fprintf(LogFile, "start of SimplNumsMul()\n");
+    DIFF_DUMP(tree);
 
     SimplifyArgs(tree, mul_node);
 
@@ -100,6 +127,10 @@ Node *SimplNumsMul(Tree *tree, Node *mul_node)
 
     ComplexToTheRight(mul_node);
     TakeOutConstsInMul(tree, mul_node);              // a * (b * x)  =>  (a * b) * x
+
+    fprintf(LogFile, "before first rec in SimplNumsMul()\n");
+    DIFF_DUMP(tree);
+
     SimplifyConstants(tree, mul_node->left);
 
     if (MulByFraction(mul_node, mul_node->left, mul_node->right))                           // если есть умножение на дробь  MUL --> DIV
@@ -117,19 +148,25 @@ Node *SimplNumsMul(Tree *tree, Node *mul_node)
 
         if (left_is_simple_multiplier && right_is_sum)      // раскрыть скобки
         {
-            fprintf(stderr, "ExpandBrackets\n");
+            fprintf(stderr, "ExpandAddBrackets\n");
 
-            ExpandBrackets(tree, mul_node);                 // MUL -> ADD
+            ExpandAddBrackets(tree, mul_node);                 // MUL -> ADD
             SimplifyConstants(tree, mul_node);
             return mul_node;
         }
     }
+
+    fprintf(LogFile, "end of SimplNumsMul()\n");
+    DIFF_DUMP(tree);
 
     return mul_node;
 }
 
 Node *SimplNumsDiv(Tree *tree, Node *div_node)
 {
+    fprintf(LogFile, "start of SimplNumsDiv()\n");
+    DIFF_DUMP(tree);
+
     SimplifyArgs(tree, div_node);
 
     if (TakeOutConstsInDiv(tree, div_node)->value != DIV)    // (a * x) / b  =>  (a / b) * x  --- упростилось и sub_node->type != DIV
@@ -191,6 +228,8 @@ Node *SimplNumsDiv(Tree *tree, Node *div_node)
         SimplifyConstants(tree, div_node->left);
     }
 
+    fprintf(LogFile, "end of SimplNumsDiv()\n");
+    DIFF_DUMP(tree);
 
     return div_node;    
 }
@@ -208,6 +247,17 @@ Node *SimplNumsDeg(Tree *tree, Node *deg_node)
     bool basis_is_valid  = ((IS_INT_TREE && basis->type  == NUM)                      || !IS_INT_TREE);
     bool degree_is_valid = ((IS_INT_TREE && degree->type == NUM && degree->value > 0) || !IS_INT_TREE);
 
+    if (basis->type == NUM && basis->value == 1)
+    {
+        Node one = *basis;
+
+        RemoveSubtree(tree, &basis);
+        RemoveSubtree(tree, &degree);
+
+        *deg_node = one;
+        return deg_node;
+    }
+
     if (basis_is_valid && degree_is_valid)
     {
         CalculateOp(tree, deg_node);
@@ -217,6 +267,19 @@ Node *SimplNumsDeg(Tree *tree, Node *deg_node)
     if (basis->type == OP && basis->value == DEG)
     {
         RevealDoubleDeg(deg_node);
+        SimplifyConstants(tree, deg_node);
+        return deg_node;
+    }
+
+    if (basis->type == OP && basis->value == MUL && !IsComplex(degree))
+    {
+        ExpandDegBrackets(tree, deg_node);      // DEG --> MUL
+
+
+    fprintf(LogFile, "after ExpandDegBrackets()\n");
+    DIFF_DUMP(tree);
+
+
         SimplifyConstants(tree, deg_node);
         return deg_node;
     }
@@ -249,7 +312,62 @@ Node *SimplVarsAdd(Tree *tree, Node *sub_node)
     assert(tree);
     assert(sub_node);
 
-    
+    Node *arg_1 = sub_node->left;
+    Node *arg_2 = sub_node->right;
+
+    if (IsSimpleVarMember(arg_1) && IsSimpleVarMember(arg_2))
+    {
+        fprintf(stderr, "simpling vars add\n");
+
+        Node *deg_1 = arg_1->right->right;
+        Node *deg_2 = arg_2->right->right;
+
+        Node *mult_1 = arg_1->left;
+        Node *mult_2 = arg_2->left;
+
+        Node *var_1  = arg_1->right->left;
+        Node *var_2  = arg_2->right->left;
+
+        if (IsComplex(deg_1) || IsComplex(deg_2) || IsComplex(mult_1) || IsComplex(mult_2))
+        {
+            fprintf(stderr, "are not complex\n");
+            return sub_node;
+        }
+
+        bool degrees_are_equal = ((deg_1->type == NUM && deg_2->type == NUM && deg_1->value == deg_2->value) 
+                               || (CHECK_NODE_OP(deg_1, DIV) && CHECK_NODE_OP(deg_2, DIV) && FractionsAreEqual(deg_1, deg_2)));
+
+        if (var_1->value == var_2->value && degrees_are_equal)
+        {
+            TreeElem_t new_mult_val = mult_1->value + mult_2->value;
+
+            Node *new_mult = mult_1;
+            new_mult->value = new_mult_val;
+
+            Node *res_node = sub_node;
+            res_node->value = MUL;
+
+            res_node->right = arg_1->right;
+            res_node->left  = new_mult;
+
+            RemoveNode(tree, &arg_1);
+            RemoveSubtree(tree, &arg_2);
+            // RemoveNode(tree, &var_2);
+            // RemoveNode(tree, &deg_2);
+            // RemoveNode(tree, &arg_2->right);
+            // RemoveNode(tree, &mult_2);
+            // RemoveNode(tree, &arg_2);
+
+            return sub_node;
+        }
+
+        // else if (var_1->value == var_2->value && CHECK_NODE_OP(deg_1, DIV) && CHECK_NODE_OP(deg_2, DIV) && FractionsAreEqual(deg_1, deg_2))
+        // {
+
+        // }
+    }
+
+    return sub_node;
 }
 
 void SimplifyArgs(Tree *tree, Node *op_node)
@@ -621,6 +739,7 @@ void VarsToNormalForm(Tree *tree)
 {
     assert(tree);
 
+    fprintf(LogFile, "before VarsToNormalForm()\n");
     DIFF_DUMP(tree);
 
     for (size_t i = 0; i < tree->size; i++)
@@ -639,6 +758,7 @@ void VarsToNormalForm(Tree *tree)
 
             if (deg_node->right->type == NUM && deg_node->right->value == 1)
             {
+                fprintf(stderr, "\nGOVNO 11\n");
                 Node new_node = *deg_node->left;
 
                 RemoveNode(tree, &deg_node->left);
@@ -649,32 +769,20 @@ void VarsToNormalForm(Tree *tree)
 
             if (multiplier->type == NUM && multiplier->value == 1)
             {
+                fprintf(stderr, "\nGOVNO 22\n");
+
                 Node new_node = *deg_node;
 
                 RemoveNode(tree, &multiplier);
+                RemoveNode(tree, &deg_node);
 
                 *cur_node = new_node;
             }
         }
-
-        // if (cur_node->type == OP && cur_node->value == DEG && cur_node->left->type == VAR)
-        // {
-        //     if (cur_node->right->type == NUM && cur_node->right->value == 1)
-        //     {
-        //         fprintf(stderr, "delete, i = %lld\n", i);
-
-        //         Node new_node = *cur_node->left;
-
-        //         RemoveNode(tree, &cur_node->left);
-        //         RemoveNode(tree, &cur_node->right);
-
-        //         *cur_node = new_node;
-        //     }
-
-        //     DIFF_DUMP(tree);
-        // }
-
     }
+
+    fprintf(LogFile, "after VarsToNormalForm()\n");
+    DIFF_DUMP(tree);
 }
 
 void AddToSub(Tree *tree)                                       // 8 + (-1) * x  =>  8 - x
@@ -717,7 +825,7 @@ void AddToSub(Tree *tree)                                       // 8 + (-1) * x 
     }
 }
 
-void ExpandBrackets(Tree *tree, Node *mul_node)
+void ExpandAddBrackets(Tree *tree, Node *mul_node)                 // a * (x + y)
 {
     assert(tree);
     assert(mul_node);
@@ -748,6 +856,36 @@ bool IsComplex(Node *node)
     return (SubtreeContainsVar(node) || SubtreeContComplicOperation(node));
 }
 
+void ExpandDegBrackets(Tree *tree, Node *deg_op_node)                 // (f * g) ^ a  --> f^a * g^a
+{
+    fprintf(LogFile, "before ExpandDegBrackets()\n");
+    DIFF_DUMP(tree);
+
+
+    Node *basis  = deg_op_node->left;
+    Node *degree = deg_op_node->right;
+
+    Node *res_node  = deg_op_node;
+    res_node->value = MUL;
+
+    Node *new_basis_1  = basis->left;
+    Node *new_basis_2  = basis->right;
+    Node *degree_cpy_1 = TreeCopyPaste(tree, tree, degree);
+    Node *degree_cpy_2 = TreeCopyPaste(tree, tree, degree);
+
+    res_node->left->value = DEG;
+    res_node->left->right = degree_cpy_1;
+
+    RemoveSubtree(tree, &res_node->right);
+    
+    res_node->right = NewNode(tree, OP, DEG, NULL, NULL);
+
+    res_node->right->left  = new_basis_2;
+    res_node->right->right = degree_cpy_2;
+
+    fprintf(LogFile, "after ExpandDegBrackets()\n");
+    DIFF_DUMP(tree);
+}
 
 
 Node *AddFractions(Tree *tree, Node *add_node)      // (a / b) + (c / d)
@@ -847,7 +985,7 @@ bool IsSimpleFraction(Node *node)
 
 bool IsSimpleVarMember(Node *node)          // example (-4) * x ^(7/9)
 {
-    if (node->type == OP && node->value == MUL)
+    if (CHECK_NODE_OP(node, MUL))
     {
         Node *right_multiplier = node->right;
 
@@ -859,4 +997,16 @@ bool IsSimpleVarMember(Node *node)          // example (-4) * x ^(7/9)
     }
 
     return false;
+}
+
+bool FractionsAreEqual(Node *div_1, Node *div_2)        // 3/2 != 6/4
+{
+    assert(div_1);
+    assert(div_2);
+    assert(CHECK_NODE_OP(div_1, DIV) && CHECK_NODE_OP(div_2, DIV));
+
+    if (IsComplex(div_1) || IsComplex(div_2))
+        return false;
+
+    return (div_1->left->value == div_2->left->value && div_1->right->value == div_2->right->value);
 }

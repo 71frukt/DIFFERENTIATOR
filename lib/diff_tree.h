@@ -75,6 +75,7 @@ void  TreeDtor        (Tree *tree);
 void  TreeRecalloc    (Tree *tree, size_t new_capacity);
 Node *NewNode         (Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right);
 void  RemoveNode      (Tree *tree, Node **node);
+void  RemoveSubtree   (Tree *tree, Node **start_node);
 char *NodeValToStr    (Node *node, char *res_str);
 void  GetStrTreeData  (Node *start_node, char *dest_str);
 void  NodeValFromStr  (char *dest_str, Node *node);

@@ -110,6 +110,16 @@ void RemoveNode(Tree *tree, Node **node)
     *node = NULL;
 }
 
+void RemoveSubtree(Tree *tree, Node **start_node)
+{
+    if ((*start_node)->left != NULL)
+        RemoveSubtree(tree, &(*start_node)->left);
+    if ((*start_node)->right != NULL)
+        RemoveSubtree(tree, &(*start_node)->right);
+
+    RemoveNode(tree, start_node);
+}
+
 char *NodeValToStr(Node *node, char *res_str)
 {
 // fprintf(stderr, "called NodeValToStr(), val = %d\n", val);
@@ -337,6 +347,8 @@ Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node)
 
 bool SubtreeContainsVar(Node *cur_node)
 {
+    assert(cur_node);
+
     if (cur_node == NULL)
         return false;
 

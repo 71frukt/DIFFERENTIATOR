@@ -20,7 +20,9 @@ Node *AddFractions        (Tree *tree, Node *add_node);                         
 Node *FracPlusNum         (Tree *tree, Node *add_node);
 Node *ComplexToTheRight   (Node *cur_node);
 void  FlipDenominator     (Node *fraction_node);
-void  ExpandBrackets      (Tree *tree, Node *mul_node);
+void  ExpandAddBrackets   (Tree *tree, Node *mul_node);                         // a * (x + y)(f * g) ^ a
+void  ExpandDegBrackets    (Tree *tree, Node *deg_op_node);                     // (f * g) ^ a
+
 Node *RevealDoubleDeg     (Node *deg_node);
 
 Node *TakeOutConstsInAdd  (Tree *tree, Node *cur_node);                         // (a + x) + b  =>  (a + b) + x
@@ -36,6 +38,8 @@ Node *FractionBecomesZero (Tree *tree, Node *div_node);
 bool  IsComplex           (Node *node);
 bool  IsSimpleFraction    (Node *node);
 bool  IsSimpleVarMember   (Node *node);                                         // example (-4) * x ^(7/9)
+bool  FractionsAreEqual   (Node *div_1, Node *div_2);                           // 3/2 != 6/4
+
 
 
 TreeElem_t CalculateOp    (Tree *tree, Node *op_node);
@@ -70,6 +74,9 @@ struct VarMemberInfo
 
 
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
+
 #define IS_INT_VAL(node)  (((long long int) node->value == node->value) && (node->type == NUM))
+
+#define CHECK_NODE_OP(node, op_num)  (node->type == OP && node->value == op_num)
 
 #endif

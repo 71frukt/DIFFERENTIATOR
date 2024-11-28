@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1732820698.91238 "c:/Users/71fru/Documents/GitHub/DIFF/build/tex/dest_file.tex" "dest_file.pdf" "dest_file" 1732820699.47846 0
+["pdflatex"] 1732837841.27429 "c:/Users/71fru/Documents/GitHub/DIFF/build/tex/dest_file.tex" "dest_file.pdf" "dest_file" 1732837842.32503 0
   "C:/Users/71fru/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1732279097 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/71fru/AppData/Local/MiKTeX/fonts/pk/ljfour/lh/lh-t2a/dpi600/larm1200.pk" 1732280000 27028 9abd7c9cad9f497b43a5687a9f3e11f1 ""
   "C:/Users/71fru/AppData/Local/MiKTeX/fonts/tfm/lh/lh-t2a/larm1200.tfm" 1732279999 3240 c2435f2b5cd66d4930bc29b8df87967e ""
@@ -15,8 +15,6 @@
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy8.tfm" 1136765053 1120 8b7d695260f3cff42e636090a8002094 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb" 1247596667 30251 6afa5cb1d0204815a708a080681d4674 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb" 1247596667 36741 0ee9e374ec3e30da87cdfb0ea3575226 ""
-  "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb" 1247596666 37166 8ab3487cbe3ab49ebce74c29ea2418db ""
-  "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1247596666 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1247596667 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1247596667 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1247596667 32726 39f0f9e62e84beb801509898a605dbd5 ""
@@ -51,9 +49,9 @@
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/tex/latex/mmap/oms.cmap" 1215051813 2370 3b1f71b14b974f07cef532db09ae9ee0 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/tex/latex/mmap/omx.cmap" 1215051860 3001 252c8ca42b06a22cb1a11c0e47790c6e ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/tex/latex/ucs/utf8x.def" 1700127473 8944 e3433baec74c4b7b278c6b6a547ff9ec ""
-  "c:/Users/71fru/Documents/GitHub/DIFF/build/tex/dest_file.tex" 1732820698 1504 db9ffd223e5fbd66005520522b915555 ""
-  "dest_file.aux" 1732820699 170 05bb43932b5d4106755b871c2dd43de2 "pdflatex"
-  "dest_file.tex" 1732820698 1504 db9ffd223e5fbd66005520522b915555 ""
+  "c:/Users/71fru/Documents/GitHub/DIFF/build/tex/dest_file.tex" 1732837839 2523 ab78ae1cfc812f97d75155d3f3d22e2e ""
+  "dest_file.aux" 1732837841 170 d10c2249b63a98b3fdd3409f7f5663f1 "pdflatex"
+  "dest_file.tex" 1732837839 2523 ab78ae1cfc812f97d75155d3f3d22e2e ""
   (generated)
   "dest_file.aux"
   "dest_file.log"
