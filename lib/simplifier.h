@@ -13,6 +13,7 @@ Node *TakeOutConsts       (Tree *tree, Node *cur_node);                     // a
 void  FlipDenominator     (Node *fraction_node);
 void  ExpandBrackets      (Tree *tree, Node *mul_node);
 Node *AddFractions(Tree *tree, Node *add_node);      // (a / b) + (c / d)
+Node *FracPlusNum(Tree *tree, Node *add_node);
 
 
 void  SubToAdd            (Tree *tree);

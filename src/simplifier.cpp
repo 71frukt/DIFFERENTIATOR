@@ -531,7 +531,15 @@ Node *SimplifyAdd(Tree *tree, Node *add_node)
         SimplifyConstants(tree, new_fract_node);
         return new_fract_node;
     }
-    
+
+    if ((IsSimpleFraction(add_node->left)  && add_node->right->type == NUM)
+     || (IsSimpleFraction(add_node->right) && add_node->left->type  == NUM))
+    {
+        Node *new_fract_node = FracPlusNum(tree, add_node);               // ADD --> DIV
+        SimplifyConstants(tree, new_fract_node);
+        return new_fract_node;
+    }
+
     ComplexToTheRight(add_node);
 
     TakeOutConsts(tree, add_node);              // a + (b + x)  =>  (a + b) + x
@@ -764,6 +772,24 @@ Node *AddFractions(Tree *tree, Node *add_node)      // (a / b) + (c / d)
     add_node->value = DIV;
 
     return add_node;
+}
+
+Node *FracPlusNum(Tree *tree, Node *add_node)
+{
+    assert(tree);
+    assert(add_node);
+
+    Node **num  = NULL;
+
+    if (add_node->right->value == NUM)
+        num = &add_node->right;
+
+    else
+        num = &add_node->left;
+
+    *num = NewNode(tree, OP, DIV, *num, NewNode(tree, NUM, 1, NULL, NULL));
+
+    return AddFractions(tree, add_node);
 }
 
 bool IsSimpleFraction(Node *node)
