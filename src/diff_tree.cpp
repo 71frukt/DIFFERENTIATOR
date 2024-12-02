@@ -344,6 +344,19 @@ Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node)
     return pasted_node;
 }
 
+size_t GetTreeHeight(Node *cur_node)
+{
+    if (cur_node->type != OP)
+        return 1;
+
+    size_t left_height  = GetTreeHeight(cur_node->left);
+    size_t right_height = GetTreeHeight(cur_node->right);
+
+    size_t max_height = (left_height > right_height ? left_height : right_height);
+
+    return (max_height + 1);
+}
+
 bool SubtreeContainsVar(Node *cur_node)
 {
     assert(cur_node);

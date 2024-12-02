@@ -70,19 +70,20 @@ struct Tree
     ON_DIFF_DEBUG(const char *name);
 };
 
-void  TreeCtor        (Tree *tree, size_t start_capacity ON_DIFF_DEBUG(, const char *name));
-void  TreeDtor        (Tree *tree);
-void  TreeRecalloc    (Tree *tree, size_t new_capacity);
-Node *NewNode         (Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right);
-void  RemoveNode      (Tree *tree, Node **node);
-void  RemoveSubtree   (Tree *tree, Node **start_node);
-char *NodeValToStr    (Node *node, char *res_str);
-void  GetStrTreeData  (Node *start_node, char *dest_str);
-void  NodeValFromStr  (char *dest_str, Node *node);
-void  GetTreeFromFile (Tree *tree, const char *source_file_name);
-Node *GetNodeFamily   (Tree *tree, FILE *source_file);
-Node *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
-Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node);
+void   TreeCtor        (Tree *tree, size_t start_capacity ON_DIFF_DEBUG(, const char *name));
+void   TreeDtor        (Tree *tree);
+void   TreeRecalloc    (Tree *tree, size_t new_capacity);
+Node  *NewNode         (Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right);
+void   RemoveNode      (Tree *tree, Node **node);
+void   RemoveSubtree   (Tree *tree, Node **start_node);
+char  *NodeValToStr    (Node *node, char *res_str);
+void   GetStrTreeData  (Node *start_node, char *dest_str);
+void   NodeValFromStr  (char *dest_str, Node *node);
+void   GetTreeFromFile (Tree *tree, const char *source_file_name);
+Node  *GetNodeFamily   (Tree *tree, FILE *source_file);
+Node  *TreeCopyPaste   (Tree *source_tree, Tree *dest_tree, Node *coping_node);
+size_t GetTreeHeight   (Node *cur_node);
+Node  *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
 
 bool  IsTrigonometric    (int op);
 bool  SubtreeContainsVar (Node *cur_node);
