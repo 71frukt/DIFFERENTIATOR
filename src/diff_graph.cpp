@@ -31,6 +31,7 @@ void InitNodesInDot(Tree *tree, FILE *dot_file)
 {
     assert(tree);
     assert(dot_file);
+    assert(tree->node_ptrs);
 
     for (size_t i = 0; i < tree->size; i++)
     {
@@ -39,7 +40,6 @@ void InitNodesInDot(Tree *tree, FILE *dot_file)
         char node_val_str[LABEL_LENGTH] = {};
 
         NodeValToStr(cur_node, node_val_str);
-
         if (cur_node->type == OP)
             fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"{%s | { <%s> %s | <%s> %s } }\"]\n",
                 NODE_NAME_PREFIX, cur_node, OP_NODE_SHAPE, OP_NODE_COLOR, node_val_str, LEFT_MARK, LEFT_MARK, RIGHT_MARK, RIGHT_MARK);

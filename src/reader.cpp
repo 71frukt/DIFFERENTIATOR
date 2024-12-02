@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -8,117 +9,162 @@
 #include "diff_tree.h"
 #include "operations.h"
 
-TreeElem_t GetExpr(Expression *expr)
+Node *GetExpr(Expression *expr, Tree *dest_tree)
 {
-    TreeElem_t val = GetSum(expr);
+    dest_tree->root_ptr = GetSum(expr, dest_tree);
 
+    SkipSpaces(expr);
     if (expr->data[expr->ip] != END_OF_EXPR)
+    {
+        fprintf(stderr, "expr->data + expr->ip = '%s'\n", expr->data + expr->ip);
         SYNTAX_ERROR(expr, "expr->data[expr->ip] != END_OF_EXPR");
+    }
 
-    return val;
+    return dest_tree->root_ptr;
 }
 
-TreeElem_t GetSum(Expression *expr)
+Node *GetSum(Expression *expr, Tree *dest_tree)
 {
-    TreeElem_t val = GetMul(expr);
+    Node *res_node = GetMul(expr, dest_tree);
 
     if (expr->data[expr->ip] == SEPARATOR)
-        return val;
-
-    const char *plus_symbol  = GetOperationByNum(ADD)->symbol;
-    const char *minus_symbol = GetOperationByNum(SUB)->symbol;
+        return res_node;
 
     char func_symbol[MAX_FUNCNAME_LEN] = {};
     int  shift = 0;
 
+    SkipSpaces(expr);
     sscanf(expr->data + expr->ip, GET_FUNC_SPECIFIER "%n", func_symbol, &shift);
 
-    bool is_plus  = (strcmp(func_symbol, plus_symbol)  == 0);
-    bool is_minus = (strcmp(func_symbol, minus_symbol) == 0);
+    const Operation *cur_op = GetOperationBySymbol(func_symbol);
 
-    while ((is_plus || is_minus) && shift != 0)
+    if (cur_op == NULL)
+        return res_node;
+
+    bool is_add = (cur_op->num == ADD);
+    bool is_sub = (cur_op->num == SUB);
+
+    while ((is_add || is_sub) && shift != 0)
     {
         expr->ip += shift;
 
-        TreeElem_t val_2 = GetMul(expr);
+        Node *arg_2 = GetMul(expr, dest_tree);
 
-        if (is_plus)
-            val += val_2;
+        res_node = NewNode(dest_tree, OP, cur_op->num, res_node, arg_2);
 
-        else 
-            val -= val_2;
-            
         shift = 0;
+        SkipSpaces(expr);
         sscanf(expr->data + expr->ip, GET_FUNC_SPECIFIER "%n", func_symbol, &shift);
 
-        is_plus  = (strcmp(func_symbol, plus_symbol)  == 0);
-        is_minus = (strcmp(func_symbol, minus_symbol) == 0);
+        cur_op = GetOperationBySymbol(func_symbol);
+
+        if (cur_op == NULL)
+        {
+            fprintf(stderr, "operation: %s\n", func_symbol);
+            SYNTAX_ERROR(expr, "unknown operation");
+        }
+
+
+        is_add = (cur_op->num == ADD);
+        is_sub = (cur_op->num == SUB);
     }
 
-    return val;
+    return res_node;
 }
 
-TreeElem_t GetMul(Expression *expr)
+Node *GetMul(Expression *expr, Tree *dest_tree)
 {
-    TreeElem_t val = GetFunc(expr);
-
-    const char *mul_symbol = GetOperationByNum(MUL)->symbol;
-    const char *div_symbol = GetOperationByNum(DIV)->symbol;
+    Node *res_node = GetPow(expr, dest_tree);
 
     char func_symbol[MAX_FUNCNAME_LEN] = {};
     int  shift = 0;
 
+    SkipSpaces(expr);
     sscanf(expr->data + expr->ip, GET_FUNC_SPECIFIER "%n", func_symbol, &shift);
 
-    bool is_mul = (strcmp(func_symbol, mul_symbol) == 0);
-    bool is_div = (strcmp(func_symbol, div_symbol) == 0);
+    const Operation *cur_op = GetOperationBySymbol(func_symbol);
+
+    if (cur_op == NULL)
+        return res_node;
+
+    bool is_mul = (cur_op->num == MUL);
+    bool is_div = (cur_op->num == DIV);
 
     while ((is_mul || is_div) && shift != 0)
     {
         expr->ip += shift;
 
-        TreeElem_t val_2 = GetFunc(expr);
+        Node *arg_2 = GetPow(expr, dest_tree);
 
-        if (is_mul)
-            val *= val_2;
+        res_node = NewNode(dest_tree, OP, cur_op->num, res_node, arg_2);
 
-        else 
-            val /= val_2;
-            
         shift = 0;
+        SkipSpaces(expr);
         sscanf(expr->data + expr->ip, GET_FUNC_SPECIFIER "%n", func_symbol, &shift);
 
-        is_mul = (strcmp(func_symbol, mul_symbol) == 0);
-        is_div = (strcmp(func_symbol, div_symbol) == 0);
+        cur_op = GetOperationBySymbol(func_symbol);
+
+        if (cur_op == NULL)
+        {
+            fprintf(stderr, "operation: '%s'\n", func_symbol);
+            SYNTAX_ERROR(expr, "unknown operation");
+        }
+
+        is_mul = (cur_op->num == MUL);
+        is_div = (cur_op->num == DIV);
     }
 
-    return val;
+    return res_node;
 }
 
-TreeElem_t GetFunc(Expression *expr)
+Node *GetPow(Expression *expr, Tree *dest_tree)
+{
+    Node *got_node = GetFunc(expr, dest_tree);
+
+    char func_symbol[MAX_FUNCNAME_LEN] = {};
+    int  shift = 0;
+
+    SkipSpaces(expr);
+    sscanf(expr->data + expr->ip, GET_FUNC_SPECIFIER "%n", func_symbol, &shift);
+
+    const Operation *cur_op = GetOperationBySymbol(func_symbol);
+
+    if (cur_op == NULL)
+        return got_node;
+
+    if (cur_op->num == DEG)
+    {
+        expr->ip++;
+
+        Node *degree = GetPow(expr, dest_tree);
+        return NewNode(dest_tree, OP, DEG, got_node, degree);
+    }
+
+    else
+        return got_node;
+}
+
+Node *GetFunc(Expression *expr, Tree *dest_tree)
 {
     char func_name[MAX_FUNCNAME_LEN] = {};
     int  shift = 0;
 
+    SkipSpaces(expr);
     sscanf(expr->data + expr->ip, GET_FUNC_SPECIFIER "%n", func_name, &shift);
-fprintf(stderr, "func_name = '%s'\n", func_name);
+
     const Operation *op = GetOperationBySymbol(func_name);
 
     if (op != NULL)
     {
         expr->ip += shift;
 
-        TreeElem_t arg = 0;
-
         if (op->life_form == INFIX)
             SYNTAX_ERROR(expr, "op->life_form == INFIX");
 
         if (op->type == UNARY)
         {
-            arg = GetPow(expr);
-            TreeElem_t res = op->op_func(arg, arg);         // впоследствии логика дерева будет выстроена так, что условно для унарных функций два равных аргумента (одно и то же поддерево и правый сосед и левый одновременно)
-            
-            return res;
+            Node *arg = GetExprInBrackets(expr, dest_tree);
+            return NewNode(dest_tree, OP, op->num, arg, arg);
         }
 
         else
@@ -126,86 +172,85 @@ fprintf(stderr, "func_name = '%s'\n", func_name);
             if (expr->data[expr->ip++] != BRACKET_OPEN)
                 SYNTAX_ERROR(expr, "no open bracket in arg of binary func");
 
-            TreeElem_t arg_1 = GetPow(expr);
+            Node *arg_1 = GetExprInBrackets(expr, dest_tree);
 
             if (expr->data[expr->ip++] != SEPARATOR)
                 SYNTAX_ERROR(expr, "no separator in arg of binary func");
 
-            TreeElem_t arg_2 = GetPow(expr);
+            Node *arg_2 = GetExprInBrackets(expr, dest_tree);
 
             if (expr->data[expr->ip++] != BRACKET_CLOSE)
                 SYNTAX_ERROR(expr, "no close bracket in arg of binary func");
 
-            TreeElem_t res = op->op_func(arg_1, arg_2);
-            
-            return res;
+            return NewNode(dest_tree, OP, op->num, arg_1, arg_2);
         }        
     }
 
     else 
-        return GetPow(expr);
+        return GetExprInBrackets(expr, dest_tree);
 }
 
-
-TreeElem_t GetPow(Expression *expr)
-{
-    TreeElem_t val = GetExprInBrackets(expr);
-
-    const char pow_symbol = *GetOperationByNum(DEG)->symbol;
-
-    if (expr->data[expr->ip] == pow_symbol)
-    {
-        expr->ip++;
-
-        TreeElem_t degree = GetPow(expr);
-        val = (TreeElem_t) pow(val, degree);
-    }
-
-    fprintf(stderr, "ip in pow = %lld\n", expr->ip);
-
-    return val;
-}
-
-TreeElem_t GetExprInBrackets(Expression *expr)
+Node *GetExprInBrackets(Expression *expr, Tree *dest_tree)
 {
     if (expr->data[expr->ip] == BRACKET_OPEN)
     {
         expr->ip++;
 
-        TreeElem_t val = GetSum(expr);
+        Node *res_node = GetSum(expr, dest_tree);
 
         if (expr->data[expr->ip] != BRACKET_CLOSE)
             SYNTAX_ERROR(expr, "expr->data[expr->ip] != BRACKET_CLOSE");
 
         expr->ip++;
-        return val;
+        return res_node;
     }
 
     else 
-        return GetNumber(expr);
+        return GetNumber(expr, dest_tree);
 
 }
 
-TreeElem_t GetNumber(Expression *expr)
+Node *GetNumber(Expression *expr, Tree *dest_tree)
 {
     TreeElem_t val = 0;
 
-    size_t old_ip = expr->ip;
+    SkipSpaces(expr);
 
-    while ('0' <= expr->data[expr->ip] && expr->data[expr->ip] <= '9')
+    if ('a' <= expr->data[expr->ip] && expr->data[expr->ip] <= 'z')
     {
-        val = val * 10 + (expr->data[expr->ip] - '0');
+        val = expr->data[expr->ip];
         expr->ip++;
+
+        return NewNode(dest_tree, VAR, val, NULL, NULL);
     }
 
-    if (expr->ip == old_ip)
-        SYNTAX_ERROR(expr, "expr->ip == old_ip");
+    else if ('0' <= expr->data[expr->ip] && expr->data[expr->ip] <= '9')
+    {
+        while ('0' <= expr->data[expr->ip] && expr->data[expr->ip] <= '9')
+        {
+            val = val * 10 + (expr->data[expr->ip] - '0');
+            expr->ip++;
+        }
 
-    return val;
+        return NewNode(dest_tree, NUM, val, NULL, NULL);
+    }
+    
+    else
+        SYNTAX_ERROR(expr, "incorrect syntax");
+
+    return NewNode(dest_tree, NUM, val, NULL, NULL);
 }
 
 void SyntaxError(Expression *expr, const char *error, const char *file, int line, const char *func)
 {
     fprintf(stderr, "SyntaxError called in %s:%d |%s()|, ip = %lld\nerror: '%s'\n", file, line, func, expr->ip, error);
     abort();
+}
+
+char *SkipSpaces(Expression *expr)
+{
+    while (isspace(expr->data[expr->ip]))
+        expr->ip++;
+
+    return expr->data + expr->ip;
 }

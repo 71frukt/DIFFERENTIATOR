@@ -13,7 +13,7 @@ const char BRACKET_OPEN   = '(';
 const char BRACKET_CLOSE  = ')';
 const char SEPARATOR      = ',';
 
-#define GET_FUNC_SPECIFIER  " %[a-zA-Z-+^*/]"
+#define GET_FUNC_SPECIFIER  "%[a-zA-Z-+^*/]"
 
 struct Expression
 {
@@ -21,15 +21,16 @@ struct Expression
     size_t ip;
 };
 
-TreeElem_t GetExpr           (Expression *expr);
-TreeElem_t GetSum            (Expression *expr);
-TreeElem_t GetMul            (Expression *expr);
-TreeElem_t GetFunc           (Expression *expr);
-TreeElem_t GetPow            (Expression *expr);
-TreeElem_t GetExprInBrackets (Expression *expr);
-TreeElem_t GetNumber         (Expression *expr);
+Node *GetExpr           (Expression *expr, Tree *dest_tree);
+Node *GetSum            (Expression *expr, Tree *dest_tree);
+Node *GetMul            (Expression *expr, Tree *dest_tree);
+Node *GetFunc           (Expression *expr, Tree *dest_tree);
+Node *GetPow            (Expression *expr, Tree *dest_tree);
+Node *GetExprInBrackets (Expression *expr, Tree *dest_tree);
+Node *GetNumber         (Expression *expr, Tree *dest_tree);
 
-void SyntaxError(Expression *expr, const char *error, const char *file, int line, const char *func);
+void  SyntaxError (Expression *expr, const char *error, const char *file, int line, const char *func);
+char *SkipSpaces  (Expression *expr);
 
 #define SYNTAX_ERROR(expr, error)  SyntaxError(expr, error, __FILE__, __LINE__, __func__)
 

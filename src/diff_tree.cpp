@@ -91,7 +91,6 @@ Node *NewNode(Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right
     new_node->left  = left;
     new_node->right = right;
 
-    // tree->root_ptr = new_node;      // TODO ????
     tree->size++;
 
     return new_node;
@@ -130,7 +129,7 @@ char *NodeValToStr(Node *node, char *res_str)
         sprintf(res_str, TREE_ELEM_SPECIFIER, node->value);
     
     else if (node->type == VAR)
-        sprintf(res_str, "%c", 'a' + node->value);
+        sprintf(res_str, "%c", node->value);
 
     else if (node->type == OP)
     {
