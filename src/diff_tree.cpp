@@ -357,6 +357,52 @@ size_t GetTreeHeight(Node *cur_node)
     return (max_height + 1);
 }
 
+void SplitTree(Tree *tree, Node *cur_node)
+{
+    if (cur_node->type != OP)
+        return;
+    
+    SplitTree(tree, cur_node->left);
+    SplitTree(tree, cur_node->right);
+
+    if (CHECK_NODE_OP(cur_node, ADD) || CHECK_NODE_OP(cur_node, SUB))
+        return;
+
+    if (GetTreeHeight(cur_node->left)  > MIN_SPLIT_HEIGHT)
+    {
+        cur_node->left  = ChangeToVar(tree, cur_node->left);
+    }
+
+    if (GetTreeHeight(cur_node->right) > MIN_SPLIT_HEIGHT)
+    {
+        cur_node->right = ChangeToVar(tree, cur_node->right);
+    }
+}
+
+Node *ChangeToVar(Tree *tree, Node *cur_node)
+{
+    assert(tree);
+    assert(cur_node);
+
+    // if (start_node->type != OP)
+    //     return start_node;
+
+    // start_node->left  = ChangeToVar(tree, start_node->left);
+    // start_node->right = ChangeToVar(tree, start_node->right);
+        
+    // if (CHECK_NODE_OP(start_node, ADD) || CHECK_NODE_OP(start_node, SUB))
+    //     return start_node;
+
+    TreeElem_t new_node_name = (TreeElem_t) ('A' + tree->changed_vars.size);
+
+    Node *new_var = NewNode(tree, VAR, new_node_name, NULL, NULL);
+    tree->changed_vars.data[0][tree->changed_vars.size++] = cur_node->left;
+
+    return new_var;
+}
+
+
+
 bool SubtreeContainsVar(Node *cur_node)
 {
     assert(cur_node);

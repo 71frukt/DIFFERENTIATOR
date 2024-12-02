@@ -178,6 +178,30 @@ FILE *GetOutputFile(const int argc, const char *argv[])
     return OutputFile;
 }
 
+// void PrintChangedVarsTex(Tree *tree, FILE *output_file)
+// {
+//     ChangedVars *changed_vars = &tree->changed_vars;
+
+//     for (size_t derivative_num = 0; derivative_num < CHANGED_VARS_DERIVATIVE_NUM; derivative_num++)
+//     {
+//         for (size_t var_num = 0; var_num < changed_vars->size; var_num++)
+//         {
+//             if (changed_vars->data[derivative_num][var_num] == NULL)
+//                 continue;
+
+            
+//         }
+//     }
+// }
+
+// void GetChangedVarTexName(ChangedVars *changed_vars, TreeElem_t var_name, char *res_name)
+// {
+//     for (size_t i = 0; i < CHANGED_VARS_DERIVATIVE_NUM; i++)
+//     {
+
+//     }
+// }
+
 void CloseOutputFile()
 {
     fprintf(OutputFile, "\\end{document}\n");

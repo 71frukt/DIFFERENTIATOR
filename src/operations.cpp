@@ -22,6 +22,17 @@ const Operation *GetOperationByNode(Node *node)
     return NULL;
 }
 
+const Operation *GetOperationByNum(int num)
+{
+    for (size_t i = 0; i < OPERATIONS_NUM; i++)
+    {
+        if (num == Operations[i].num)
+            return &Operations[i];
+    }
+
+    return NULL;
+}
+
 const Operation *GetOperationBySymbol(char *sym)
 {
     assert(sym);
@@ -86,7 +97,7 @@ TreeElem_t Ln(TreeElem_t arg1, TreeElem_t arg2)
 
 TreeElem_t Log(TreeElem_t arg1, TreeElem_t arg2)
 {
-    return (TreeElem_t) (log(arg1) / log(arg2));
+    return (TreeElem_t) (log(arg2) / log(arg1));
 }
 
 Node *DiffAdd(Tree *expr_tree, Node *expr_node, Tree *solv_tree)

@@ -1,12 +1,8 @@
 digraph G{           
 bgcolor = "#FFF3D1";  
-node_000002a054a065a8 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000002a054a06608 [shape = "square", style = filled, fillcolor = "aquamarine", label = "x"]
-node_000002a054a06650 [shape = "record", style = filled, fillcolor = "azure", label = "{/ | { <L> L | <R> R } }"]
-node_000002a054a066b0 [shape = "oval", style = filled, fillcolor = "pink", label = "1"]
-node_000002a054a066e0 [shape = "oval", style = filled, fillcolor = "pink", label = "2"]
-node_000002a054a065a8: <L> -> node_000002a054a06608
-node_000002a054a065a8: <R> -> node_000002a054a06650
-node_000002a054a06650: <L> -> node_000002a054a066b0
-node_000002a054a06650: <R> -> node_000002a054a066e0
+node_0000024fef8d6f00 [shape = "record", style = filled, fillcolor = "azure", label = "{/ | { <L> L | <R> R } }"]
+node_0000024fef8d6f18 [shape = "oval", style = filled, fillcolor = "pink", label = "1"]
+node_0000024fef8d6f30 [shape = "oval", style = filled, fillcolor = "pink", label = "3"]
+node_0000024fef8d6f00: <L> -> node_0000024fef8d6f18
+node_0000024fef8d6f00: <R> -> node_0000024fef8d6f30
 } 

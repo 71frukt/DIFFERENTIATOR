@@ -57,7 +57,6 @@ INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend
 INPUT .\dest_file.aux
 INPUT .\dest_file.aux
 INPUT dest_file.aux
-OUTPUT dest_file.aux
 INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\tex\latex\cyrillic\t2acmr.fd
 INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\tex\latex\cyrillic\t2acmr.fd
 INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\tex\latex\cyrillic\t2acmr.fd
@@ -66,6 +65,7 @@ INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\tex\latex\cmap\t2a.cmap
 INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\tex\latex\cmap\t2a.cmap
 OUTPUT dest_file.pdf
 INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\tex\latex\cmap\t2a.cmap
+OUTPUT dest_file.aux
 INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
 INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\tex\latex\cmap\ot1.cmap
 INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\tex\latex\cmap\ot1.cmap
@@ -90,15 +90,5 @@ INPUT C:\Users\71fru\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
 INPUT dest_file.aux
 INPUT C:\Users\71fru\AppData\Local\MiKTeX\fonts\pk\ljfour\lh\lh-t2a\dpi600\larm1200.pk
 INPUT C:\Users\71fru\AppData\Local\MiKTeX\fonts\pk\ljfour\lh\lh-t2a\dpi600\larm1200.pk
-INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
-INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
-INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
-INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
-INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
-INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
-INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
-INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
 INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
-INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
-INPUT C:\Users\71fru\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb

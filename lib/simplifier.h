@@ -3,30 +3,36 @@
 
 #include "diff_tree.h"
 
-void  SimplifyExpr        (Tree *expr_tree);
-Node *SimplifyConstants   (Tree *tree, Node *cur_node);
+void  SimplifyExpr      (Tree *expr_tree);
+Node *SimplifyConstants (Tree *tree, Node *cur_node);
+Node *SimplifyVars      (Tree *tree, Node *cur_node);
 
-Node *SimplNumsAdd(Tree *tree, Node *cur_node);
-Node *SimplNumsSub(Tree *tree, Node *cur_node);
-Node *SimplNumsMul(Tree *tree, Node *cur_node);
-Node *SimplNumsDiv(Tree *tree, Node *add_node);
-Node *SimplNumsDeg(Tree *tree, Node *deg_node);
+Node *SimplNumsAdd      (Tree *tree, Node *cur_node);
+Node *SimplNumsSub      (Tree *tree, Node *cur_node);
+Node *SimplNumsMul      (Tree *tree, Node *cur_node);
+Node *SimplNumsDiv      (Tree *tree, Node *add_node);
+Node *SimplNumsDeg      (Tree *tree, Node *deg_node);
 
-Node *SimplVarsAdd(Tree *tree, Node *sub_node);
+Node *SimplVarsAdd      (Tree *tree, Node *sub_node);
+Node *SimplVarsMul      (Tree *tree, Node *sub_node);
 
-Node *SimplifyFraction    (Tree *tree, Node *op_node, Node *numerator, Node *denominator);
-bool  MulByFraction       (Node *mul_node, Node *left_arg, Node *right_arg);
-Node *AddFractions        (Tree *tree, Node *add_node);                         // (a / b) + (c / d)
-Node *FracPlusNum         (Tree *tree, Node *add_node);
-Node *ComplexToTheRight   (Node *cur_node);
-void  FlipDenominator     (Node *fraction_node);
-void  ExpandAddBrackets   (Tree *tree, Node *mul_node);                         // a * (x + y)(f * g) ^ a
-void  ExpandDegBrackets    (Tree *tree, Node *deg_op_node);                     // (f * g) ^ a
+void  ExpandAddBrackets (Tree *tree, Node *mul_node);                         // a * (x + y)
+void  ExpandDegBrackets (Tree *tree, Node *deg_op_node);                      // (f * g) ^ a
 
-Node *RevealDoubleDeg     (Node *deg_node);
+Node *MulByNull         (Tree *tree, Node *mul_node);
+Node *FractionInDeg     (Tree *tree, Node *pow_node);
+bool  MulByFraction     (Node *mul_node, Node *left_arg, Node *right_arg);
 
-Node *TakeOutConstsInAdd  (Tree *tree, Node *cur_node);                         // (a + x) + b  =>  (a + b) + x
-Node *TakeOutConstsInMul  (Tree *tree, Node *cur_node);                         // a * (b * x)  =>  (a * b) * x
+Node *SimplifyFraction  (Tree *tree, Node *op_node, Node *numerator, Node *denominator);
+Node *AddFractions      (Tree *tree, Node *add_node);                         // (a / b) + (c / d)
+Node *FracPlusNum       (Tree *tree, Node *add_node);
+void  FlipDenominator   (Node *fraction_node);
+Node *ComplexToTheRight (Node *cur_node);
+
+Node *RevealDoubleDeg   (Node *deg_node);
+
+Node *TakeOutConsts  (Tree *tree, Node *cur_node);                         // a + (b + x)   =>  (a + b) + x  или (a + f(x)) + g(x) => a + (f(x) + g(x))  и аналогично для умножения
+// Node *TakeOutConstsInMul  (Tree *tree, Node *cur_node);                         // a * (b * x)  =>  (a * b) * x   или (a * f(x)) * g(x) => a * (f(x) * g(x))
 Node *TakeOutConstsInDiv  (Tree *tree, Node *cur_node);                         // (a * x) / b  =>  (a / b) * x 
 
 void  SubToAdd            (Tree *tree);                                         // 8 - f => 8 + (-f)
@@ -41,9 +47,9 @@ bool  IsSimpleVarMember   (Node *node);                                         
 bool  FractionsAreEqual   (Node *div_1, Node *div_2);                           // 3/2 != 6/4
 
 
-
-TreeElem_t CalculateOp    (Tree *tree, Node *op_node);
-void       SimplifyArgs   (Tree *tree, Node *op_node);
+TreeElem_t  CalculateOp    (Tree *tree, Node *op_node);
+Node       *SimplNumsArgs  (Tree *tree, Node *op_node);
+Node       *SimplVarsArgs  (Tree *tree, Node *op_node);
 
 
 enum MemberType

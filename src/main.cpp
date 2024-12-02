@@ -3,6 +3,7 @@
 #include <math.h>
 
 #include "diff_tree.h"
+#include "reader.h"
 #include "tex_work.h"
 #include "diff_debug.h"
 #include "derivative.h"
@@ -12,47 +13,59 @@ FILE *OutputFile = NULL;  // TODO: change
 
 int main(const int argc, const char *argv[])
 {
-    OutputFile = GetOutputFile(argc, argv);
-
     fprintf(stderr, "START!\n");
+
+    // Expression expr = {.data = "1 / x$"};
+    Expression expr = {.data = "x ^ (9 / 27) * 2 + 3 * 48 ^ 2 - 7 * x ^ (9 / 27)$"};
+    
+    OutputFile = GetOutputFile(argc, argv);
 
     Tree orig = {};
     
     TreeCtor(&orig, START_TREE_SIZE, "orig_expression");
+    GetExpr(&expr, &orig);
 
-    GetTreeFromFile(&orig, "file.txt");
-fprintf(stderr, "point1\n");
     DIFF_DUMP(&orig);
-    char tex[TEX_EXPRESSION_LEN] = {};
-    GetTexTreeData(orig.root_ptr, tex, false);
-    fprintf(OutputFile, "orig \\[ %s \\]\n\n", tex);
-    fprintf(stderr, "orig \\[ %s \\]\n\n", tex);
 
-    SimplifyExpr(&orig);
+    char tex_orig[TEX_EXPRESSION_LEN] = {};
+    GetTexTreeData(orig.root_ptr, tex_orig, false);
+    fprintf(OutputFile, "The original expression has the form \\[ %s \\]\n\n", tex_orig);
 
-    char tex1[TEX_EXPRESSION_LEN] = {};
-    GetTexTreeData(orig.root_ptr, tex1, false);
-    fprintf(OutputFile, "simpl 1 \\[ %s \\]\n\n", tex1);
-    fprintf(stderr, "simpl 1 \\[ %s \\]\n\n", tex1);
+    // PrintChangedVarsTex(&orig, OutputFile);
 
-    // SimplifyExpr(&orig);
-    // char tex2[TEX_EXPRESSION_LEN] = {};
-    // GetTexTreeData(orig.root_ptr, tex2, false);
-    // fprintf(OutputFile, "simp2 \\[ %s \\]\n\n", tex2);
-    // fprintf(stderr, "simp2 \\[ %s \\]\n\n", tex2);
+    // SplitTree(&orig, orig.root_ptr);
+    DIFF_DUMP(&orig);
+    Tree orig_simpl = {};
+    TreeCtor(&orig_simpl, START_TREE_SIZE, "orig_simpl");
+    orig_simpl.root_ptr = TreeCopyPaste(&orig, &orig_simpl, orig.root_ptr);
+
+    DIFF_DUMP(&orig_simpl);
+
+    SimplifyExpr(&orig_simpl);
+
+    char tex_orig_simpl[TEX_EXPRESSION_LEN] = {};
+    GetTexTreeData(orig_simpl.root_ptr, tex_orig_simpl, false);
+
+    fprintf(OutputFile, "By simple mathematical transformations: \\[ %s \\]\n \\newline", tex_orig_simpl);
+/*
 
     fprintf(stderr, "before diff\n");
 
-//     Tree solving = {};
-//     TreeCtor(&solving, START_TREE_SIZE, "solving");
+    Tree derivative = {};
+    TreeCtor(&derivative, START_TREE_SIZE, "derivative");
+    derivative.root_ptr = TakeDifferential(&orig_simpl, orig_simpl.root_ptr, &derivative);
 
-//     solving.root_ptr = TakeDifferential(&orig, orig.root_ptr, &solving);
+    char tex_derivative[TEX_EXPRESSION_LEN] = {};
+    GetTexTreeData(derivative.root_ptr, tex_derivative, false);
 
-//     char diff_str[TEX_EXPRESSION_LEN] = {};
-//     GetTexTreeData(solving.root_ptr, diff_str, false);
-//     fprintf(OutputFile, "diff: \\[ %s \\]\n\n", diff_str);
-// fprintf(stderr, "diff: \\[ %s \\]\n\n", diff_str);
-//     SimplifyExpr(&solving);
+    fprintf(OutputFile, "Having counted the most obvious derivative, which the Soviet spermatozoa were actually able to calculate in their minds, we get: \\[ %s \\]\n \\newline", tex_derivative);
+    DIFF_DUMP(&derivative);
+    SimplifyExpr(&derivative);
+
+    char tex_derivative_simpl[TEX_EXPRESSION_LEN] = {};
+    GetTexTreeData(derivative.root_ptr, tex_derivative_simpl, false);
+
+    fprintf(OutputFile, "By simple mathematical transformations: \\[ %s \\]\n", tex_derivative_simpl);
 
 //     char tex3[TEX_EXPRESSION_LEN] = {};
 //     GetTexTreeData(solving.root_ptr, tex3, false);
@@ -67,6 +80,9 @@ fprintf(stderr, "point1\n");
 // DIFF_DUMP(&solving);
 //     TreeDtor(&solving);
     TreeDtor(&orig);
+    TreeDtor(&orig_simpl);
+    // TreeDtor(&derivative);
+*/
 
     fprintf(stderr, "END!\n");
     return 0;
