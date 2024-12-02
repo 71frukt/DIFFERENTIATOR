@@ -63,7 +63,7 @@ enum MemberType
 
 union simple_ratio
 {
-    TreeElem_t  value;
+    TreeElem_t  val;
     Node       *node;
 };
 
@@ -81,8 +81,9 @@ struct VarMemberInfo
 
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
-#define IS_INT_VAL(node)  (((long long int) node->value == node->value) && (node->type == NUM))
+// #define IS_INT_VAL(node)  (((long long int) node->val == node->val) && (node->type == NUM))
+#define IS_INT_VAL(node)  ((IS_INT_TREE) && (node->type == NUM))
 
-#define CHECK_NODE_OP(node, op_num)  (node->type == OP && node->value == op_num)
+#define CHECK_NODE_OP(node, op_num)  (node->type == OP && node->val.op == op_num)
 
 #endif

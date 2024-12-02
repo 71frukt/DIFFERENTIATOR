@@ -15,13 +15,13 @@
 
   }
 
-   Tree 'orig_expression' DIFF_DUMP called from src/main.cpp:35  (main)
+   Tree 'orig_expression' DIFF_DUMP called from src/main.cpp:37  (main)
   {
 <img src = graphs/orig_expression/graph_1.png width = "20%" style="margin-left: 3%">
 
   }
 
-   Tree 'orig_simpl' DIFF_DUMP called from src/main.cpp:40  (main)
+   Tree 'orig_simpl' DIFF_DUMP called from src/main.cpp:42  (main)
   {
 <img src = graphs/orig_simpl/graph_2.png width = "20%" style="margin-left: 3%">
 
@@ -34,7 +34,7 @@ before SimplifyConstants()
 
   }
 
-in SimplifyVars(): cur_node->value = 3
+in SimplifyVars(): cur_node->val = 4
 before VarsToNormalForm()
    Tree 'orig_simpl' DIFF_DUMP called from src/simplifier.cpp:29  (SimplifyExpr)
   {
@@ -52,6 +52,58 @@ before AddToSub()
    Tree 'orig_simpl' DIFF_DUMP called from src/simplifier.cpp:38  (SimplifyExpr)
   {
 <img src = graphs/orig_simpl/graph_6.png width = "20%" style="margin-left: 3%">
+
+  }
+
+   Tree 'tmp_expr_deg_diff' DIFF_DUMP called from src/diff_tree.cpp:40  (TreeDtor)
+  {
+<img src = graphs/tmp_expr_deg_diff/graph_7.png width = "20%" style="margin-left: 3%">
+
+  }
+
+   Tree 'derivative' DIFF_DUMP called from src/main.cpp:62  (main)
+  {
+<img src = graphs/derivative/graph_8.png width = "20%" style="margin-left: 3%">
+
+  }
+
+before SimplifyConstants()
+   Tree 'derivative' DIFF_DUMP called from src/simplifier.cpp:21  (SimplifyExpr)
+  {
+<img src = graphs/derivative/graph_9.png width = "20%" style="margin-left: 3%">
+
+  }
+
+in SimplifyVars(): cur_node->val = 2
+before VarsToNormalForm()
+   Tree 'derivative' DIFF_DUMP called from src/simplifier.cpp:29  (SimplifyExpr)
+  {
+<img src = graphs/derivative/graph_10.png width = "20%" style="margin-left: 3%">
+
+  }
+
+before AddToSub()
+   Tree 'derivative' DIFF_DUMP called from src/simplifier.cpp:34  (SimplifyExpr)
+  {
+<img src = graphs/derivative/graph_11.png width = "20%" style="margin-left: 3%">
+
+  }
+
+   Tree 'derivative' DIFF_DUMP called from src/simplifier.cpp:38  (SimplifyExpr)
+  {
+<img src = graphs/derivative/graph_12.png width = "20%" style="margin-left: 3%">
+
+  }
+
+   Tree 'orig_expression' DIFF_DUMP called from src/diff_tree.cpp:40  (TreeDtor)
+  {
+<img src = graphs/orig_expression/graph_13.png width = "20%" style="margin-left: 3%">
+
+  }
+
+   Tree 'orig_simpl' DIFF_DUMP called from src/diff_tree.cpp:40  (TreeDtor)
+  {
+<img src = graphs/orig_simpl/graph_14.png width = "20%" style="margin-left: 3%">
 
   }
 

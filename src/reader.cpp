@@ -50,7 +50,7 @@ Node *GetSum(Expression *expr, Tree *dest_tree)
 
         Node *arg_2 = GetMul(expr, dest_tree);
 
-        res_node = NewNode(dest_tree, OP, cur_op->num, res_node, arg_2);
+        res_node = NewNode(dest_tree, OP, {.op = cur_op->num}, res_node, arg_2);
 
         shift = 0;
         SkipSpaces(expr);
@@ -96,7 +96,7 @@ Node *GetMul(Expression *expr, Tree *dest_tree)
 
         Node *arg_2 = GetPow(expr, dest_tree);
 
-        res_node = NewNode(dest_tree, OP, cur_op->num, res_node, arg_2);
+        res_node = NewNode(dest_tree, OP, {.op = cur_op->num}, res_node, arg_2);
 
         shift = 0;
         SkipSpaces(expr);
@@ -137,7 +137,7 @@ Node *GetPow(Expression *expr, Tree *dest_tree)
         expr->ip++;
 
         Node *degree = GetPow(expr, dest_tree);
-        return NewNode(dest_tree, OP, DEG, got_node, degree);
+        return NewNode(dest_tree, OP, {.op = DEG}, got_node, degree);
     }
 
     else
@@ -164,7 +164,7 @@ Node *GetFunc(Expression *expr, Tree *dest_tree)
         if (op->type == UNARY)
         {
             Node *arg = GetExprInBrackets(expr, dest_tree);
-            return NewNode(dest_tree, OP, op->num, arg, arg);
+            return NewNode(dest_tree, OP, {.op = op->num}, arg, arg);
         }
 
         else
@@ -182,7 +182,7 @@ Node *GetFunc(Expression *expr, Tree *dest_tree)
             if (expr->data[expr->ip++] != BRACKET_CLOSE)
                 SYNTAX_ERROR(expr, "no close bracket in arg of binary func");
 
-            return NewNode(dest_tree, OP, op->num, arg_1, arg_2);
+            return NewNode(dest_tree, OP, {.op = op->num}, arg_1, arg_2);
         }        
     }
 
@@ -212,33 +212,38 @@ Node *GetExprInBrackets(Expression *expr, Tree *dest_tree)
 
 Node *GetNumber(Expression *expr, Tree *dest_tree)
 {
-    TreeElem_t val = 0;
-
     SkipSpaces(expr);
 
     if ('a' <= expr->data[expr->ip] && expr->data[expr->ip] <= 'z')
     {
+        char val = 0;
+
         val = expr->data[expr->ip];
         expr->ip++;
 
-        return NewNode(dest_tree, VAR, val, NULL, NULL);
+        return NewNode(dest_tree, VAR, {.var = val}, NULL, NULL);
     }
 
     else if ('0' <= expr->data[expr->ip] && expr->data[expr->ip] <= '9')
     {
+        TreeElem_t val = 0;
+
         while ('0' <= expr->data[expr->ip] && expr->data[expr->ip] <= '9')
         {
             val = val * 10 + (expr->data[expr->ip] - '0');
             expr->ip++;
         }
 
-        return NewNode(dest_tree, NUM, val, NULL, NULL);
+        return NewNode(dest_tree, NUM, {.num = val}, NULL, NULL);
     }
     
     else
+    {
         SYNTAX_ERROR(expr, "incorrect syntax");
+        return NULL;
+    }
 
-    return NewNode(dest_tree, NUM, val, NULL, NULL);
+    // return NewNode(dest_tree, NUM, {.num = val}, NULL, NULL);
 }
 
 void SyntaxError(Expression *expr, const char *error, const char *file, int line, const char *func)

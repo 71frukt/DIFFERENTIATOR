@@ -40,7 +40,7 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
     {
         const Operation *cur_op = GetOperationByNode(start_node);
 
-        const char *op_tex = OperationToTex((int) start_node->value);
+        const char *op_tex = OperationToTex(start_node->val.op);
     
         if (cur_op->tex_form == PREFIX)
         {
@@ -82,27 +82,27 @@ void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
     if (op_node->type != OP)
         return;
 
-    if (op_node->value == ADD)
+    if (op_node->val.op == ADD)
     {
         Node *arg2 = op_node->right;
 
-        if (arg2->type == NUM && arg2->value < 0)
+        if (arg2->type == NUM && arg2->val.num < 0)
             *param_2 = true;
 
         *param_1 = false;
     }
 
-    else if (op_node->value == SUB)
+    else if (op_node->val.op == SUB)
     {
-        if (op_node->right->type == OP && (op_node->right->value == ADD || op_node->right->value == SUB))
+        if (op_node->right->type == OP && (op_node->right->val.op == ADD || op_node->right->val.op == SUB))
             *param_2 = true;
 
         *param_1 = false;
     }
 
-    else if (op_node->value == DEG)
+    else if (op_node->val.op == DEG)
     {
-        if (op_node->left->type == OP || (op_node->left->type == NUM && op_node->left->value < 0))
+        if (op_node->left->type == OP || (op_node->left->type == NUM && op_node->left->val.num < 0))
             *param_1 = true;
         else 
             *param_1 = false;
@@ -110,31 +110,31 @@ void ParamsNeedBrackets(Node *op_node, bool *param_1, bool *param_2)
         *param_2 = false;
     }
 
-    else if (op_node->value == MUL)
+    else if (op_node->val.op == MUL)
     {
-        if (op_node->left->type == OP && (op_node->left->value == ADD || op_node->left->value == SUB))
+        if (op_node->left->type == OP && (op_node->left->val.op == ADD   || op_node->left->val.op == SUB))
             *param_1 = true;
 
-        if (op_node->right->type == OP && (op_node->right->value == ADD || op_node->right->value == SUB))
+        if (op_node->right->type == OP && (op_node->right->val.op == ADD || op_node->right->val.op == SUB))
             *param_2 = true;
 
-        if (op_node->left->type == NUM && op_node->left->value < 0)
+        if (op_node->left->type == NUM  && op_node->left->val.num < 0)
             *param_1 = true;
 
-        if (op_node->right->type == NUM && op_node->right->value < 0)
+        if (op_node->right->type == NUM && op_node->right->val.num < 0)
             *param_2 = true; 
     }
 
-    else if (IsTrigonometric(op_node->value))
+    else if (IsTrigonometric(op_node->val.op))
     {
         if (op_node->left->type == OP)
             *param_1 = true;
 
-        if (op_node->left->type == NUM && op_node->left->value < 0)
+        if (op_node->left->type == NUM && op_node->left->val.num < 0)
             *param_1 = true;
     }
 
-    else if (op_node->value == DIF)
+    else if (op_node->val.op == DIF)
     {
         if (op_node->left->type == OP)
             *param_1 = true;

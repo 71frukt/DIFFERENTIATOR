@@ -7,12 +7,18 @@ Node *TakeDifferential(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 {
     if (expr_node->type == NUM)
     {
-        return NewNode(solv_tree, NUM, 0, NULL, NULL);
+        NodeVal val = {};
+        val.num = 0;
+
+        return NewNode(solv_tree, NUM, val, NULL, NULL);
     }
 
     else if (expr_node->type == VAR)
     {
-        return NewNode(solv_tree, NUM, 1, NULL, NULL);
+        NodeVal val = {};
+        val.num = 1;
+
+        return NewNode(solv_tree, NUM, val, NULL, NULL);
     }
 
     else

@@ -16,7 +16,7 @@ int main(const int argc, const char *argv[])
     fprintf(stderr, "START!\n");
 
     // Expression expr = {.data = "1 / x$"};
-    Expression expr = {.data = "x ^ (9 / 27) * 2 + 3 * 48 ^ 2 - 7 * x ^ (9 / 27)$"};
+    Expression expr = {.data = "x ^ (2 * x)$"};
     
     OutputFile = GetOutputFile(argc, argv);
 
@@ -46,8 +46,8 @@ int main(const int argc, const char *argv[])
     char tex_orig_simpl[TEX_EXPRESSION_LEN] = {};
     GetTexTreeData(orig_simpl.root_ptr, tex_orig_simpl, false);
 
-    fprintf(OutputFile, "By simple mathematical transformations: \\[ %s \\]\n \\newline", tex_orig_simpl);
-/*
+    fprintf(OutputFile, "By simple mathematical transformations: \\[ %s \\]\n \\newline ", tex_orig_simpl);
+
 
     fprintf(stderr, "before diff\n");
 
@@ -58,7 +58,7 @@ int main(const int argc, const char *argv[])
     char tex_derivative[TEX_EXPRESSION_LEN] = {};
     GetTexTreeData(derivative.root_ptr, tex_derivative, false);
 
-    fprintf(OutputFile, "Having counted the most obvious derivative, which the Soviet spermatozoa were actually able to calculate in their minds, we get: \\[ %s \\]\n \\newline", tex_derivative);
+    fprintf(OutputFile, "Having counted the most obvious derivative, which the Soviet spermatozoa were actually able to calculate in their minds, we get: \\[ %s \\]\n \\newline ", tex_derivative);
     DIFF_DUMP(&derivative);
     SimplifyExpr(&derivative);
 
@@ -82,7 +82,6 @@ int main(const int argc, const char *argv[])
     TreeDtor(&orig);
     TreeDtor(&orig_simpl);
     // TreeDtor(&derivative);
-*/
 
     fprintf(stderr, "END!\n");
     return 0;

@@ -73,7 +73,7 @@ void TreeRecalloc(Tree *tree, size_t new_capacity)
         tree->node_ptrs[prev_capacity + i] = new_nodes + i;
 }
 
-Node *NewNode(Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right)
+Node *NewNode(Tree *tree, NodeType type, NodeVal val, Node *left, Node *right)
 {
     assert(tree);
 
@@ -87,7 +87,7 @@ Node *NewNode(Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right
     assert(new_node);
     
     new_node->type  = type;
-    new_node->value = val;
+    new_node->val   = val;
     new_node->left  = left;
     new_node->right = right;
 
@@ -102,10 +102,10 @@ void RemoveNode(Tree *tree, Node **node)
     assert(node);
     assert(*node);
 
-    (*node)->left  = NULL;
-    (*node)->right = NULL;
-    (*node)->type  = POISON_TYPE;
-    (*node)->value = 0;
+    (*node)->left    = NULL;
+    (*node)->right   = NULL;
+    (*node)->type    = POISON_TYPE;
+    (*node)->val.num = 0;
     *node = NULL;
 }
 
@@ -126,10 +126,10 @@ char *NodeValToStr(Node *node, char *res_str)
     assert(res_str);
 
     if (node->type == NUM)
-        sprintf(res_str, TREE_ELEM_SPECIFIER, node->value);
+        sprintf(res_str, TREE_ELEM_SPECIFIER, node->val.num);
     
     else if (node->type == VAR)
-        sprintf(res_str, "%c", node->value);
+        sprintf(res_str, "%c", node->val.var);
 
     else if (node->type == OP)
     {
@@ -146,26 +146,35 @@ char *NodeValToStr(Node *node, char *res_str)
 
 void NodeValFromStr(char *dest_str, Node *node)
 {
-    TreeElem_t val = 0;
+    NodeVal val = {};
 
-    if (sscanf(dest_str, TREE_ELEM_SPECIFIER, &val) == 1)       // is NUM
+    if (sscanf(dest_str, TREE_ELEM_SPECIFIER, &val.num) == 1)       // is NUM
     {
         node->type  = NUM;
-        node->value = val;
+        node->val   = val;
     }
 
-    else if (strlen(dest_str) == 1 && isalpha(dest_str[0]))     // is VAR
+    else if (strlen(dest_str) == 1 && isalpha(dest_str[0]))         // is VAR
     {
-        node->type = VAR;
-        node->value = dest_str[0] - 'a';
+        node->type    = VAR;
+        node->val.var = dest_str[0] - 'a';
     }
 
-    else                                                        // is OP
+    else                                                            // is OP
     {
-        node->type = OP;
-        
         const Operation *cur_op = GetOperationBySymbol(dest_str);
-        node->value = cur_op->num;
+
+        if (cur_op != NULL)
+        {
+            node->type = OP;
+            node->val.op = cur_op->num;
+        }
+
+        else
+        {
+            node->type    = POISON_TYPE;
+            node->val.num = POISON_VAL;
+        }
     }
 }
 
@@ -226,7 +235,9 @@ Node *GetNodeFamily_prefix(Tree *tree, FILE *source_file)
     {
     // fprintf(stderr, "in cycle, node_val_str = '%s'\n", node_val_str);
 
-        Node *cur_node = NewNode(tree, POISON_TYPE, POISON_VAL, NULL, NULL);
+        NodeVal val = {.num = POISON_VAL};
+
+        Node *cur_node = NewNode(tree, POISON_TYPE, val, NULL, NULL);
         NodeValFromStr(node_val_str, cur_node);
 
         if (cur_node->type == OP)
@@ -289,7 +300,10 @@ Node *GetNodeFamily(Tree *tree, FILE *source_file)
         if (cur_op != NULL && cur_op->life_form == PREFIX)     // это префиксная операция
         {
             getc(source_file);  // съесть '('
-            cur_node = NewNode(tree, OP, cur_op->num, NULL, NULL);
+            
+            NodeVal val = {.op = cur_op->num};
+
+            cur_node = NewNode(tree, OP, val, NULL, NULL);
 
             if (cur_op->type == UNARY)
             {
@@ -314,7 +328,7 @@ Node *GetNodeFamily(Tree *tree, FILE *source_file)
 
         else    // это VAR, NUM или символ бинарной инфиксной операции
         {
-            cur_node = NewNode(tree, POISON_TYPE, POISON_VAL, NULL, NULL);
+            cur_node = NewNode(tree, POISON_TYPE, {.num = POISON_VAL}, NULL, NULL);
             NodeValFromStr(node_val_str, cur_node);
         }        
 
@@ -330,12 +344,12 @@ Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node)
 
     if (coping_node->type == NUM || coping_node->type == VAR)
     {
-        pasted_node = NewNode(dest_tree, coping_node->type, coping_node->value, NULL, NULL);
+        pasted_node = NewNode(dest_tree, coping_node->type, coping_node->val, NULL, NULL);
     }
 
     else
     {
-        pasted_node = NewNode(dest_tree, OP, coping_node->value, NULL, NULL);
+        pasted_node = NewNode(dest_tree, OP, coping_node->val, NULL, NULL);
 
         pasted_node->left  = TreeCopyPaste(source_tree, dest_tree, coping_node->left);
         pasted_node->right = TreeCopyPaste(source_tree, dest_tree, coping_node->right);
@@ -393,9 +407,9 @@ Node *ChangeToVar(Tree *tree, Node *cur_node)
     // if (CHECK_NODE_OP(start_node, ADD) || CHECK_NODE_OP(start_node, SUB))
     //     return start_node;
 
-    TreeElem_t new_node_name = (TreeElem_t) ('A' + tree->changed_vars.size);
+    char new_node_name = (char) ('A' + tree->changed_vars.size);
 
-    Node *new_var = NewNode(tree, VAR, new_node_name, NULL, NULL);
+    Node *new_var = NewNode(tree, VAR, {.var = new_node_name}, NULL, NULL);
     tree->changed_vars.data[0][tree->changed_vars.size++] = cur_node->left;
 
     return new_var;
@@ -438,7 +452,7 @@ bool SubtreeContComplicOperation(Node *cur_node)
     if (cur_node->type == VAR || cur_node->type == NUM)
         return false;
     
-    else if (cur_node->type == OP && cur_node->value != MUL && cur_node->value != DIV)        // дроби и произведения выносим как множители
+    else if (cur_node->type == OP && cur_node->val.op != MUL && cur_node->val.op != DIV)        // дроби и произведения выносим как множители
         return true;
 
     else
@@ -461,7 +475,7 @@ bool OpNodeIsCommutativity(Node *op_node)
 {
     assert(op_node);
 
-    if (op_node->type == OP && (op_node->value == ADD || op_node->value == MUL))
+    if (op_node->type == OP && (op_node->val.op == ADD || op_node->val.op == MUL))
         return true;
     
     else return false;

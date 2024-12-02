@@ -44,11 +44,19 @@ enum Variable
     VAR_Z = 25
 };
 
+union NodeVal
+{
+    TreeElem_t num;
+    char       var;
+    int        op;
+};
+
+
 struct Node
 {
     NodeType type;
 
-    TreeElem_t value;
+    NodeVal val;
 
     Node *left;
     Node *right;
@@ -85,7 +93,7 @@ struct Tree
 void    TreeCtor        (Tree *tree, size_t start_capacity ON_DIFF_DEBUG(, const char *name));
 void    TreeDtor        (Tree *tree);
 void    TreeRecalloc    (Tree *tree, size_t new_capacity);
-Node   *NewNode         (Tree *tree, NodeType type, TreeElem_t val, Node *left, Node *right);
+Node   *NewNode         (Tree *tree, NodeType type, NodeVal val, Node *left, Node *right);
 void    RemoveNode      (Tree *tree, Node **node);
 void    RemoveSubtree   (Tree *tree, Node **start_node);
 char   *NodeValToStr    (Node *node, char *res_str);
