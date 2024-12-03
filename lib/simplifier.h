@@ -3,7 +3,7 @@
 
 #include "diff_tree.h"
 
-void  SimplifyExpr      (Tree *expr_tree);
+void  SimplifyExpr      (Tree *expr_tree, Node *start_node);
 Node *SimplifyConstants (Tree *tree, Node *cur_node);
 Node *SimplifyVars      (Tree *tree, Node *cur_node);
 
@@ -31,14 +31,14 @@ Node *ComplexToTheRight (Node *cur_node);
 
 Node *RevealDoubleDeg   (Node *deg_node);
 
-Node *TakeOutConsts  (Tree *tree, Node *cur_node);                         // a + (b + x)   =>  (a + b) + x  или (a + f(x)) + g(x) => a + (f(x) + g(x))  и аналогично для умножения
-// Node *TakeOutConstsInMul  (Tree *tree, Node *cur_node);                         // a * (b * x)  =>  (a * b) * x   или (a * f(x)) * g(x) => a * (f(x) * g(x))
+Node *TakeOutConsts  (Tree *tree, Node *cur_node);                              // a + (b + x)   =>  (a + b) + x  или (a + f(x)) + g(x) => a + (f(x) + g(x))  и аналогично для умножения
+// Node *TakeOutConstsInMul  (Tree *tree, Node *cur_node);                      // a * (b * x)  =>  (a * b) * x   или (a * f(x)) * g(x) => a * (f(x) * g(x))
 Node *TakeOutConstsInDiv  (Tree *tree, Node *cur_node);                         // (a * x) / b  =>  (a / b) * x 
 
-void  SubToAdd            (Tree *tree);                                         // 8 - f => 8 + (-f)
-void  AddToSub            (Tree *tree);                                         // 8 + (-1) * f  =>  8 - f
-void  VarsToGeneralform   (Tree *tree);
-void  VarsToNormalForm    (Tree *tree);
+void  SubToAdd            (Tree *tree, Node *start_node);                       // 8 - x  =>  8 + (-1) * x
+void  AddToSub            (Tree *tree, Node *start_node);                                         // 8 + (-1) * f  =>  8 - f
+void  VarsToGeneralform   (Tree *tree, Node *start_node);
+void  VarsToNormalForm    (Tree *tree, Node *start_node);
 
 Node *FractionBecomesZero (Tree *tree, Node *div_node);
 bool  IsComplex           (Node *node);

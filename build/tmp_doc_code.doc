@@ -1,69 +1,78 @@
 digraph G{           
 bgcolor = "#FFF3D1";  
-node_000001e9c5f66590 [shape = "square", style = filled, fillcolor = "aquamarine", label = "x"]
-node_000001e9c5f665b0 [shape = "oval", style = filled, fillcolor = "pink", label = "2"]
-node_000001e9c5f665d0 [shape = "square", style = filled, fillcolor = "aquamarine", label = "x"]
-node_000001e9c5f665f0 [shape = "square", style = filled, fillcolor = "aquamarine", label = "x"]
-node_000001e9c5f66610 [shape = "oval", style = filled, fillcolor = "pink", label = "2"]
-node_000001e9c5f66630 [shape = "oval", style = filled, fillcolor = "pink", label = "3"]
-node_000001e9c5f66650 [shape = "oval", style = filled, fillcolor = "pink", label = "4"]
-node_000001e9c5f66670 [shape = "oval", style = filled, fillcolor = "pink", label = "5"]
-node_000001e9c5f66690 [shape = "oval", style = filled, fillcolor = "pink", label = "6"]
-node_000001e9c5f666b0 [shape = "oval", style = filled, fillcolor = "pink", label = "7"]
-node_000001e9c5f666d0 [shape = "oval", style = filled, fillcolor = "pink", label = "8"]
-node_000001e9c5f666f0 [shape = "oval", style = filled, fillcolor = "pink", label = "9"]
-node_000001e9c5f66710 [shape = "oval", style = filled, fillcolor = "pink", label = "10"]
-node_000001e9c5f66730 [shape = "oval", style = filled, fillcolor = "pink", label = "11"]
-node_000001e9c5f66750 [shape = "oval", style = filled, fillcolor = "pink", label = "12"]
-node_000001e9c5f66770 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000001e9c5f66790 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000001e9c5f667b0 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000001e9c5f667d0 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000001e9c5f667f0 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000001e9c5f66810 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000001e9c5f66830 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000001e9c5f66850 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000001e9c5f66870 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000001e9c5f66890 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000001e9c5f668b0 [shape = "tab", style = filled, fillcolor = "aqua", label = "A(0)"]
-node_000001e9c5f668b0_cpy [shape = "tab", style = filled, fillcolor = "grey", label = "A(0)"]
-node_000001e9c5f668d0 [shape = "record", style = filled, fillcolor = "azure", label = "{ln | { <L> L | <R> R } }"]
-node_000001e9c5f668f0 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000001e9c5f66910 [shape = "tab", style = filled, fillcolor = "aqua", label = "B(0)"]
-node_000001e9c5f66910_cpy [shape = "tab", style = filled, fillcolor = "grey", label = "B(0)"]
-node_000001e9c5f66930 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
-node_000001e9c5f66950 [shape = "record", style = filled, fillcolor = "azure", label = "{/ | { <L> L | <R> R } }"]
-node_000001e9c5f66970 [shape = "record", style = filled, fillcolor = "azure", label = "{* | { <L> L | <R> R } }"]
-node_000001e9c5f66770: <L> -> node_000001e9c5f66730
-node_000001e9c5f66770: <R> -> node_000001e9c5f66750
-node_000001e9c5f66790: <L> -> node_000001e9c5f66710
-node_000001e9c5f66790: <R> -> node_000001e9c5f66770
-node_000001e9c5f667b0: <L> -> node_000001e9c5f666f0
-node_000001e9c5f667b0: <R> -> node_000001e9c5f66790
-node_000001e9c5f667d0: <L> -> node_000001e9c5f666d0
-node_000001e9c5f667d0: <R> -> node_000001e9c5f667b0
-node_000001e9c5f667f0: <L> -> node_000001e9c5f666b0
-node_000001e9c5f667f0: <R> -> node_000001e9c5f667d0
-node_000001e9c5f66810: <L> -> node_000001e9c5f66690
-node_000001e9c5f66810: <R> -> node_000001e9c5f667f0
-node_000001e9c5f66830: <L> -> node_000001e9c5f66670
-node_000001e9c5f66830: <R> -> node_000001e9c5f66810
-node_000001e9c5f66850: <L> -> node_000001e9c5f66650
-node_000001e9c5f66850: <R> -> node_000001e9c5f66830
-node_000001e9c5f66870: <L> -> node_000001e9c5f66630
-node_000001e9c5f66870: <R> -> node_000001e9c5f66850
-node_000001e9c5f66890: <L> -> node_000001e9c5f66610
-node_000001e9c5f66890: <R> -> node_000001e9c5f66870
-node_000001e9c5f668b0_cpy -> node_000001e9c5f66950[style = "dashed", arrowhead = "dot", color = "darkgreen"]
-node_000001e9c5f668d0: <L> -> node_000001e9c5f668b0
-node_000001e9c5f668d0: <R> -> node_000001e9c5f668b0
-node_000001e9c5f668f0: <L> -> node_000001e9c5f665d0
-node_000001e9c5f668f0: <R> -> node_000001e9c5f668d0
-node_000001e9c5f66910_cpy -> node_000001e9c5f66970[style = "dashed", arrowhead = "dot", color = "darkgreen"]
-node_000001e9c5f66930: <L> -> node_000001e9c5f66590
-node_000001e9c5f66930: <R> -> node_000001e9c5f66910
-node_000001e9c5f66950: <L> -> node_000001e9c5f665f0
-node_000001e9c5f66950: <R> -> node_000001e9c5f66890
-node_000001e9c5f66970: <L> -> node_000001e9c5f665b0
-node_000001e9c5f66970: <R> -> node_000001e9c5f668f0
+node_0000022dd6257df0 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
+node_0000022dd6257e10 [shape = "oval", style = filled, fillcolor = "pink", label = "2"]
+node_0000022dd6257e30 [shape = "tab", style = filled, fillcolor = "aqua", label = "A(0)"]
+node_0000022dd6257e30_cpy [shape = "tab", style = filled, fillcolor = "grey", label = "A(0)"]
+node_0000022dd6257e50 [shape = "record", style = filled, fillcolor = "azure", label = "{* | { <L> L | <R> R } }"]
+node_0000022dd6257e70 [shape = "oval", style = filled, fillcolor = "pink", label = "2"]
+node_0000022dd6257e90 [shape = "square", style = filled, fillcolor = "aquamarine", label = "x"]
+node_0000022dd6257eb0 [shape = "oval", style = filled, fillcolor = "pink", label = "2"]
+node_0000022dd6257ed0 [shape = "record", style = filled, fillcolor = "azure", label = "{ln | { <L> L | <R> R } }"]
+node_0000022dd6257ef0 [shape = "record", style = filled, fillcolor = "azure", label = "{* | { <L> L | <R> R } }"]
+node_0000022dd6257f50 [shape = "oval", style = filled, fillcolor = "pink", label = "2"]
+node_0000022dd6257f70 [shape = "tab", style = filled, fillcolor = "aqua", label = "A(1)"]
+node_0000022dd6257f70_cpy [shape = "tab", style = filled, fillcolor = "grey", label = "A(1)"]
+node_0000022dd6257f90 [shape = "record", style = filled, fillcolor = "azure", label = "{* | { <L> L | <R> R } }"]
+node_0000022dd6257fd0 [shape = "tab", style = filled, fillcolor = "aqua", label = "B(1)"]
+node_0000022dd6257fd0_cpy [shape = "tab", style = filled, fillcolor = "grey", label = "B(1)"]
+node_0000022dd6257ff0 [shape = "record", style = filled, fillcolor = "azure", label = "{+ | { <L> L | <R> R } }"]
+node_0000022dd62582f0 [shape = "record", style = filled, fillcolor = "azure", label = "{* | { <L> L | <R> R } }"]
+node_0000022dd62583d0 [shape = "oval", style = filled, fillcolor = "pink", label = "216"]
+node_0000022dd62583f0 [shape = "square", style = filled, fillcolor = "aquamarine", label = "x"]
+node_0000022dd6258450 [shape = "oval", style = filled, fillcolor = "pink", label = "2"]
+node_0000022dd62584b0 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
+node_0000022dd62586b0 [shape = "oval", style = filled, fillcolor = "pink", label = "2"]
+node_0000022dd62586d0 [shape = "record", style = filled, fillcolor = "azure", label = "{- | { <L> L | <R> R } }"]
+node_0000022dd62586f0 [shape = "record", style = filled, fillcolor = "azure", label = "{* | { <L> L | <R> R } }"]
+node_0000022dd6258750 [shape = "tab", style = filled, fillcolor = "aqua", label = "B(0)"]
+node_0000022dd6258750_cpy [shape = "tab", style = filled, fillcolor = "grey", label = "B(0)"]
+node_0000022dd6258770 [shape = "record", style = filled, fillcolor = "azure", label = "{* | { <L> L | <R> R } }"]
+node_0000022dd6258790 [shape = "oval", style = filled, fillcolor = "pink", label = "72"]
+node_0000022dd62587b0 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
+node_0000022dd62587d0 [shape = "square", style = filled, fillcolor = "aquamarine", label = "x"]
+node_0000022dd62587f0 [shape = "oval", style = filled, fillcolor = "pink", label = "3"]
+node_0000022dd6258810 [shape = "record", style = filled, fillcolor = "azure", label = "{^ | { <L> L | <R> R } }"]
+node_0000022dd6258830 [shape = "record", style = filled, fillcolor = "azure", label = "{/ | { <L> L | <R> R } }"]
+node_0000022dd6258a30 [shape = "oval", style = filled, fillcolor = "pink", label = "9"]
+node_0000022dd6259110 [shape = "oval", style = filled, fillcolor = "pink", label = "-9"]
+node_0000022dd62591d0 [shape = "square", style = filled, fillcolor = "aquamarine", label = "x"]
+node_0000022dd62591f0 [shape = "tab", style = filled, fillcolor = "aqua", label = "C(1)"]
+node_0000022dd62591f0_cpy [shape = "tab", style = filled, fillcolor = "grey", label = "C(1)"]
+node_0000022dd6259210 [shape = "record", style = filled, fillcolor = "azure", label = "{+ | { <L> L | <R> R } }"]
+node_0000022dd6257df0: <L> -> node_0000022dd6257e10
+node_0000022dd6257df0: <R> -> node_0000022dd6257e30
+node_0000022dd6257e30_cpy -> node_0000022dd6257e50[style = "dashed", arrowhead = "dot", color = "darkgreen"]
+node_0000022dd6257e50: <L> -> node_0000022dd6257e70
+node_0000022dd6257e50: <R> -> node_0000022dd6257e90
+node_0000022dd6257ed0: <L> -> node_0000022dd6257eb0
+node_0000022dd6257ed0: <R> -> node_0000022dd6257eb0
+node_0000022dd6257ef0: <L> -> node_0000022dd6257df0
+node_0000022dd6257ef0: <R> -> node_0000022dd6257ed0
+node_0000022dd6257f70_cpy -> node_0000022dd6257f50[style = "dashed", arrowhead = "dot", color = "darkgreen"]
+node_0000022dd6257f90: <L> -> node_0000022dd6257ef0
+node_0000022dd6257f90: <R> -> node_0000022dd6257f70
+node_0000022dd6257fd0_cpy -> node_0000022dd62582f0[style = "dashed", arrowhead = "dot", color = "darkgreen"]
+node_0000022dd6257ff0: <L> -> node_0000022dd6259110
+node_0000022dd6257ff0: <R> -> node_0000022dd6257fd0
+node_0000022dd62582f0: <L> -> node_0000022dd62583d0
+node_0000022dd62582f0: <R> -> node_0000022dd62584b0
+node_0000022dd62584b0: <L> -> node_0000022dd62583f0
+node_0000022dd62584b0: <R> -> node_0000022dd6258450
+node_0000022dd62586d0: <L> -> node_0000022dd62586f0
+node_0000022dd62586d0: <R> -> node_0000022dd6258750
+node_0000022dd62586f0: <L> -> node_0000022dd6258a30
+node_0000022dd62586f0: <R> -> node_0000022dd62591d0
+node_0000022dd6258750_cpy -> node_0000022dd6258770[style = "dashed", arrowhead = "dot", color = "darkgreen"]
+node_0000022dd6258770: <L> -> node_0000022dd6258790
+node_0000022dd6258770: <R> -> node_0000022dd62587b0
+node_0000022dd62587b0: <L> -> node_0000022dd62587d0
+node_0000022dd62587b0: <R> -> node_0000022dd62587f0
+node_0000022dd6258810: <L> -> node_0000022dd62586d0
+node_0000022dd6258810: <R> -> node_0000022dd62586b0
+node_0000022dd6258830: <L> -> node_0000022dd6257ff0
+node_0000022dd6258830: <R> -> node_0000022dd6258810
+node_0000022dd62591f0_cpy -> node_0000022dd6258830[style = "dashed", arrowhead = "dot", color = "darkgreen"]
+node_0000022dd6259210: <L> -> node_0000022dd6257f90
+node_0000022dd6259210: <R> -> node_0000022dd62591f0
 } 

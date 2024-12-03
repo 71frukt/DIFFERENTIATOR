@@ -102,6 +102,9 @@ void RemoveNode(Tree *tree, Node **node)
     assert(node);
     assert(*node);
 
+    // if ((*node)->type == CHANGE)
+    //     RemoveSubtree(tree, &(*node)->val.change->target_node);
+
     (*node)->left    = NULL;
     (*node)->right   = NULL;
     (*node)->type    = POISON_TYPE;
@@ -111,6 +114,9 @@ void RemoveNode(Tree *tree, Node **node)
 
 void RemoveSubtree(Tree *tree, Node **start_node)
 {
+    if ((*start_node)->type == CHANGE)
+        RemoveSubtree(tree, &((*start_node)->val.change->target_node));
+
     if ((*start_node)->left != NULL)
         RemoveSubtree(tree, &(*start_node)->left);
     if ((*start_node)->right != NULL)
@@ -350,12 +356,26 @@ Node *TreeCopyPaste(Tree *source_tree, Tree *dest_tree, Node *coping_node)
         pasted_node = NewNode(dest_tree, coping_node->type, coping_node->val, NULL, NULL);
     }
 
-    else
+    else if (coping_node->type == CHANGE)
+    {
+        Change *pasted_change = &(dest_tree->changed_vars.data[dest_tree->changed_vars.size++]);
+
+        *pasted_change = *coping_node->val.change;
+
+        pasted_node = NewNode(dest_tree, coping_node->type, {.change = pasted_change}, NULL, NULL);
+        pasted_node->val.change->target_node = TreeCopyPaste(source_tree, dest_tree, coping_node->val.change->target_node);
+    }
+
+    else if (coping_node->type == OP)
     {
         pasted_node = NewNode(dest_tree, OP, coping_node->val, NULL, NULL);
 
         pasted_node->left  = TreeCopyPaste(source_tree, dest_tree, coping_node->left);
-        pasted_node->right = TreeCopyPaste(source_tree, dest_tree, coping_node->right);
+
+        if (GetOperationByNode(pasted_node)->type == BINARY)
+            pasted_node->right = TreeCopyPaste(source_tree, dest_tree, coping_node->right);
+
+        else (pasted_node->right = pasted_node->left);
     }
 
     return pasted_node;
@@ -382,9 +402,6 @@ void SplitTree(Tree *tree, Node *cur_node)
     SplitTree(tree, cur_node->left);
     SplitTree(tree, cur_node->right);
 
-    if (CHECK_NODE_OP(cur_node, ADD) || CHECK_NODE_OP(cur_node, SUB))
-        return;
-
     if (IsSuitableForChange(cur_node, cur_node->left))
         ChangeToVar(tree, cur_node->left);
 
@@ -402,7 +419,7 @@ Node *ChangeToVar(Tree *tree, Node *cur_node)
 
     char new_node_name = (char) ('A' + tree->changed_vars.size);
 
-    Change *new_change = &(tree->changed_vars.data[0][tree->changed_vars.size++]);
+    Change *new_change = &(tree->changed_vars.data[tree->changed_vars.size++]);
 
     new_change->derivative_num = 0;
     new_change->name = new_node_name;
@@ -429,7 +446,7 @@ bool IsSuitableForChange(Node *op_node, Node *arg)
 
     if (CHECK_NODE_OP(op_node, ADD) || CHECK_NODE_OP(op_node, SUB) || CHECK_NODE_OP(op_node, MUL) || CHECK_NODE_OP(op_node, DIV))
     {
-        if (GetTreeHeight(arg) > MIN_SPLIT_HEIGHT)
+        if (GetTreeHeight(arg) >= MIN_SPLIT_HEIGHT)
             return true;
         
         else
@@ -443,28 +460,27 @@ bool IsSuitableForChange(Node *op_node, Node *arg)
 bool SubtreeContainsVar(Node *cur_node)
 {
     assert(cur_node);
+    return (SubtreeContainsType(cur_node, VAR) || SubtreeContainsType(cur_node, CHANGE));
+}
 
+bool SubtreeContainsType(Node *cur_node, NodeType type)
+{
     if (cur_node == NULL)
         return false;
 
-    else if (cur_node->type == VAR)
+    else if (cur_node->type == type)
         return true;
-    
-    else if (cur_node->type == NUM || cur_node->type == CHANGE)
-        return false;
 
-    else        // if OP
+    else
     {
-        bool left_subtree_cont_var = SubtreeContainsVar(cur_node->left);
+        bool left_subtree_cont_type = SubtreeContainsType(cur_node->left, type);
 
-        const Operation *cur_op = GetOperationByNode(cur_node);
+        bool right_subtree_cont_type = false;
 
-        bool right_subtree_cont_var = false;
+        if (cur_node->type == OP && GetOperationByNode(cur_node)->type == BINARY)       // чтобы не проходить одну и ту же ветку дважды для унарной операции
+            right_subtree_cont_type = SubtreeContainsType(cur_node->right, type);
 
-        if (cur_op->type == BINARY)
-            right_subtree_cont_var = SubtreeContainsVar(cur_node->right);
-
-        return (left_subtree_cont_var || right_subtree_cont_var);
+        return (left_subtree_cont_type || right_subtree_cont_type);
     }
 }
 

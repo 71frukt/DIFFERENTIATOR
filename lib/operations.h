@@ -85,14 +85,14 @@ enum Operation_enum
 const int OPERATIONS_NUM = 11;
 
 const Operation Operations[OPERATIONS_NUM] = 
-{                                                              // life   tex
+{                                                              // life    tex
     { .num = ADD, .symbol = "+",   .tex_code = "+",      BINARY, INFIX,  INFIX,  .op_func = Add, .diff_func = DiffAdd, .simpl_nums_func = SimplNumsAdd,  .simpl_vars_func = SimplVarsAdd  },
     { .num = SUB, .symbol = "-",   .tex_code = "-",      BINARY, INFIX,  INFIX,  .op_func = Sub, .diff_func = DiffSub, .simpl_nums_func = SimplNumsSub,  .simpl_vars_func = SimplVarsArgs },
     { .num = MUL, .symbol = "*",   .tex_code = "\\cdot", BINARY, INFIX,  INFIX,  .op_func = Mul, .diff_func = DiffMul, .simpl_nums_func = SimplNumsMul,  .simpl_vars_func = SimplVarsMul  },
     { .num = DIV, .symbol = "/",   .tex_code = "\\frac", BINARY, INFIX,  PREFIX, .op_func = Div, .diff_func = DiffDiv, .simpl_nums_func = SimplNumsDiv,  .simpl_vars_func = SimplVarsArgs },
     { .num = DEG, .symbol = "^",   .tex_code = "^",      BINARY, INFIX,  INFIX,  .op_func = Deg, .diff_func = DiffDeg, .simpl_nums_func = SimplNumsDeg,  .simpl_vars_func = SimplVarsArgs },
 
-    { .num = LN,  .symbol = "ln",  .tex_code = "\\ln",   UNARY,  INFIX,  PREFIX, .op_func = Ln,  .diff_func = DiffLn,  .simpl_nums_func = SimplNumsArgs, .simpl_vars_func = SimplVarsArgs },
+    { .num = LN,  .symbol = "ln",  .tex_code = "\\ln",   UNARY,  PREFIX, PREFIX, .op_func = Ln,  .diff_func = DiffLn,  .simpl_nums_func = SimplNumsArgs, .simpl_vars_func = SimplVarsArgs },
     { .num = LOG, .symbol = "log", .tex_code = "\\log_", BINARY, PREFIX, PREFIX, .op_func = Log, .diff_func = DiffLog, .simpl_nums_func = SimplNumsArgs, .simpl_vars_func = SimplVarsArgs },
 
     { .num = SIN, .symbol = "sin", .tex_code = "\\sin",  UNARY,  PREFIX, PREFIX, .op_func = Sin, .diff_func = DiffSin, .simpl_nums_func = SimplNumsArgs, .simpl_vars_func = SimplVarsArgs },

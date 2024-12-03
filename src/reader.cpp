@@ -158,8 +158,8 @@ Node *GetFunc(Expression *expr, Tree *dest_tree)
     {
         expr->ip += shift;
 
-        if (op->life_form != INFIX)
-            SYNTAX_ERROR(expr, "op->life_form != INFIX");
+        if (op->life_form == INFIX)
+            SYNTAX_ERROR(expr, "op->life_form == INFIX");
 
         if (op->type == UNARY)
         {

@@ -23,6 +23,7 @@ const char *OperationToTex(int node_op)
 const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
 {
     assert(start_node);
+    assert(dest_str);
 
     char node_val_str[LABEL_LENGTH] = {};
 
@@ -190,24 +191,25 @@ void PrintChangedVarsTex(Tree *tree, FILE *output_file)
 
     ChangedVars *changed_vars = &tree->changed_vars;
 
-    for (size_t derivative_num = 0; derivative_num < CHANGED_VARS_DERIVATIVE_NUM; derivative_num++)
+    // for (int i = (int) changed_vars->size - 1; i >= 0; i--)
+    // {
+    for (size_t i = 0; i < changed_vars->size; i++)
     {
-        for (int var_num = (int) changed_vars->size - 1; var_num >= 0; var_num--)
-        {
-            Change *cur_change = &(changed_vars->data[derivative_num][var_num]);
+        Change *cur_change = &(changed_vars->data[i]);
 
-            if (cur_change->target_node == NULL)
-                continue;
+        if (cur_change->target_node == NULL)
+            continue;
 
-            char tex_change_name[TEX_CHANGE_NAME_LEN] = {};
-            GetTexChangedVarName(cur_change, tex_change_name);
+        char tex_change_name[TEX_CHANGE_NAME_LEN] = {};
+        GetTexChangedVarName(cur_change, tex_change_name);
 
-            char tex_subtree[TEX_EXPRESSION_LEN] = {};
-            GetTexTreeData(cur_change->target_node, tex_subtree, false);
+        char tex_subtree[TEX_EXPRESSION_LEN] = {};
+        GetTexTreeData(cur_change->target_node, tex_subtree, false);
 
-            fprintf(output_file, "$%s = %s$\n\n", tex_change_name, tex_subtree);
-        }
+        fprintf(output_file, "$%s = %s$\n\\newline\\newline\n", tex_change_name, tex_subtree);
     }
+    
+    fprintf(output_file, "\\newline\n");
 }
 
 void GetTexChangedVarName(Change *change, char *res_name)

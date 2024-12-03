@@ -15,8 +15,9 @@ int main(const int argc, const char *argv[])
 {
     fprintf(stderr, "START!\n");
 
-    // Expression expr = {.data = "1 / x$"};
-    Expression expr = {.data = "x ^ (2 * x ^ ln(x / 2 ^ 3 ^ 4 ^ 5 ^ 6 ^ 7 ^ 8 ^ 9 ^ 10 ^ 11 ^ 12))$"};
+    // Expression expr = {.data = "5 * 6$"};
+    Expression expr = {.data = "2 ^ (2 * x) + 2 ^ (2) / 36 / (x - 8 * x ^ 3)$"};
+    // Expression expr = {.data = "1 / (x ^ (1 / 2))$"};
     
     OutputFile = GetOutputFile(argc, argv);
 
@@ -29,19 +30,9 @@ int main(const int argc, const char *argv[])
 
     char tex_orig[TEX_EXPRESSION_LEN] = {};
     GetTexTreeData(orig.root_ptr, tex_orig, false);
-    fprintf(OutputFile, "The original expression has the form \\[ %s \\]\n\n", tex_orig);
+    fprintf(OutputFile, "The original expression has the form \\[f(x) = %s \\]\n\n", tex_orig);
 
-    SplitTree(&orig, orig.root_ptr);
 
-    tex_orig[0] = '\0';
-    GetTexTreeData(orig.root_ptr, tex_orig, false);
-    fprintf(OutputFile, "The original expression has new form \\[ %s \\]\n\n", tex_orig);
-
-    DIFF_DUMP(&orig);
-
-    PrintChangedVarsTex(&orig, OutputFile);
-/*
-    // SplitTree(&orig, orig.root_ptr);
     DIFF_DUMP(&orig);
     Tree orig_simpl = {};
     TreeCtor(&orig_simpl, START_TREE_SIZE, "orig_simpl");
@@ -49,31 +40,43 @@ int main(const int argc, const char *argv[])
 
     DIFF_DUMP(&orig_simpl);
 
-    SimplifyExpr(&orig_simpl);
+    SimplifyExpr(&orig_simpl, orig_simpl.root_ptr);
+    SplitTree(&orig_simpl, orig_simpl.root_ptr);
 
-    char tex_orig_simpl[TEX_EXPRESSION_LEN] = {};
-    GetTexTreeData(orig_simpl.root_ptr, tex_orig_simpl, false);
+    char tex_split[TEX_EXPRESSION_LEN] = {};
+    GetTexTreeData(orig_simpl.root_ptr, tex_split, false);
+    fprintf(OutputFile, "after making substitutions, we will get: \\newline\n \\[f(x) = %s\\]\\newline\n", tex_split);
+    PrintChangedVarsTex(&orig_simpl, OutputFile);
 
-    fprintf(OutputFile, "By simple mathematical transformations: \\[ %s \\]\n\n \\newline ", tex_orig_simpl);
+    DIFF_DUMP(&orig_simpl);
 
+    // tex_orig_simpl[0] = '\0';
+    // GetTexTreeData(orig_simpl.root_ptr, tex_orig_simpl, false);
+    // fprintf(OutputFile, "The simple original expression has new form \\[ %s \\]\n\n", tex_orig_simpl);
+    // PrintChangedVarsTex(&orig_simpl, OutputFile);
 
     fprintf(stderr, "before diff\n");
 
     Tree derivative = {};
     TreeCtor(&derivative, START_TREE_SIZE, "derivative");
+    derivative.root_ptr = derivative.node_ptrs[0];              // TODO: нахуй
     derivative.root_ptr = TakeDifferential(&orig_simpl, orig_simpl.root_ptr, &derivative);
 
     char tex_derivative[TEX_EXPRESSION_LEN] = {};
     GetTexTreeData(derivative.root_ptr, tex_derivative, false);
 
-    fprintf(OutputFile, "Having counted the most obvious derivative, which the Soviet spermatozoa were actually able to calculate in their minds, we get: \\[ %s \\]\n \\newline ", tex_derivative);
-    DIFF_DUMP(&derivative);
-    SimplifyExpr(&derivative);
+    fprintf(OutputFile, "In total, we imeem(poimeem): \\newline\\[f'(x) = %s\\]\n\\newline\n", tex_derivative);
+    PrintChangedVarsTex(&derivative, OutputFile);
 
-    char tex_derivative_simpl[TEX_EXPRESSION_LEN] = {};
-    GetTexTreeData(derivative.root_ptr, tex_derivative_simpl, false);
+    // fprintf(OutputFile, "Having counted the most obvious derivative, which the Soviet spermatozoa were actually able to calculate in their minds, we get: \\[ %s \\]\n \\newline ", tex_derivative);
+    // DIFF_DUMP(&derivative);
+    // SimplifyExpr(&derivative, derivative.root_ptr);
 
-    fprintf(OutputFile, "By simple mathematical transformations: \\[ %s \\]\n", tex_derivative_simpl);
+    // char tex_derivative_simpl[TEX_EXPRESSION_LEN] = {};
+    // GetTexTreeData(derivative.root_ptr, tex_derivative_simpl, false);
+
+    // fprintf(OutputFile, "By simple mathematical transformations: \\[ %s \\]\n", tex_derivative_simpl);
+    // PrintChangedVarsTex(&derivative, OutputFile);
 
 //     char tex3[TEX_EXPRESSION_LEN] = {};
 //     GetTexTreeData(solving.root_ptr, tex3, false);
@@ -89,8 +92,7 @@ int main(const int argc, const char *argv[])
 //     TreeDtor(&solving);
     TreeDtor(&orig);
     TreeDtor(&orig_simpl);
-    // TreeDtor(&derivative);
-*/
+    TreeDtor(&derivative);
 
     fprintf(stderr, "END!\n");
     return 0;

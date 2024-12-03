@@ -14,8 +14,8 @@ const int TREE_ALLOC_MARKS_NUM        = 20;            // конечная вместимость l
 const int START_TREE_SIZE             = 100;
 const int LABEL_LENGTH                = 50;
 const int MIN_SPLIT_HEIGHT            = 3;
-const int CHANGED_VARS_NUM            = 26;            // A-Z
-const int CHANGED_VARS_DERIVATIVE_NUM = 4;
+const int CHANGED_VARS_NUM            = 30;
+const int CHANGED_VARS_DERIVATIVE_NUM = 3;
 
 const TreeElem_t POISON_VAL    = 0xDEB11;
 
@@ -81,7 +81,7 @@ struct TreeAllocMarks
 
 struct ChangedVars
 {
-    Change data[CHANGED_VARS_DERIVATIVE_NUM][CHANGED_VARS_NUM];
+    Change data[CHANGED_VARS_NUM];
     size_t size;
 };
 
@@ -121,6 +121,7 @@ Node   *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
 bool    IsSuitableForChange(Node *op_node, Node *arg);
 bool    IsTrigonometric    (int op);
 bool    SubtreeContainsVar (Node *cur_node);
+bool    SubtreeContainsType(Node *cur_node, NodeType type);
 bool    SubtreeContComplicOperation(Node *cur_node);
 bool    OpNodeIsCommutativity(Node *op_node);
 

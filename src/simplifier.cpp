@@ -5,45 +5,61 @@
 #include "operations.h"
 #include "diff_tree.h"
 #include "diff_debug.h"
+#include "tex_work.h"
 
 extern FILE *LogFile;
+extern FILE *OutputFile;
 
-void SimplifyExpr(Tree *expr_tree)
+void SimplifyExpr(Tree *expr_tree, Node *start_node)
 {
+    assert(expr_tree);
+    assert(start_node);
+
     fprintf(stderr, "rabotaet yproshalka\n");
+    char orig_tex[TEX_EXPRESSION_LEN] = {};
+    GetTexTreeData(start_node, orig_tex, false);
+DIFF_DUMP(expr_tree);
+    SubToAdd(expr_tree, start_node);
+fprintf(LogFile, "after SubToAdd()\n");
+DIFF_DUMP(expr_tree);
 
-    SubToAdd(expr_tree);
-
-    VarsToGeneralform(expr_tree);                   // x --> 1 * x ^ 1
+    VarsToGeneralform(expr_tree, start_node);                   // x --> 1 * x ^ 1
+fprintf(LogFile, "after VarsToGeneralform()\n");
+DIFF_DUMP(expr_tree);
 
     fprintf(LogFile, "before SimplifyConstants()\n");
     DIFF_DUMP(expr_tree);
-    SimplifyConstants (expr_tree, expr_tree->root_ptr);
+    SimplifyConstants (expr_tree, start_node);
 
-    SimplifyVars      (expr_tree, expr_tree->root_ptr);
+    SimplifyVars      (expr_tree, start_node);
 
-    SimplifyConstants (expr_tree, expr_tree->root_ptr);
+    SimplifyConstants (expr_tree, start_node);
 
  fprintf(LogFile, "before VarsToNormalForm()\n");
     DIFF_DUMP(expr_tree);
 
-    VarsToNormalForm(expr_tree);
+    VarsToNormalForm(expr_tree, start_node);
 
 fprintf(LogFile, "before AddToSub()\n");
     DIFF_DUMP(expr_tree);
 
-    AddToSub(expr_tree);
+    AddToSub(expr_tree, start_node);
 
     DIFF_DUMP(expr_tree);
+
+    char simpl_tex[TEX_EXPRESSION_LEN] = {};
+    GetTexTreeData(start_node, simpl_tex, false);
+    fprintf(OutputFile, "By the too simple mathematical transformations:\n $%s = %s$ \n \\newline\n \\newline \n", orig_tex, simpl_tex);
 
     fprintf(stderr, "zakonchila yproshalka\n");
 }
 
 Node *SimplifyConstants(Tree *tree, Node *cur_node)
 {
+    assert(tree);
     assert(cur_node);
 
-    fprintf(stderr, "root_ptr = %p\n", tree->root_ptr);
+    fprintf(stderr, "root_ptr = %p , !%s\n", tree->root_ptr, tree->name);
 
     const Operation *op  = GetOperationByNode(cur_node);
 
@@ -457,7 +473,6 @@ Node *SimplNumsArgs(Tree *tree, Node *op_node)
 
     if (left_op != NULL)
         op_node->left = left_op->simpl_nums_func(tree, op_node->left);
-
     
     if (this_op->type == BINARY)
     {
@@ -466,6 +481,9 @@ Node *SimplNumsArgs(Tree *tree, Node *op_node)
         if (right_op != NULL)
             op_node->right = right_op->simpl_nums_func(tree, op_node->right);
     }
+
+    // else
+    //     op_node->right = op_node->left;
 
     return op_node;
 }
@@ -495,6 +513,11 @@ Node *SimplVarsArgs(Tree *tree, Node *op_node)
             op_node->right = right_op->simpl_vars_func(tree, op_node->right);
     }
 
+    // else 
+    // {
+    //     fprintf(stderr, "\n\n\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n");
+    //     op_node->right = op_node->left;
+    // }
     return op_node;
 }
 
@@ -812,145 +835,260 @@ Node *FractionBecomesZero(Tree *tree, Node *div_node)
     return div_node;
 }
 
-void SubToAdd(Tree *tree)                                           // 8 - x  =>  8 + (-1) * x
+void SubToAdd(Tree *tree, Node *start_node)                                           // 8 - x  =>  8 + (-1) * x
 {
     assert(tree);
 
-    for (size_t i = 0; i < tree->size; i++)
+    if (start_node == NULL || start_node->type != OP)
+        return;
+
+    SubToAdd(tree, start_node->left);
+    SubToAdd(tree, start_node->right);
+
+    if (CHECK_NODE_OP(start_node, SUB))
     {
-        Node *cur_node = tree->node_ptrs[i];
-
-        if (cur_node == NULL)
-            continue;
-
-        if (CHECK_NODE_OP(cur_node, SUB))
-        {
-            Node *minus = NewNode(tree, NUM, {.num = -1}, NULL, NULL);
-            cur_node->right = NewNode(tree, OP, {.op = MUL}, minus, cur_node->right);
-            cur_node->val.op = ADD;
-        }
+        Node *minus = NewNode(tree, NUM, {.num = -1}, NULL, NULL);
+        start_node->right = NewNode(tree, OP, {.op = MUL}, minus, start_node->right);
+        start_node->val.op = ADD;
     }
+
+    // for (size_t i = 0; i < tree->size; i++)
+    // {
+    //     Node *cur_node = tree->node_ptrs[i];
+
+    //     if (cur_node == NULL)
+    //         continue;
+
+    //     if (CHECK_NODE_OP(cur_node, SUB))
+    //     {
+    //         Node *minus = NewNode(tree, NUM, {.num = -1}, NULL, NULL);
+    //         cur_node->right = NewNode(tree, OP, {.op = MUL}, minus, cur_node->right);
+    //         cur_node->val.op = ADD;
+    //     }
+    // }
 }
 
-void VarsToGeneralform(Tree *tree)
+void VarsToGeneralform(Tree *tree, Node *start_node)
 {
     assert(tree);
 
-    size_t start_tree_size = tree->size;
+    if (start_node == NULL)
+        return;
 
-    for (size_t i = 0; i < start_tree_size; i++)
+    if (start_node->type == OP)
     {
-        Node *cur_node = tree->node_ptrs[i];
-
-        if (cur_node == NULL)
-            continue;
-
-        if (cur_node->type == VAR)
-        {
-            Node *cur_node_cpy = TreeCopyPaste(tree, tree, cur_node);
-
-            Node *degree     = NewNode(tree, NUM, {.num = 1}, NULL, NULL);
-            Node *multiplier = NewNode(tree, NUM, {.num = 1}, NULL, NULL);
-
-            Node *deg_node   = NewNode(tree, OP, {.op = DEG}, cur_node_cpy, degree);
-
-            cur_node->left   = multiplier;
-            cur_node->right  = deg_node;
-            cur_node->type   = OP;
-            cur_node->val.op = MUL;
-        }
+        VarsToGeneralform(tree, start_node->left);
+        VarsToGeneralform(tree, start_node->right);
     }
+
+    else if (start_node->type == VAR)
+    {
+        Node *start_node_cpy = TreeCopyPaste(tree, tree, start_node);
+
+        Node *degree     = NewNode(tree, NUM, {.num = 1}, NULL, NULL);
+        Node *multiplier = NewNode(tree, NUM, {.num = 1}, NULL, NULL);
+
+        Node *deg_node   = NewNode(tree, OP, {.op = DEG}, start_node_cpy, degree);
+
+        start_node->left   = multiplier;
+        start_node->right  = deg_node;
+        start_node->type   = OP;
+        start_node->val.op = MUL;
+    }
+
+    // size_t start_tree_size = tree->size;
+
+    // for (size_t i = 0; i < start_tree_size; i++)
+    // {
+    //     Node *cur_node = tree->node_ptrs[i];
+
+    //     if (cur_node == NULL)
+    //         continue;
+
+    //     if (cur_node->type == VAR)
+    //     {
+    //         Node *cur_node_cpy = TreeCopyPaste(tree, tree, cur_node);
+
+    //         Node *degree     = NewNode(tree, NUM, {.num = 1}, NULL, NULL);
+    //         Node *multiplier = NewNode(tree, NUM, {.num = 1}, NULL, NULL);
+
+    //         Node *deg_node   = NewNode(tree, OP, {.op = DEG}, cur_node_cpy, degree);
+
+    //         cur_node->left   = multiplier;
+    //         cur_node->right  = deg_node;
+    //         cur_node->type   = OP;
+    //         cur_node->val.op = MUL;
+    //     }
+    // }
 }
 
-void VarsToNormalForm(Tree *tree)
+void VarsToNormalForm(Tree *tree, Node *start_node)
 {
     assert(tree);
 
-    for (size_t i = 0; i < tree->size; i++)
+    fprintf(stderr, "in VarsToNormalForm()\n");
+
+    if (start_node == NULL || start_node->type != OP)
+        return;
+
+    VarsToNormalForm(tree, start_node->left);
+    VarsToNormalForm(tree, start_node->right);
+
+    if (!CHECK_NODE_OP(start_node, MUL))
+        return;
+
+    Node *multiplier = start_node->left;
+    Node *deg_node   = start_node->right;
+
+    if (IsSimpleVarMember(start_node) && deg_node->right->type == NUM && deg_node->right->val.num == 1)
     {
-        Node *cur_node = tree->node_ptrs[i];
+        fprintf(stderr, "\nGOVNO 11\n");
+        Node new_node = *deg_node->left;
 
-        if (cur_node == NULL || cur_node->type != OP || !CHECK_NODE_OP(cur_node, MUL))
-            continue;
+        RemoveNode(tree, &deg_node->left);
+        RemoveNode(tree, &deg_node->right);
 
-        Node *multiplier = cur_node->left;
-        Node *deg_node   = cur_node->right;
+        *deg_node = new_node;
+    }
+    
+    if (multiplier->type == NUM && multiplier->val.num == 1)
+    {
+        fprintf(stderr, "\nGOVNO 22\n");
 
-        if (IsSimpleVarMember(cur_node) && deg_node->right->type == NUM && deg_node->right->val.num == 1)
-        {
-            fprintf(stderr, "\nGOVNO 11\n");
-            Node new_node = *deg_node->left;
+        RemoveNode(tree, &multiplier);
+        // RemoveNode(tree, &add_node);
 
-            RemoveNode(tree, &deg_node->left);
-            RemoveNode(tree, &deg_node->right);
+        Node *right = start_node->right;
 
-            *deg_node = new_node;
-        }
+        *start_node = *right;
+        RemoveNode(tree, &right);
+    }
+
+    // for (size_t i = 0; i < tree->size; i++)
+    // {
+    //     fprintf(stderr, "in VarsToNormalForm i = %lld\n", i);
+
+    //     Node *cur_node = tree->node_ptrs[i];
+
+    //     if (cur_node == NULL || cur_node->type != OP || !CHECK_NODE_OP(cur_node, MUL))
+    //         continue;
+
+    //     Node *multiplier = cur_node->left;
+    //     Node *deg_node   = cur_node->right;
+
+    //     if (IsSimpleVarMember(cur_node) && deg_node->right->type == NUM && deg_node->right->val.num == 1)
+    //     {
+    //         fprintf(stderr, "\nGOVNO 11\n");
+    //         Node new_node = *deg_node->left;
+
+    //         RemoveNode(tree, &deg_node->left);
+    //         RemoveNode(tree, &deg_node->right);
+
+    //         *deg_node = new_node;
+    //     }
         
-        if (multiplier->type == NUM && multiplier->val.num == 1)
-        {
-            fprintf(stderr, "\nGOVNO 22\n");
+    //     if (multiplier->type == NUM && multiplier->val.num == 1)
+    //     {
+    //         fprintf(stderr, "\nGOVNO 22\n");
 
-            RemoveNode(tree, &multiplier);
-            // RemoveNode(tree, &add_node);
+    //         RemoveNode(tree, &multiplier);
+    //         // RemoveNode(tree, &add_node);
 
-            Node *right = cur_node->right;
+    //         Node *right = cur_node->right;
 
-            *cur_node = *right;
-            RemoveNode(tree, &right);
-        }
+    //         *cur_node = *right;
+    //         RemoveNode(tree, &right);
+    //     }
 
-        // if (mul_node->left->type == NUM && mul_node->left->val == 1)
-        // {
-        //     RemoveNode(tree, &mul_node->left);
-        //     // RemoveNode(tree, &add_node);
+    //     // if (mul_node->left->type == NUM && mul_node->left->val == 1)
+    //     // {
+    //     //     RemoveNode(tree, &mul_node->left);
+    //     //     // RemoveNode(tree, &add_node);
 
-        //     Node *right = mul_node->right;
+    //     //     Node *right = mul_node->right;
 
-        //     *mul_node = *right;
-        //     RemoveNode(tree, &right);
-        // }
-    }
+    //     //     *mul_node = *right;
+    //     //     RemoveNode(tree, &right);
+    //     // }
+    // }
+
+    // fprintf(stderr, "End of vars to norm form\n");    
+    // fprintf(LogFile, "End of vars to norm form\n");
 }
 
-void AddToSub(Tree *tree)                                       // 8 + (-1) * x  =>  8 - x
+void AddToSub(Tree *tree, Node *start_node)                                       // 8 + (-1) * x  =>  8 - x
 {
     assert(tree);
 
-    for (size_t i = 0; i < tree->size; i++)
+    if (start_node == NULL)
+        return;
+
+    AddToSub(tree, start_node->left);
+    AddToSub(tree, start_node->right);
+
+     if (start_node->type == OP && start_node->val.op == ADD)
     {
-        Node *cur_node = tree->node_ptrs[i];
+        Node *arg_2 = start_node->right;
 
-        if (cur_node == NULL)
-            continue;
-        
-        if (cur_node->type == OP && cur_node->val.op == ADD)
+        if (arg_2->type == OP && arg_2->val.op == MUL && arg_2->left->type == NUM && arg_2->left->val.num < 0)
         {
-            Node *arg_2 = cur_node->right;
+            start_node->val.op = SUB;
 
-            if (arg_2->type == OP && arg_2->val.op == MUL && arg_2->left->type == NUM && arg_2->left->val.num < 0)
-            {
-                cur_node->val.op = SUB;
+            if (arg_2->left->val.num == -1)   // частный случай
+            {       
+                start_node->right = arg_2->right;
 
-                if (arg_2->left->val.num == -1)   // частный случай
-                {       
-                    cur_node->right = arg_2->right;
-
-                    RemoveNode(tree, &arg_2->left);
-                    RemoveNode(tree, &arg_2);
-                }
-
-                else
-                    arg_2->left->val.num *= -1;
+                RemoveNode(tree, &arg_2->left);
+                RemoveNode(tree, &arg_2);
             }
 
-            else if (arg_2->type == NUM && arg_2->val.num < 0)
-            {
-                cur_node->val.op = SUB;
-                arg_2->val.num  *= -1;   
-            }
+            else
+                arg_2->left->val.num *= -1;
+        }
+
+        else if (arg_2->type == NUM && arg_2->val.num < 0)
+        {
+            start_node->val.op = SUB;
+            arg_2->val.num  *= -1;   
         }
     }
+
+    // assert(tree);
+
+    // for (size_t i = 0; i < tree->size; i++)
+    // {
+    //     Node *cur_node = tree->node_ptrs[i];
+
+    //     if (cur_node == NULL)
+    //         continue;
+        
+    //     if (cur_node->type == OP && cur_node->val.op == ADD)
+    //     {
+    //         Node *arg_2 = cur_node->right;
+
+    //         if (arg_2->type == OP && arg_2->val.op == MUL && arg_2->left->type == NUM && arg_2->left->val.num < 0)
+    //         {
+    //             cur_node->val.op = SUB;
+
+    //             if (arg_2->left->val.num == -1)   // частный случай
+    //             {       
+    //                 cur_node->right = arg_2->right;
+
+    //                 RemoveNode(tree, &arg_2->left);
+    //                 RemoveNode(tree, &arg_2);
+    //             }
+
+    //             else
+    //                 arg_2->left->val.num *= -1;
+    //         }
+
+    //         else if (arg_2->type == NUM && arg_2->val.num < 0)
+    //         {
+    //             cur_node->val.op = SUB;
+    //             arg_2->val.num  *= -1;   
+    //         }
+    //     }
+    // }
 }
 
 void ExpandAddBrackets(Tree *tree, Node *mul_node)                 // a * (x + y)
