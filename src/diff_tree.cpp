@@ -138,6 +138,9 @@ char *NodeValToStr(Node *node, char *res_str)
         sprintf(res_str, "%s", cur_op->symbol);
     }
 
+    else if (node->type == CHANGE)
+        sprintf(res_str, "%c(%d)", node->val.change->name, node->val.change->derivative_num);
+
     else    // POISON_TYPE
         sprintf(res_str, "%s", POISON_TYPE_MARK);
 
@@ -382,40 +385,60 @@ void SplitTree(Tree *tree, Node *cur_node)
     if (CHECK_NODE_OP(cur_node, ADD) || CHECK_NODE_OP(cur_node, SUB))
         return;
 
-    if (GetTreeHeight(cur_node->left)  > MIN_SPLIT_HEIGHT)
-    {
-        cur_node->left  = ChangeToVar(tree, cur_node->left);
-    }
+    if (IsSuitableForChange(cur_node, cur_node->left))
+        ChangeToVar(tree, cur_node->left);
 
-    if (GetTreeHeight(cur_node->right) > MIN_SPLIT_HEIGHT)
-    {
-        cur_node->right = ChangeToVar(tree, cur_node->right);
-    }
+    if (IsSuitableForChange(cur_node, cur_node->right))
+        ChangeToVar(tree, cur_node->right);
 }
 
 Node *ChangeToVar(Tree *tree, Node *cur_node)
 {
     assert(tree);
     assert(cur_node);
-
-    // if (start_node->type != OP)
-    //     return start_node;
-
-    // start_node->left  = ChangeToVar(tree, start_node->left);
-    // start_node->right = ChangeToVar(tree, start_node->right);
-        
-    // if (CHECK_NODE_OP(start_node, ADD) || CHECK_NODE_OP(start_node, SUB))
-    //     return start_node;
+    
+    Node *cur_node_cpy = NewNode(tree, {}, {}, NULL, NULL);
+    *cur_node_cpy = *cur_node;
 
     char new_node_name = (char) ('A' + tree->changed_vars.size);
 
-    Node *new_var = NewNode(tree, VAR, {.var = new_node_name}, NULL, NULL);
-    tree->changed_vars.data[0][tree->changed_vars.size++] = cur_node->left;
+    Change *new_change = &(tree->changed_vars.data[0][tree->changed_vars.size++]);
 
-    return new_var;
+    new_change->derivative_num = 0;
+    new_change->name = new_node_name;
+    new_change->target_node = cur_node_cpy;
+
+    // Node *new_var = NewNode(tree, CHANGE, {.change = new_change}, NULL, NULL);
+    
+    cur_node->type       = CHANGE;
+    cur_node->val.change = new_change;
+    cur_node->left       = NULL;
+    cur_node->right      = NULL;
+
+    return cur_node;
 }
 
+bool IsSuitableForChange(Node *op_node, Node *arg)
+{
+    assert(op_node);
+    assert(arg);
+    assert(op_node->type == OP);
 
+    if (arg->type != OP || CHECK_NODE_OP(arg, ADD) || CHECK_NODE_OP(arg, SUB) || !SubtreeContainsVar(arg))
+        return false;
+
+    if (CHECK_NODE_OP(op_node, ADD) || CHECK_NODE_OP(op_node, SUB) || CHECK_NODE_OP(op_node, MUL) || CHECK_NODE_OP(op_node, DIV))
+    {
+        if (GetTreeHeight(arg) > MIN_SPLIT_HEIGHT)
+            return true;
+        
+        else
+            return false;
+    }
+
+    else
+        return true;
+}
 
 bool SubtreeContainsVar(Node *cur_node)
 {
@@ -424,10 +447,10 @@ bool SubtreeContainsVar(Node *cur_node)
     if (cur_node == NULL)
         return false;
 
-    if (cur_node->type == VAR)
+    else if (cur_node->type == VAR)
         return true;
     
-    else if (cur_node->type == NUM)
+    else if (cur_node->type == NUM || cur_node->type == CHANGE)
         return false;
 
     else        // if OP

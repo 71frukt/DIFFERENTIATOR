@@ -16,7 +16,7 @@ int main(const int argc, const char *argv[])
     fprintf(stderr, "START!\n");
 
     // Expression expr = {.data = "1 / x$"};
-    Expression expr = {.data = "x ^ (2 * x)$"};
+    Expression expr = {.data = "x ^ (2 * x ^ ln(x / 2 ^ 3 ^ 4 ^ 5 ^ 6 ^ 7 ^ 8 ^ 9 ^ 10 ^ 11 ^ 12))$"};
     
     OutputFile = GetOutputFile(argc, argv);
 
@@ -31,8 +31,16 @@ int main(const int argc, const char *argv[])
     GetTexTreeData(orig.root_ptr, tex_orig, false);
     fprintf(OutputFile, "The original expression has the form \\[ %s \\]\n\n", tex_orig);
 
-    // PrintChangedVarsTex(&orig, OutputFile);
+    SplitTree(&orig, orig.root_ptr);
 
+    tex_orig[0] = '\0';
+    GetTexTreeData(orig.root_ptr, tex_orig, false);
+    fprintf(OutputFile, "The original expression has new form \\[ %s \\]\n\n", tex_orig);
+
+    DIFF_DUMP(&orig);
+
+    PrintChangedVarsTex(&orig, OutputFile);
+/*
     // SplitTree(&orig, orig.root_ptr);
     DIFF_DUMP(&orig);
     Tree orig_simpl = {};
@@ -46,7 +54,7 @@ int main(const int argc, const char *argv[])
     char tex_orig_simpl[TEX_EXPRESSION_LEN] = {};
     GetTexTreeData(orig_simpl.root_ptr, tex_orig_simpl, false);
 
-    fprintf(OutputFile, "By simple mathematical transformations: \\[ %s \\]\n \\newline ", tex_orig_simpl);
+    fprintf(OutputFile, "By simple mathematical transformations: \\[ %s \\]\n\n \\newline ", tex_orig_simpl);
 
 
     fprintf(stderr, "before diff\n");
@@ -82,6 +90,7 @@ int main(const int argc, const char *argv[])
     TreeDtor(&orig);
     TreeDtor(&orig_simpl);
     // TreeDtor(&derivative);
+*/
 
     fprintf(stderr, "END!\n");
     return 0;

@@ -29,11 +29,13 @@ const char *const POISON_TYPE_MARK = "#POISON";
 #define ON_DIFF_DEBUG(...)
 #endif
 
+
 enum NodeType
 {
     POISON_TYPE,
     NUM,
     VAR,
+    CHANGE,
     OP
 };
 
@@ -44,22 +46,31 @@ enum Variable
     VAR_Z = 25
 };
 
-union NodeVal
+struct Node;
+
+struct Change
 {
-    TreeElem_t num;
-    char       var;
-    int        op;
+    Node *target_node;
+    char  name;
+    int   derivative_num; 
 };
 
+union NodeVal
+{
+    TreeElem_t  num;
+    char        var;
+    int         op;
+    Change     *change;
+};
 
 struct Node
 {
     NodeType type;
 
-    NodeVal val;
+    NodeVal  val;
 
-    Node *left;
-    Node *right;
+    Node    *left;
+    Node    *right;
 };
 
 struct TreeAllocMarks
@@ -70,10 +81,9 @@ struct TreeAllocMarks
 
 struct ChangedVars
 {
-    Node *data[CHANGED_VARS_DERIVATIVE_NUM][CHANGED_VARS_NUM];
+    Change data[CHANGED_VARS_DERIVATIVE_NUM][CHANGED_VARS_NUM];
     size_t size;
 };
-
 
 struct Tree
 {
@@ -89,6 +99,7 @@ struct Tree
 
     ON_DIFF_DEBUG(const char *name);
 };
+
 
 void    TreeCtor        (Tree *tree, size_t start_capacity ON_DIFF_DEBUG(, const char *name));
 void    TreeDtor        (Tree *tree);
@@ -107,6 +118,7 @@ void    SplitTree       (Tree *tree, Node *cur_node);
 Node   *ChangeToVar     (Tree *tree, Node *start_node);
 Node   *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
 
+bool    IsSuitableForChange(Node *op_node, Node *arg);
 bool    IsTrigonometric    (int op);
 bool    SubtreeContainsVar (Node *cur_node);
 bool    SubtreeContComplicOperation(Node *cur_node);

@@ -6,16 +6,20 @@
 #define NODE_NAME_PREFIX   "node_"
 
 
-#define BACKGROUND_COLOR  "#FFF3D1"
+#define BACKGROUND_COLOR   "#FFF3D1"
 
-#define VAR_NODE_COLOR    "aquamarine"
-#define VAR_NODE_SHAPE    "square"
+#define VAR_NODE_COLOR     "aquamarine"
+#define VAR_NODE_SHAPE     "square"
 
-#define NUM_NODE_COLOR    "pink"
-#define NUM_NODE_SHAPE    "oval"
+#define NUM_NODE_COLOR     "pink"
+#define NUM_NODE_SHAPE     "oval"
 
-#define OP_NODE_COLOR     "azure"
-#define OP_NODE_SHAPE     "record"
+#define OP_NODE_COLOR      "azure"
+#define OP_NODE_SHAPE      "record"
+
+#define CHANGE_NODE_COLOR          "aqua"
+#define CHANGE_NODE_POINTER_COLOR  "grey"
+#define CHANGE_NODE_SHAPE          "tab"
 
 
 const int GRAPH_IMG_WIDTH = 20;     // (%)

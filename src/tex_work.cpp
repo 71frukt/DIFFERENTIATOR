@@ -25,7 +25,12 @@ const char *GetTexTreeData(Node *start_node, char *dest_str, bool need_brackets)
     assert(start_node);
 
     char node_val_str[LABEL_LENGTH] = {};
-    NodeValToStr(start_node, node_val_str);
+
+    if (start_node->type != CHANGE)
+        NodeValToStr(start_node, node_val_str);
+    
+    else
+        GetTexChangedVarName(start_node->val.change, node_val_str);
     
     bool param1_brackets = false;
     bool param2_brackets = false;
@@ -178,29 +183,47 @@ FILE *GetOutputFile(const int argc, const char *argv[])
     return OutputFile;
 }
 
-// void PrintChangedVarsTex(Tree *tree, FILE *output_file)
-// {
-//     ChangedVars *changed_vars = &tree->changed_vars;
+void PrintChangedVarsTex(Tree *tree, FILE *output_file)
+{
+    assert(tree);
+    assert(output_file);
 
-//     for (size_t derivative_num = 0; derivative_num < CHANGED_VARS_DERIVATIVE_NUM; derivative_num++)
-//     {
-//         for (size_t var_num = 0; var_num < changed_vars->size; var_num++)
-//         {
-//             if (changed_vars->data[derivative_num][var_num] == NULL)
-//                 continue;
+    ChangedVars *changed_vars = &tree->changed_vars;
 
-            
-//         }
-//     }
-// }
+    for (size_t derivative_num = 0; derivative_num < CHANGED_VARS_DERIVATIVE_NUM; derivative_num++)
+    {
+        for (int var_num = (int) changed_vars->size - 1; var_num >= 0; var_num--)
+        {
+            Change *cur_change = &(changed_vars->data[derivative_num][var_num]);
 
-// void GetChangedVarTexName(ChangedVars *changed_vars, TreeElem_t var_name, char *res_name)
-// {
-//     for (size_t i = 0; i < CHANGED_VARS_DERIVATIVE_NUM; i++)
-//     {
+            if (cur_change->target_node == NULL)
+                continue;
 
-//     }
-// }
+            char tex_change_name[TEX_CHANGE_NAME_LEN] = {};
+            GetTexChangedVarName(cur_change, tex_change_name);
+
+            char tex_subtree[TEX_EXPRESSION_LEN] = {};
+            GetTexTreeData(cur_change->target_node, tex_subtree, false);
+
+            fprintf(output_file, "$%s = %s$\n\n", tex_change_name, tex_subtree);
+        }
+    }
+}
+
+void GetTexChangedVarName(Change *change, char *res_name)
+{
+    if (change->derivative_num == 0)
+        sprintf(res_name, "%c", change->name);
+    
+    else if (change->derivative_num == 1)
+        sprintf(res_name, "%c_x'", change->name);
+
+    else if (change->derivative_num == 2)
+        sprintf(res_name, "%c_x''", change->name);
+
+    else
+        sprintf(res_name, "%c_x^(%d)", change->name, change->derivative_num);
+}
 
 void CloseOutputFile()
 {

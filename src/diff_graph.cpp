@@ -40,6 +40,7 @@ void InitNodesInDot(Tree *tree, FILE *dot_file)
         char node_val_str[LABEL_LENGTH] = {};
 
         NodeValToStr(cur_node, node_val_str);
+        
         if (cur_node->type == OP)
             fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"{%s | { <%s> %s | <%s> %s } }\"]\n",
                 NODE_NAME_PREFIX, cur_node, OP_NODE_SHAPE, OP_NODE_COLOR, node_val_str, LEFT_MARK, LEFT_MARK, RIGHT_MARK, RIGHT_MARK);
@@ -51,6 +52,15 @@ void InitNodesInDot(Tree *tree, FILE *dot_file)
         else if (cur_node->type == NUM)
             fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"%s\"]\n",
                 NODE_NAME_PREFIX, cur_node, NUM_NODE_SHAPE, NUM_NODE_COLOR, node_val_str);
+
+        else if (cur_node->type == CHANGE)
+        {
+            fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"%s\"]\n",
+                NODE_NAME_PREFIX, cur_node, CHANGE_NODE_SHAPE, CHANGE_NODE_COLOR, node_val_str);
+
+            fprintf(dot_file, "%s%p_cpy [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"%s\"]\n",
+                NODE_NAME_PREFIX, cur_node, CHANGE_NODE_SHAPE, CHANGE_NODE_POINTER_COLOR, node_val_str);
+        }
     }
 }
 
@@ -70,6 +80,9 @@ void MakeLinksInDot(Tree *tree, FILE *dot_file)
 
         if (right_son != NULL)
             fprintf(dot_file, "%s%p: <%s> -> %s%p\n", NODE_NAME_PREFIX, cur_node, RIGHT_MARK, NODE_NAME_PREFIX, right_son);
+
+        if (cur_node->type == CHANGE)
+            fprintf(dot_file, "%s%p_cpy -> %s%p[style = \"dashed\", arrowhead = \"dot\", color = \"darkgreen\"]\n", NODE_NAME_PREFIX, cur_node, NODE_NAME_PREFIX, cur_node->val.change->target_node);
     }
 }
 

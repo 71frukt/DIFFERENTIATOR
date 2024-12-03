@@ -12,7 +12,6 @@ void SimplifyExpr(Tree *expr_tree)
 {
     fprintf(stderr, "rabotaet yproshalka\n");
 
-
     SubToAdd(expr_tree);
 
     VarsToGeneralform(expr_tree);                   // x --> 1 * x ^ 1
@@ -824,7 +823,7 @@ void SubToAdd(Tree *tree)                                           // 8 - x  =>
         if (cur_node == NULL)
             continue;
 
-        if (cur_node->type == OP && cur_node->val.op == SUB)
+        if (CHECK_NODE_OP(cur_node, SUB))
         {
             Node *minus = NewNode(tree, NUM, {.num = -1}, NULL, NULL);
             cur_node->right = NewNode(tree, OP, {.op = MUL}, minus, cur_node->right);
