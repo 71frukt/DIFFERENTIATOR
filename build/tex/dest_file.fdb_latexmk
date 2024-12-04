@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1733259894.50959 "c:/Users/71fru/Documents/GitHub/DIFF/build/tex/dest_file.tex" "dest_file.pdf" "dest_file" 1733259895.45238 0
+["pdflatex"] 1733309223.58343 "c:/Users/71fru/Documents/GitHub/DIFF/build/tex/dest_file.tex" "dest_file.pdf" "dest_file" 1733309224.15705 0
   "C:/Users/71fru/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1732279097 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/71fru/AppData/Local/MiKTeX/fonts/pk/ljfour/lh/lh-t2a/dpi600/larm1200.pk" 1732280000 27028 9abd7c9cad9f497b43a5687a9f3e11f1 ""
   "C:/Users/71fru/AppData/Local/MiKTeX/fonts/tfm/lh/lh-t2a/larm1200.tfm" 1732279999 3240 c2435f2b5cd66d4930bc29b8df87967e ""
@@ -14,13 +14,9 @@
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy6.tfm" 1136765053 1116 933a60c408fc0a863a92debe84b2d294 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy8.tfm" 1136765053 1120 8b7d695260f3cff42e636090a8002094 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb" 1247596667 36741 0ee9e374ec3e30da87cdfb0ea3575226 ""
-  "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb" 1247596666 37166 8ab3487cbe3ab49ebce74c29ea2418db ""
-  "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1247596666 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1247596667 32722 d7379af29a190c3f453aba36302ff5a9 ""
-  "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1247596667 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1247596667 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1247596667 32569 5e5ddc8df908dea60932f3c484a54c0d ""
-  "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1247596667 32587 65067f817f408bc71a7312f3d9828a9b ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1247596667 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/tex/generic/babel/babel.sty" 1731069673 143218 b56ba929001097bf81564e098af1c174 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/tex/generic/babel/locale/en/babel-en.ini" 1731069674 3966 caeee5a9e5771d4446aa1ca9015ba1b2 ""
@@ -50,9 +46,9 @@
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/tex/latex/mmap/oms.cmap" 1215051813 2370 3b1f71b14b974f07cef532db09ae9ee0 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/tex/latex/mmap/omx.cmap" 1215051860 3001 252c8ca42b06a22cb1a11c0e47790c6e ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/tex/latex/ucs/utf8x.def" 1700127473 8944 e3433baec74c4b7b278c6b6a547ff9ec ""
-  "c:/Users/71fru/Documents/GitHub/DIFF/build/tex/dest_file.tex" 1733259892 5616 0195614f66105e22f498d71d29d16e5b ""
-  "dest_file.aux" 1733259895 170 d10c2249b63a98b3fdd3409f7f5663f1 "pdflatex"
-  "dest_file.tex" 1733259892 5616 0195614f66105e22f498d71d29d16e5b ""
+  "c:/Users/71fru/Documents/GitHub/DIFF/build/tex/dest_file.tex" 1733309222 13414 a8c0bd0706e884dfd0df127e4323fb37 ""
+  "dest_file.aux" 1733309223 170 abfd21c7305f0b5c4c61d3e1cb3ea5b4 "pdflatex"
+  "dest_file.tex" 1733309222 13414 a8c0bd0706e884dfd0df127e4323fb37 ""
   (generated)
   "dest_file.aux"
   "dest_file.log"

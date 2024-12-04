@@ -486,9 +486,10 @@ bool SubtreeContainsType(Node *cur_node, NodeType type)
 
 bool SubtreeContComplicOperation(Node *cur_node)
 {
-    assert(cur_node);
+    if (cur_node == NULL)
+        return false;
 
-    if (cur_node->type == VAR || cur_node->type == NUM)
+    if (cur_node->type == VAR || cur_node->type == CHANGE || cur_node->type == NUM)
         return false;
     
     else if (cur_node->type == OP && cur_node->val.op != MUL && cur_node->val.op != DIV)        // дроби и произведения выносим как множители

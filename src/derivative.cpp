@@ -9,25 +9,52 @@
 extern FILE *LogFile;
 extern FILE *OutputFile;
 
-Node *TakeDifferential(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
+Node *TakeHighDerivative(Tree *expr_tree, Node *start_node, Tree *diff_tree, size_t order)
+{
+    assert(expr_tree);
+    assert(start_node);
+    assert(diff_tree);
+
+    Tree tmp_diff_tree = {};
+    TreeCtor(&tmp_diff_tree, START_TREE_SIZE ON_DIFF_DEBUG(, "tmp_diff_tree"));
+
+    diff_tree->root_ptr = TreeCopyPaste(expr_tree, diff_tree, start_node);
+
+    for (size_t i = 0; i < order; i++)
+    {
+        tmp_diff_tree.root_ptr = TreeCopyPaste(diff_tree, &tmp_diff_tree, diff_tree->root_ptr);
+
+        RemoveSubtree(diff_tree, &diff_tree->root_ptr);
+        diff_tree->size = 0;
+
+        diff_tree->root_ptr = TakeDerivative(&tmp_diff_tree, tmp_diff_tree.root_ptr, diff_tree);
+        SimplifyExpr(diff_tree, diff_tree->root_ptr);
+
+        RemoveSubtree(&tmp_diff_tree, &tmp_diff_tree.root_ptr);
+        tmp_diff_tree.size = 0;
+    }
+
+    TreeDtor(&tmp_diff_tree);
+
+    return diff_tree->root_ptr;
+}
+
+Node *TakeDerivative(Tree *expr_tree, Node *expr_node, Tree *diff_tree)
 {
     assert(expr_tree);
     assert(expr_node);
-    assert(solv_tree);
+    assert(diff_tree);
 
-fprintf(LogFile, "start of TakeDifferential():\n");
-fprintf(stderr, "watawatawata\n");
-DIFF_DUMP(solv_tree);
-DIFF_DUMP(expr_tree);
+fprintf(LogFile, "start of TakeDerivative():\n");
 
     if (expr_node->type == NUM)
     {
-        return NewNode(solv_tree, NUM, {.num = 0}, NULL, NULL);
+        return NewNode(diff_tree, NUM, {.num = 0}, NULL, NULL);
     }
 
     else if (expr_node->type == VAR)
     {
-        return NewNode(solv_tree, NUM, {.num = 1}, NULL, NULL);
+        return NewNode(diff_tree, NUM, {.num = 1}, NULL, NULL);
     }
 
 
@@ -35,7 +62,6 @@ DIFF_DUMP(expr_tree);
 
     if (expr_node->type == CHANGE)
     {
-fprintf(stderr, "in change diff\n");
         Change *cur_change = expr_node->val.change;
 
         char tex_cur_change_name[TEX_CHANGE_NAME_LEN] = {};
@@ -44,22 +70,22 @@ fprintf(stderr, "in change diff\n");
         
         int     diff_change_deriv_num = cur_change->derivative_num + 1;
         int     diff_change_name      = cur_change->name;
-        Change *diff_change = &(solv_tree->changed_vars.data[solv_tree->changed_vars.size++]);
-
+        Change *diff_change = &(diff_tree->changed_vars.data[diff_tree->changed_vars.size++]);
         diff_change->name           = (char) diff_change_name;
         diff_change->derivative_num = diff_change_deriv_num;
         
-        diff_change->target_node = TakeDifferential(expr_tree, cur_change->target_node, solv_tree);
+        diff_change->target_node = TakeDerivative(expr_tree, cur_change->target_node, diff_tree);
 
         char tex_diff[TEX_EXPRESSION_LEN] = {};
         GetTexTreeData(diff_change->target_node, tex_diff, false);
 
         char tex_change_name[TEX_CHANGE_NAME_LEN] = {};
         GetTexChangedVarName(diff_change, tex_change_name);
-fprintf(stderr, "in chang simpl\n");
-        SimplifyExpr(solv_tree, diff_change->target_node);
+        SimplifyExpr(diff_tree, diff_change->target_node);
+        Node *new_node = NewNode(diff_tree, CHANGE, {.change = diff_change}, NULL, NULL);
 
-        Node *new_node = NewNode(solv_tree, CHANGE, {.change = diff_change}, NULL, NULL);
+    // fprintf(LogFile, "after make new A(2)\n");
+    // DIFF_DUMP(diff_tree);
 
         char res_change_name_tex[TEX_CHANGE_NAME_LEN] = {};
         GetTexChangedVarName(diff_change, res_change_name_tex);
@@ -68,7 +94,7 @@ fprintf(stderr, "in chang simpl\n");
         GetTexTreeData(diff_change->target_node, res_diff_tex, false);
 
         fprintf(OutputFile, "So $%s = %s$\\newline\n\\newline\n", res_change_name_tex, res_diff_tex);
-DIFF_DUMP(expr_tree);
+fprintf(stderr, "So $%s = %s$\\newline\n\\newline\n", res_change_name_tex, res_diff_tex);
 
         res_node = new_node;
     }
@@ -81,9 +107,9 @@ DIFF_DUMP(expr_tree);
 
         const Operation *cur_op = GetOperationByNode(expr_node);
 
-        res_node = cur_op->diff_func(expr_tree, expr_node, solv_tree);
+        res_node = cur_op->diff_func(expr_tree, expr_node, diff_tree);
         
-        SimplifyExpr(solv_tree, res_node);
+        SimplifyExpr(diff_tree, res_node);
         char res_diff_tex[TEX_EXPRESSION_LEN] = {};
         GetTexTreeData(res_node, res_diff_tex, false);
 
@@ -92,3 +118,12 @@ DIFF_DUMP(expr_tree);
 
     return res_node;
 }
+
+// Node *CalculateTailor(Tree *expr_tree, Node *start_node, Tree *tailor_tree, size_t order)
+// {
+//     assert(expr_tree);
+//     assert(start_node);
+//     assert(tailor_tree);
+
+    
+// }

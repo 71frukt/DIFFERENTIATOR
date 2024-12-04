@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 
 #include "simplifier.h"
 #include "operations.h"
@@ -18,17 +19,17 @@ void SimplifyExpr(Tree *expr_tree, Node *start_node)
     fprintf(stderr, "rabotaet yproshalka\n");
     char orig_tex[TEX_EXPRESSION_LEN] = {};
     GetTexTreeData(start_node, orig_tex, false);
-DIFF_DUMP(expr_tree);
+// DIFF_DUMP(expr_tree);
     SubToAdd(expr_tree, start_node);
 fprintf(LogFile, "after SubToAdd()\n");
-DIFF_DUMP(expr_tree);
+// DIFF_DUMP(expr_tree);
 
     VarsToGeneralform(expr_tree, start_node);                   // x --> 1 * x ^ 1
 fprintf(LogFile, "after VarsToGeneralform()\n");
-DIFF_DUMP(expr_tree);
+// DIFF_DUMP(expr_tree);
 
     fprintf(LogFile, "before SimplifyConstants()\n");
-    DIFF_DUMP(expr_tree);
+    // DIFF_DUMP(expr_tree);
     SimplifyConstants (expr_tree, start_node);
 
     SimplifyVars      (expr_tree, start_node);
@@ -36,22 +37,26 @@ DIFF_DUMP(expr_tree);
     SimplifyConstants (expr_tree, start_node);
 
  fprintf(LogFile, "before VarsToNormalForm()\n");
-    DIFF_DUMP(expr_tree);
+    // DIFF_DUMP(expr_tree);
 
     VarsToNormalForm(expr_tree, start_node);
 
 fprintf(LogFile, "before AddToSub()\n");
-    DIFF_DUMP(expr_tree);
+    // DIFF_DUMP(expr_tree);
 
     AddToSub(expr_tree, start_node);
 
-    DIFF_DUMP(expr_tree);
+    // DIFF_DUMP(expr_tree);
 
     char simpl_tex[TEX_EXPRESSION_LEN] = {};
     GetTexTreeData(start_node, simpl_tex, false);
-    fprintf(OutputFile, "By the too simple mathematical transformations:\n $%s = %s$ \n \\newline\n \\newline \n", orig_tex, simpl_tex);
+
+    if (strcmp(orig_tex, simpl_tex) != 0)
+        fprintf(OutputFile, "By the too simple mathematical transformations:\n $%s = %s$ \n \\newline\n \\newline \n", orig_tex, simpl_tex);
 
     fprintf(stderr, "zakonchila yproshalka\n");
+
+    // DIFF_DUMP(expr_tree);
 }
 
 Node *SimplifyConstants(Tree *tree, Node *cur_node)
@@ -64,7 +69,22 @@ Node *SimplifyConstants(Tree *tree, Node *cur_node)
     const Operation *op  = GetOperationByNode(cur_node);
 
     if (op != NULL)
+    {
         cur_node = op->simpl_nums_func(tree, cur_node);
+
+        if (!IS_INT_TREE && cur_node->left->type == NUM && cur_node->right->type == NUM)
+        {
+            TreeElem_t new_val = op->op_func(cur_node->left->val.num, cur_node->right->val.num);
+            
+            RemoveNode(tree, &cur_node->left);
+            RemoveNode(tree, &cur_node->right);
+
+            cur_node->left  = NULL;     //TODO: проверить можно ли убрать
+            cur_node->right = NULL;
+            cur_node->type  = NUM;
+            cur_node->val.num = new_val;
+        }
+    }
 
     return cur_node;
 }
@@ -187,7 +207,6 @@ Node *SimplNumsMul(Tree *tree, Node *mul_node)
     {
         bool left_is_simple_multiplier = !SubtreeContComplicOperation(mul_node->left);
         bool right_is_sum = (mul_node->right->type == OP && mul_node->right->val.op == ADD);
-
         if (left_is_simple_multiplier && right_is_sum)      // раскрыть скобки
         {
             fprintf(stderr, "ExpandAddBrackets\n");
@@ -197,7 +216,6 @@ Node *SimplNumsMul(Tree *tree, Node *mul_node)
             return mul_node;
         }
     }
-
 
     return mul_node;
 }

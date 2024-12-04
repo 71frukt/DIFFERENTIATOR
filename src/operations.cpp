@@ -14,7 +14,7 @@ const Operation *GetOperationByNode(Node *node)
     assert(node);
 
     if (node->type != OP)
-        return NULL;
+        return NULL; 
 
     for (size_t i = 0; i < OPERATIONS_NUM; i++)
     {
@@ -105,16 +105,16 @@ TreeElem_t Log(TreeElem_t arg1, TreeElem_t arg2)
 
 Node *DiffAdd(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 {
-    Node *left  = TakeDifferential(expr_tree, expr_node->left,  solv_tree);
-    Node *right = TakeDifferential(expr_tree, expr_node->right, solv_tree);
+    Node *left  = TakeDerivative(expr_tree, expr_node->left,  solv_tree);
+    Node *right = TakeDerivative(expr_tree, expr_node->right, solv_tree);
 
     return NewNode(solv_tree, OP, {.op = ADD} , left, right);
 }
 
 Node *DiffSub(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 {
-    Node *left  = TakeDifferential(expr_tree, expr_node->left,  solv_tree);
-    Node *right = TakeDifferential(expr_tree, expr_node->right, solv_tree);
+    Node *left  = TakeDerivative(expr_tree, expr_node->left,  solv_tree);
+    Node *right = TakeDerivative(expr_tree, expr_node->right, solv_tree);
 
     return NewNode(solv_tree, OP, {.op = SUB} , left, right);
 }
@@ -146,7 +146,7 @@ Node *DiffMul(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
             num_node = TreeCopyPaste(expr_tree, solv_tree, expr_node->left);
         }
 
-        Node *var_node_diff = TakeDifferential(expr_tree, var_node, solv_tree);
+        Node *var_node_diff = TakeDerivative(expr_tree, var_node, solv_tree);
 
         return NewNode(solv_tree, OP, {.op = MUL}, num_node, var_node_diff);
     }
@@ -156,8 +156,8 @@ Node *DiffMul(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
     Node *left_mul  = NewNode(solv_tree, OP, {.op = MUL}, NULL, NULL);
     Node *right_mul = NewNode(solv_tree, OP, {.op = MUL}, NULL, NULL);
 
-    left_mul->left   = TakeDifferential(expr_tree, expr_node->left,  solv_tree);
-    right_mul->right = TakeDifferential(expr_tree, expr_node->right, solv_tree);
+    left_mul->left   = TakeDerivative(expr_tree, expr_node->left,  solv_tree);
+    right_mul->right = TakeDerivative(expr_tree, expr_node->right, solv_tree);
 
     left_mul->right = TreeCopyPaste(expr_tree, solv_tree, expr_node->right);
     right_mul->left = TreeCopyPaste(expr_tree, solv_tree, expr_node->left);
@@ -175,8 +175,8 @@ Node *DiffDiv(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
     Node *solv_numerator = NewNode(solv_tree, OP, {.op = SUB}, left_mul, right_mul);
 
-    left_mul->left   = TakeDifferential(expr_tree, expr_node->left,  solv_tree);
-    right_mul->right = TakeDifferential(expr_tree, expr_node->right, solv_tree);
+    left_mul->left   = TakeDerivative(expr_tree, expr_node->left,  solv_tree);
+    right_mul->right = TakeDerivative(expr_tree, expr_node->right, solv_tree);
 
     right_mul->left = TreeCopyPaste(expr_tree, solv_tree, expr_node->left);
     left_mul->right = TreeCopyPaste(expr_tree, solv_tree, expr_node->right);
@@ -193,8 +193,8 @@ Node *DiffDiv(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 {
     fprintf(LogFile, "before DiffDeg():\n");
-    DIFF_DUMP(expr_tree);
-    DIFF_DUMP(solv_tree);
+    // DIFF_DUMP(expr_tree);
+    // DIFF_DUMP(solv_tree);
 
     Node *degree = expr_node->right;
     Node *basis = expr_node->left;
@@ -217,7 +217,7 @@ Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
         tmp_expr_tree.root_ptr = NewNode(&tmp_expr_tree, OP, {.op = MUL}, tmp_degree_cpy, tmp_ln_of_basis);
 
-        Node *arg_diff = TakeDifferential(&tmp_expr_tree, tmp_expr_tree.root_ptr, solv_tree);
+        Node *arg_diff = TakeDerivative(&tmp_expr_tree, tmp_expr_tree.root_ptr, solv_tree);
 
         TreeDtor(&tmp_expr_tree);
 
@@ -237,7 +237,7 @@ Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
         Node *func_diff  = NewNode(solv_tree, OP, {.op = MUL}, degree_cpy_2, deg_node);
 
-        Node *basis_diff = TakeDifferential(expr_tree, basis_cpy, solv_tree);
+        Node *basis_diff = TakeDerivative(expr_tree, basis_cpy, solv_tree);
 
         return NewNode(solv_tree, OP, {.op = MUL}, func_diff, basis_diff);
     }
@@ -245,8 +245,8 @@ Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
     else if (!basis_cont_var && degree_cont_var)         // a ^ g(x)
     {
         fprintf(LogFile, "in DiffDeg():\n");
-    DIFF_DUMP(expr_tree);
-    DIFF_DUMP(solv_tree);
+    // DIFF_DUMP(expr_tree);
+    // DIFF_DUMP(solv_tree);
 
         Node *expr_cpy   = TreeCopyPaste(expr_tree, solv_tree, expr_node);
         Node *basis_cpy  = TreeCopyPaste(expr_tree, solv_tree, basis);
@@ -256,7 +256,7 @@ Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
         Node *ln_of_basis = NewNode(solv_tree, OP, {.op = LN}, basis_cpy, basis_cpy);
         Node *func_diff   = NewNode(solv_tree, OP, {.op = MUL}, expr_cpy, ln_of_basis);
-        Node *degree_diff = TakeDifferential(expr_tree, degree, solv_tree);
+        Node *degree_diff = TakeDerivative(expr_tree, degree, solv_tree);
 
         return NewNode(solv_tree, OP, {.op = MUL}, func_diff, degree_diff);
     }
@@ -275,7 +275,7 @@ Node *DiffSin(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
     Node *arg_cpy  = TreeCopyPaste(expr_tree, solv_tree, arg);
     Node *diff_sin = NewNode(solv_tree, OP, {.op = COS}, arg_cpy, arg_cpy);
 
-    Node *diff_arg = TakeDifferential(expr_tree, arg, solv_tree);
+    Node *diff_arg = TakeDerivative(expr_tree, arg, solv_tree);
 
     return NewNode(solv_tree, OP, {.op = MUL}, diff_sin, diff_arg);
 }
@@ -288,7 +288,7 @@ Node *DiffCos(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
     Node *minus_diff_cos = NewNode(solv_tree, OP, {.op = MUL}, diff_cos, NewNode(solv_tree, NUM, {.num = -1}, NULL, NULL));
 
-    Node *diff_arg = TakeDifferential(expr_tree, arg, solv_tree);
+    Node *diff_arg = TakeDerivative(expr_tree, arg, solv_tree);
 
     return NewNode(solv_tree, OP, {.op = MUL}, minus_diff_cos, diff_arg);
 }
@@ -305,7 +305,7 @@ Node *DiffTan(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
     Node *solv_numerator   = NewNode(solv_tree, NUM, {.num = 1}, NULL, NULL);
 
     Node *diff_tan = NewNode(solv_tree, OP, {.op = DIV}, solv_numerator, solv_denominator);
-    Node *diff_arg = TakeDifferential(expr_tree, arg, solv_tree);
+    Node *diff_arg = TakeDerivative(expr_tree, arg, solv_tree);
 
     return NewNode(solv_tree, OP, {.op = MUL}, diff_tan, diff_arg);
 }
@@ -318,7 +318,7 @@ Node *DiffLn(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
     Node *numerator =  NewNode(solv_tree, NUM, {.num = 1}, NULL, NULL);
     Node *diff_ln = NewNode(solv_tree, OP, {.op = DIV}, numerator, arg_cpy);
 
-    Node *diff_arg = TakeDifferential(expr_tree, arg, solv_tree);
+    Node *diff_arg = TakeDerivative(expr_tree, arg, solv_tree);
 
     return NewNode(solv_tree, OP, {.op = MUL}, diff_ln, diff_arg);
 }
@@ -339,7 +339,7 @@ Node *DiffLog(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
         Node *fraction     = NewNode(solv_tree, OP, {.op = DIV}, NewNode(solv_tree, NUM, {.num = 1}, NULL, NULL), denominator);
 
-        Node *degree_diff = TakeDifferential(expr_tree, degree, solv_tree);
+        Node *degree_diff = TakeDerivative(expr_tree, degree, solv_tree);
 
         return NewNode(solv_tree, OP, {.op = MUL}, fraction, degree_diff);
     }
@@ -358,7 +358,7 @@ Node *DiffLog(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
         tmp_expr_tree.root_ptr = NewNode(&tmp_expr_tree, OP, {.op = DIV}, tmp_expr_numerator, tmp_expr_denominator);
 
-        Node *res_diff = TakeDifferential(&tmp_expr_tree, tmp_expr_tree.root_ptr, solv_tree);
+        Node *res_diff = TakeDerivative(&tmp_expr_tree, tmp_expr_tree.root_ptr, solv_tree);
 
         TreeDtor(&tmp_expr_tree);
 

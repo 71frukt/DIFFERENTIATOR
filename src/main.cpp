@@ -16,8 +16,8 @@ int main(const int argc, const char *argv[])
     fprintf(stderr, "START!\n");
 
     // Expression expr = {.data = "5 * 6$"};
-    Expression expr = {.data = "2 ^ (2 * x) + 2 ^ (2) / 36 / (x - 8 * x ^ 3)$"};
-    // Expression expr = {.data = "1 / (x ^ (1 / 2))$"};
+    // Expression expr = {.data = "2 ^ (2 * x) + 2 ^ (2) / 36 / (x - 8 * x ^ (3 ^ (1 / 2)))$"};
+    Expression expr = {.data = "3 * x ^ 8 - 8 * x ^ 6 - 3 * x + 45$"};
     
     OutputFile = GetOutputFile(argc, argv);
 
@@ -41,7 +41,7 @@ int main(const int argc, const char *argv[])
     DIFF_DUMP(&orig_simpl);
 
     SimplifyExpr(&orig_simpl, orig_simpl.root_ptr);
-    SplitTree(&orig_simpl, orig_simpl.root_ptr);
+    // SplitTree(&orig_simpl, orig_simpl.root_ptr);
 
     char tex_split[TEX_EXPRESSION_LEN] = {};
     GetTexTreeData(orig_simpl.root_ptr, tex_split, false);
@@ -60,7 +60,7 @@ int main(const int argc, const char *argv[])
     Tree derivative = {};
     TreeCtor(&derivative, START_TREE_SIZE, "derivative");
     derivative.root_ptr = derivative.node_ptrs[0];              // TODO: нахуй
-    derivative.root_ptr = TakeDifferential(&orig_simpl, orig_simpl.root_ptr, &derivative);
+    derivative.root_ptr = TakeHighDerivative(&orig_simpl, orig_simpl.root_ptr, &derivative, 5);
 
     char tex_derivative[TEX_EXPRESSION_LEN] = {};
     GetTexTreeData(derivative.root_ptr, tex_derivative, false);
@@ -68,6 +68,18 @@ int main(const int argc, const char *argv[])
     fprintf(OutputFile, "In total, we imeem(poimeem): \\newline\\[f'(x) = %s\\]\n\\newline\n", tex_derivative);
     PrintChangedVarsTex(&derivative, OutputFile);
 
+    // Tree derivative_2 = {};
+    // TreeCtor(&derivative_2, START_TREE_SIZE, "derivative_2");
+    // derivative_2.root_ptr = derivative_2.node_ptrs[0];              // TODO: нахуй
+    // derivative_2.root_ptr = TakeDerivative(&derivative, derivative.root_ptr, &derivative_2);
+
+    // char tex_derivative_2[TEX_EXPRESSION_LEN] = {};
+    // GetTexTreeData(derivative_2.root_ptr, tex_derivative_2, false);
+
+    // fprintf(OutputFile, "In total, we imeem(poimeem): \\newline\\[f'(x) = %s\\]\n\\newline\n", tex_derivative_2);
+    // PrintChangedVarsTex(&derivative_2, OutputFile);
+
+// DIFF_DUMP(&derivative_2);
     // fprintf(OutputFile, "Having counted the most obvious derivative, which the Soviet spermatozoa were actually able to calculate in their minds, we get: \\[ %s \\]\n \\newline ", tex_derivative);
     // DIFF_DUMP(&derivative);
     // SimplifyExpr(&derivative, derivative.root_ptr);
