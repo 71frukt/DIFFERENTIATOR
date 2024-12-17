@@ -37,6 +37,9 @@ void InitNodesInDot(Tree *tree, FILE *dot_file)
     {
         Node *cur_node = tree->node_ptrs[i];
 
+        if (cur_node == NULL)
+            continue;
+
         char node_val_str[LABEL_LENGTH] = {};
 
         NodeValToStr(cur_node, node_val_str);
@@ -61,6 +64,10 @@ void InitNodesInDot(Tree *tree, FILE *dot_file)
             fprintf(dot_file, "%s%p_cpy [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"%s\"]\n",
                 NODE_NAME_PREFIX, cur_node, CHANGE_NODE_SHAPE, CHANGE_NODE_POINTER_COLOR, node_val_str);
         }
+
+        else
+            fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"%s\"]\n",
+                NODE_NAME_PREFIX, cur_node, NUM_NODE_SHAPE, NUM_NODE_COLOR, "POISON");
     }
 }
 
@@ -72,6 +79,10 @@ void MakeLinksInDot(Tree *tree, FILE *dot_file)
     for (size_t i = 0; i < tree->size; i++)
     {
         Node *cur_node  = tree->node_ptrs[i];
+        
+        if (cur_node == NULL)
+            continue;
+
         Node *left_son  = cur_node->left;
         Node *right_son = cur_node->right;
 
@@ -94,6 +105,5 @@ void MakeGraphPicture(const char *dotfile_path, const char *picture_path)
     char cmd_command[CMD_COMMAND_LEN] = {};
 
     sprintf(cmd_command, "dot %s -T png -o %s\n", dotfile_path, picture_path);
-// fprintf(stderr, "command: %s\n", cmd_command);
     system(cmd_command);
 }

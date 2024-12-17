@@ -15,48 +15,25 @@ void SimplifyExpr(Tree *expr_tree, Node *start_node)
 {
     assert(expr_tree);
     assert(start_node);
+    fprintf(stderr, "SIMPLIFIER\n");
 
-    fprintf(stderr, "rabotaet yproshalka\n");
-    char orig_tex[TEX_EXPRESSION_LEN] = {};
-    GetTexTreeData(start_node, orig_tex, false);
-// DIFF_DUMP(expr_tree);
+    char orig_tex[STR_EXPRESSION_LEN] = {};
+    GetStrTreeData(start_node, orig_tex, false, TEX);
+
     SubToAdd(expr_tree, start_node);
-fprintf(LogFile, "after SubToAdd()\n");
-// DIFF_DUMP(expr_tree);
 
     VarsToGeneralform(expr_tree, start_node);                   // x --> 1 * x ^ 1
-fprintf(LogFile, "after VarsToGeneralform()\n");
-// DIFF_DUMP(expr_tree);
 
-    fprintf(LogFile, "before SimplifyConstants()\n");
-    // DIFF_DUMP(expr_tree);
     SimplifyConstants (expr_tree, start_node);
-
     SimplifyVars      (expr_tree, start_node);
-
     SimplifyConstants (expr_tree, start_node);
-
- fprintf(LogFile, "before VarsToNormalForm()\n");
-    // DIFF_DUMP(expr_tree);
 
     VarsToNormalForm(expr_tree, start_node);
 
-fprintf(LogFile, "before AddToSub()\n");
-    // DIFF_DUMP(expr_tree);
-
-    AddToSub(expr_tree, start_node);
-
-    // DIFF_DUMP(expr_tree);
-
-    char simpl_tex[TEX_EXPRESSION_LEN] = {};
-    GetTexTreeData(start_node, simpl_tex, false);
-
-    if (strcmp(orig_tex, simpl_tex) != 0)
-        fprintf(OutputFile, "By the too simple mathematical transformations:\n $%s = %s$ \n \\newline\n \\newline \n", orig_tex, simpl_tex);
-
-    fprintf(stderr, "zakonchila yproshalka\n");
-
-    // DIFF_DUMP(expr_tree);
+    AddToSub  (expr_tree, start_node);
+    char simpl_tex[STR_EXPRESSION_LEN] = {};
+    GetStrTreeData(start_node, simpl_tex, false, TEX);
+    fprintf(OutputFile, "By too simple mathematical transformations:\n $%s = %s$ \n \\newline\n \\newline \n", orig_tex, simpl_tex);
 }
 
 Node *SimplifyConstants(Tree *tree, Node *cur_node)
@@ -64,22 +41,20 @@ Node *SimplifyConstants(Tree *tree, Node *cur_node)
     assert(tree);
     assert(cur_node);
 
-    fprintf(stderr, "root_ptr = %p , !%s\n", tree->root_ptr, tree->name);
-
     const Operation *op  = GetOperationByNode(cur_node);
 
     if (op != NULL)
     {
         cur_node = op->simpl_nums_func(tree, cur_node);
 
-        if (!IS_INT_TREE && cur_node->left->type == NUM && cur_node->right->type == NUM)
+        if (!IS_INT_TREE && cur_node->type == OP && cur_node->left->type == NUM && cur_node->right->type == NUM)
         {
             TreeElem_t new_val = op->op_func(cur_node->left->val.num, cur_node->right->val.num);
-            
+
             RemoveNode(tree, &cur_node->left);
             RemoveNode(tree, &cur_node->right);
 
-            cur_node->left  = NULL;     //TODO: проверить можно ли убрать
+            cur_node->left  = NULL;
             cur_node->right = NULL;
             cur_node->type  = NUM;
             cur_node->val.num = new_val;
@@ -92,8 +67,6 @@ Node *SimplifyConstants(Tree *tree, Node *cur_node)
 Node *SimplifyVars(Tree *tree, Node *cur_node)
 {
     assert(cur_node);
-
-    fprintf(LogFile, "in SimplifyVars(): cur_node->val = %d\n", cur_node->val.num);
 
     const Operation *op  = GetOperationByNode(cur_node);
 
@@ -116,10 +89,9 @@ Node *SimplNumsAdd(Tree *tree, Node *add_node)
         return add_node;
     }
 
-    else if (add_node->left->type == NUM && add_node->left->val.num == 0)
+    else if (add_node->left->type == NUM && ARE_EQUAL(add_node->left->val.num, 0))
     {
         RemoveNode(tree, &add_node->left);
-        // RemoveNode(tree, &add_node);
 
         Node *right = add_node->right;
 
@@ -177,11 +149,6 @@ Node *SimplNumsMul(Tree *tree, Node *mul_node)
 {
     SimplNumsArgs(tree, mul_node);
 
-    fprintf(stderr, "SimplNumsMul()\n");
-    // fprintf(LogFile, "SimplNumsMul()\n");
-    // DIFF_DUMP(tree);
-
-
     if (mul_node->left->type == NUM && mul_node->right->type == NUM)
     {
         CalculateOp(tree, mul_node);
@@ -191,7 +158,7 @@ Node *SimplNumsMul(Tree *tree, Node *mul_node)
     ComplexToTheRight(mul_node);
     TakeOutConsts(tree, mul_node);
 
-    if (mul_node->left->type == NUM && mul_node->left->val.num == 0)
+    if (mul_node->left->type == NUM && ARE_EQUAL(mul_node->left->val.num, 0))
     {
         return MulByNull(tree, mul_node);
     }
@@ -209,8 +176,6 @@ Node *SimplNumsMul(Tree *tree, Node *mul_node)
         bool right_is_sum = (mul_node->right->type == OP && mul_node->right->val.op == ADD);
         if (left_is_simple_multiplier && right_is_sum)      // раскрыть скобки
         {
-            fprintf(stderr, "ExpandAddBrackets\n");
-
             ExpandAddBrackets(tree, mul_node);                 // MUL -> ADD
             SimplifyConstants(tree, mul_node);
             return mul_node;
@@ -230,22 +195,35 @@ Node *SimplNumsDiv(Tree *tree, Node *div_node)
         return div_node;
     }
 
-    if (div_node->left->type == NUM && div_node->left->val.op == 0)
-        return FractionBecomesZero(tree, div_node);
-
     Node *numerator   = div_node->left;
     Node *denominator = div_node->right;
 
-    bool numerator_is_int   = IS_INT_VAL(div_node->left);
-    bool denominator_is_int = IS_INT_VAL(div_node->right);
 
-    bool can_calc = ((!numerator_is_int || !denominator_is_int) && (numerator->type == NUM && denominator->type == NUM)) ||         // оба double
-                     ((numerator_is_int &&  denominator_is_int) && (numerator->val.num % denominator->val.num) == 0);                       // или делятся нацело
+    if (IS_INT_VAL(numerator) && (size_t)numerator->val.num == 0)
+        return FractionBecomesZero(tree, div_node);
+
+    bool are_double = (!IS_INT_TREE) && (numerator->type == NUM && denominator->type == NUM);
+
+    #if IS_INT_TREE
+        bool are_divided = ((numerator->val.num % denominator->val.num) == 0);
+    #else 
+        bool are_divided = false;
+    #endif
+
+    bool can_calc = are_double || are_divided;        // они double или делятся нацело
 
     if (numerator->type == NUM && denominator->type == NUM && can_calc)
     {
-        CalculateOp(tree, div_node);
-        return div_node;
+        TreeElem_t new_val = numerator->val.num / denominator->val.num;
+        
+        RemoveNode(tree, &div_node->left);
+        RemoveNode(tree, &div_node->right);
+
+        div_node->left  = NULL;
+        div_node->right = NULL;
+
+        div_node->type    = NUM;
+        div_node->val.num = new_val;
     }
 
     else if ((numerator->type   == OP && numerator->val.op   == DIV)
@@ -255,16 +233,17 @@ Node *SimplNumsDiv(Tree *tree, Node *div_node)
         SimplifyConstants(tree, div_node);
     }
 
-    else if (numerator_is_int && denominator_is_int)   // и числитель, и знаменатель целые
+#if IS_INT_TREE
+
+    else if (numerator->type == NUM && denominator->type == NUM)   // и числитель, и знаменатель целые
     {
         TreeElem_t start_val = MIN(abs(numerator->val.num), abs(denominator->val.num));
 
         for (TreeElem_t divider = start_val; divider > 0; divider--)
         {
-            if (divider > abs(numerator->val.num))
-                divider = abs(numerator->val.num);
-
-
+            if (divider > numerator->val.num)
+                divider = numerator->val.num;
+            
             if (numerator->val.num % divider == 0 && denominator->val.num % divider == 0)
             {
                 numerator->val.num   /= divider;
@@ -273,12 +252,14 @@ Node *SimplNumsDiv(Tree *tree, Node *div_node)
         }
     }
 
-    if (denominator->type == NUM && denominator->val.num < 0)
+#endif
+
+    else if (denominator->type == NUM && denominator->val.num < 0)
     {
         denominator->val.num *= -1;
 
-        Node *minus    = NewNode(tree, NUM, {.num = -1},  NULL, NULL);
-        div_node->left = NewNode(tree, OP,  {.op  = MUL}, minus, numerator);
+        Node *minus   = NewNode(tree, NUM, {.num = -1}, NULL, NULL);
+        div_node->left = NewNode(tree, OP,  {.op = MUL}, minus, numerator);
 
         SimplifyConstants(tree, div_node->left);
     }
@@ -296,21 +277,30 @@ Node *SimplNumsDeg(Tree *tree, Node *deg_node)
     Node *basis  = deg_node->left;
     Node *degree = deg_node->right;
 
-    bool basis_is_valid  = ((IS_INT_TREE && basis->type  == NUM)                        || !IS_INT_TREE);
-    bool degree_is_valid = ((IS_INT_TREE && degree->type == NUM && degree->val.num > 0) || !IS_INT_TREE);
-
-    if (basis->type == NUM && basis->val.num == 1)
+    if ((basis->type == NUM && ARE_EQUAL(basis->val.num, 1)) || (degree->type == NUM && ARE_EQUAL(degree->val.num, 0)))
     {
-        Node one = *basis;
-
         RemoveSubtree(tree, &basis);
         RemoveSubtree(tree, &degree);
 
-        *deg_node = one;
+        deg_node->type    = NUM;
+        deg_node->val.num = 1;
+        deg_node->left    = NULL;
+        deg_node->right   = NULL;
+
         return deg_node;
     }
 
-    else if (basis_is_valid && degree_is_valid)
+    else if (basis->type != VAR && degree->type == NUM && ARE_EQUAL(degree->val.num, 1))
+    {
+        Node new_node = *deg_node->left;
+
+        RemoveNode(tree, &deg_node->left);
+        RemoveNode(tree, &deg_node->right);
+
+        *deg_node = new_node;
+    }
+
+    else if (basis->type  == NUM && degree->type == NUM && ((IS_INT_TREE && degree->val.num > 0) || (!IS_INT_TREE)))
     {
         CalculateOp(tree, deg_node);
         return deg_node;
@@ -342,6 +332,20 @@ Node *SimplNumsDeg(Tree *tree, Node *deg_node)
 
     return deg_node;
 }
+
+Node *SimplNumsOther(Tree *tree, Node *cur_node)
+{
+    SimplNumsArgs(tree, cur_node);
+
+    if (cur_node->left->type == NUM && cur_node->right->type == NUM)
+    {
+        CalculateOp(tree, cur_node);
+        return cur_node;
+    }
+
+    return cur_node;
+}
+
 
 Node *RevealDoubleDeg(Node *deg_node)
 {
@@ -375,8 +379,6 @@ Node *SimplVarsAdd(Tree *tree, Node *sub_node)
 
     if (IsSimpleVarMember(arg_1) && IsSimpleVarMember(arg_2))
     {
-        fprintf(stderr, "simpling vars add\n");
-
         Node *deg_1 = arg_1->right->right;
         Node *deg_2 = arg_2->right->right;
 
@@ -388,11 +390,10 @@ Node *SimplVarsAdd(Tree *tree, Node *sub_node)
 
         if (IsComplex(deg_1) || IsComplex(deg_2) || IsComplex(mult_1) || IsComplex(mult_2))
         {
-            fprintf(stderr, "are not complex\n");
             return sub_node;
         }
 
-        bool degrees_are_equal = ((deg_1->type == NUM && deg_2->type == NUM && deg_1->val.num == deg_2->val.num) 
+        bool degrees_are_equal = ((deg_1->type == NUM && deg_2->type == NUM && ARE_EQUAL(deg_1->val.num, deg_2->val.num)) 
                                || (CHECK_NODE_OP(deg_1, DIV) && CHECK_NODE_OP(deg_2, DIV) && FractionsAreEqual(deg_1, deg_2)));
 
         if (var_1->val.var == var_2->val.var && degrees_are_equal)
@@ -410,19 +411,9 @@ Node *SimplVarsAdd(Tree *tree, Node *sub_node)
 
             RemoveNode(tree, &arg_1);
             RemoveSubtree(tree, &arg_2);
-            // RemoveNode(tree, &var_2);
-            // RemoveNode(tree, &deg_2);
-            // RemoveNode(tree, &arg_2->right);
-            // RemoveNode(tree, &mult_2);
-            // RemoveNode(tree, &arg_2);
 
             return sub_node;
         }
-
-        // else if (var_1->val == var_2->val && CHECK_NODE_OP(deg_1, DIV) && CHECK_NODE_OP(deg_2, DIV) && FractionsAreEqual(deg_1, deg_2))
-        // {
-
-        // }
     }
 
     return sub_node;
@@ -431,20 +422,24 @@ Node *SimplVarsAdd(Tree *tree, Node *sub_node)
 
 Node *SimplVarsMul(Tree *tree, Node *mul_node)
 {
-    fprintf(stderr, "SIMPL MUL: VAR!!!!\n\n");
-
     assert(tree);
     assert(mul_node);
 
-    // SimplVarsArgs(tree, sub_node);
+    SimplVarsArgs(tree, mul_node);
 
     Node *arg_1 = mul_node->left;
     Node *arg_2 = mul_node->right;
 
-    if (IsSimpleVarMember(arg_1) && IsSimpleVarMember(arg_2))
+    if (arg_1->type == NUM && ARE_EQUAL(arg_1->val.num, 1) && !(CHECK_NODE_OP(arg_2, DEG) && arg_2->left->type == VAR))
     {
-        fprintf(stderr, "simpling vars add\n");
+        fprintf (stderr, "1 * ...\n");
+        RemoveNode(tree, &arg_1);
+        *mul_node = *arg_2;
+        RemoveNode(tree, &arg_2);
+    }
 
+    else if (IsSimpleVarMember(arg_1) && IsSimpleVarMember(arg_2))
+    {
         Node *deg_1 = arg_1->right->right;
         Node *deg_2 = arg_2->right->right;
 
@@ -456,7 +451,6 @@ Node *SimplVarsMul(Tree *tree, Node *mul_node)
 
         if (IsComplex(deg_1) || IsComplex(deg_2) || IsComplex(mult_1) || IsComplex(mult_2))
         {
-            fprintf(stderr, "are not complex\n");
             return mul_node;
         }
 
@@ -470,8 +464,6 @@ Node *SimplVarsMul(Tree *tree, Node *mul_node)
         arg_2->right->val.op = ADD;
         arg_2->right->left   = deg_1;
     }
-
-    fprintf(stderr, "done\n");
 
     return mul_node;
 }
@@ -499,9 +491,6 @@ Node *SimplNumsArgs(Tree *tree, Node *op_node)
         if (right_op != NULL)
             op_node->right = right_op->simpl_nums_func(tree, op_node->right);
     }
-
-    // else
-    //     op_node->right = op_node->left;
 
     return op_node;
 }
@@ -531,11 +520,6 @@ Node *SimplVarsArgs(Tree *tree, Node *op_node)
             op_node->right = right_op->simpl_vars_func(tree, op_node->right);
     }
 
-    // else 
-    // {
-    //     fprintf(stderr, "\n\n\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n");
-    //     op_node->right = op_node->left;
-    // }
     return op_node;
 }
 
@@ -566,14 +550,21 @@ Node *SimplifyFraction(Tree *tree, Node *op_node, Node *numerator, Node *denomin
     assert(numerator);
     assert(denominator);
 
-    if (numerator->type == NUM && numerator->val.num == 0)
+    if (IS_INT_VAL(numerator) && (size_t)numerator->val.num == 0)
         return FractionBecomesZero(tree, op_node);
 
     bool numerator_is_int   = IS_INT_VAL(numerator);
     bool denominator_is_int = IS_INT_VAL(denominator);
 
-    bool can_calc = ((!numerator_is_int || !denominator_is_int) && (numerator->type == NUM && denominator->type == NUM)) ||          // они double
-                     ((numerator_is_int &&  denominator_is_int) && (numerator->val.num % denominator->val.num) == 0);                // или делятся нацело
+    bool are_double = (!numerator_is_int || !denominator_is_int) && (numerator->type == NUM && denominator->type == NUM);
+
+    #if IS_INT_TREE
+        bool are_divided = ((numerator_is_int &&  denominator_is_int) && (numerator->val.num % denominator->val.num) == 0);
+    #else 
+        bool are_divided = false;
+    #endif
+
+    bool can_calc = are_double || are_divided;        // они double или делятся нацело
 
     if (numerator->type == NUM && denominator->type == NUM && can_calc)
     {
@@ -596,6 +587,8 @@ Node *SimplifyFraction(Tree *tree, Node *op_node, Node *numerator, Node *denomin
         SimplifyConstants(tree, op_node);
     }
 
+#if IS_INT_TREE
+
     else if (numerator_is_int && denominator_is_int)   // и числитель, и знаменатель целые
     {
         TreeElem_t start_val = MIN(abs(numerator->val.num), abs(denominator->val.num)) / 2;
@@ -612,6 +605,8 @@ Node *SimplifyFraction(Tree *tree, Node *op_node, Node *numerator, Node *denomin
             }
         }
     }
+
+#endif
 
     else if (denominator->type == NUM && denominator->val.num < 0)
     {
@@ -638,8 +633,6 @@ void FlipDenominator(Node *fraction_node)           // вызывается когда в числит
 
     if (denom->type == OP && denom->val.op == DIV)   // в знаменателе дробь
     {
-        fprintf(stderr, "WATAFAK\n\n");
-
         Node *numerator_of_denom = denom->left;
 
         denom->val.op = MUL;
@@ -651,8 +644,6 @@ void FlipDenominator(Node *fraction_node)           // вызывается когда в числит
 
     else                                            // в знаменателе не дробь => в числителе дробь
     {
-        fprintf(stderr, "HUETAAA\n");
-
         Node *prev_denom = fraction_node->right;
 
         fraction_node->right = fraction_node->left;
@@ -683,7 +674,6 @@ bool MulByFraction(Node *mul_node, Node *left_arg, Node *right_arg)
 
     if (left_is_fraction && !right_is_fraction && !right_is_complex)
     {
-        // mul_node->val = DIV;
         mul_node->left->val.op = MUL;
 
         mul_node->right = left_arg->right;
@@ -692,8 +682,6 @@ bool MulByFraction(Node *mul_node, Node *left_arg, Node *right_arg)
 
     else if (right_is_fraction && !left_is_fraction && !left_is_complex)
     {
-        // mul_node->val = DIV;
-
         mul_node->left = right_arg;
         mul_node->left->val.op = MUL;
 
@@ -755,7 +743,6 @@ Node *TakeOutConsts(Tree *tree, Node *cur_node)                        //      a
        !IsComplex(left_arg)          && IsComplex(right_arg) &&
        !IsComplex(right_arg->left)   && IsComplex(right_arg->right))
     {
-        fprintf(stderr, "\n\n\nTAKEOUTCONSTS   (1)\n\n");
         cur_node->right = right_arg->right;
         cur_node->left  = right_arg;
 
@@ -766,8 +753,6 @@ Node *TakeOutConsts(Tree *tree, Node *cur_node)                        //      a
 
     else if (have_equal_types_2 && !IsComplex(left_arg->left) && !IsSimpleVarMember(left_arg))
     {
-        fprintf(stderr, "\n\n\nTAKEOUTCONSTS    (2)\n\n");
-
         cur_node->right = left_arg->left;
         left_arg->left  = right_arg;
         ComplexToTheRight(cur_node);
@@ -777,33 +762,6 @@ Node *TakeOutConsts(Tree *tree, Node *cur_node)                        //      a
 
     return cur_node;
 }
-
-// Node *TakeOutConstsInMul(Tree *tree, Node *cur_node)                        //     a * (b * x)  =>  (a * b) * x
-// {                                                                           // или (a * f(x)) * g(x) => a * (f(x) * g(x))
-//     assert(tree);
-//     assert(cur_node);
-
-//     Node *left_arg  = cur_node->left;
-//     Node *right_arg = cur_node->right;
-
-//     fprintf(stderr, "\n\n\ncur_node->left = %d\n", cur_node->left->val);
-//                 fprintf(stderr, "in takeout mul\n");
-
-//     fprintf(stderr, "l = %d, r = %d, r->l = %d, r->r = %d\n\n", IsComplex(left_arg), IsComplex(right_arg), IsComplex(right_arg->left), IsComplex(right_arg->right));
-
-//     if (CHECK_NODE_OP(right_arg, MUL) &&
-//         !IsComplex(left_arg)        && IsComplex(right_arg) &&
-//         !IsComplex(right_arg->left) && IsComplex(right_arg->right))
-//     {
-//     fprintf(stderr, "in takeout mul gooo\n");
-//         cur_node->right = right_arg->right;
-//         cur_node->left  = right_arg;
-
-//         right_arg->right = left_arg;
-//     }
-
-//     return cur_node;
-// }
 
 Node *TakeOutConstsInDiv(Tree *tree, Node *cur_node)                        // (a * x) / b  =>  (a / b) * x 
 {
@@ -817,7 +775,7 @@ Node *TakeOutConstsInDiv(Tree *tree, Node *cur_node)                        // (
             return cur_node;
 
     if (IsComplex(left_arg)       && !IsComplex(right_arg) && 
-        !IsComplex(left_arg->left) && IsComplex(left_arg->right))       // TODO !Exists vars instead
+        !IsComplex(left_arg->left) && IsComplex(left_arg->right))
     {
         cur_node->right = left_arg->right;
         left_arg->right = right_arg;
@@ -833,11 +791,8 @@ Node *FractionBecomesZero(Tree *tree, Node *div_node)
 {
     Node *denominator = div_node->right;
 
-    if (denominator->type == NUM && denominator->val.num == 0)
+    if (IS_INT_VAL(denominator) && (size_t)denominator->val.num == 0)
     {
-        fprintf(stderr, "%p\n", div_node);
-
-        fprintf(stderr, "Warning: uncertainty type of '0/0'\n");
         return div_node;
     }
 
@@ -856,7 +811,6 @@ Node *FractionBecomesZero(Tree *tree, Node *div_node)
 void SubToAdd(Tree *tree, Node *start_node)                                           // 8 - x  =>  8 + (-1) * x
 {
     assert(tree);
-
     if (start_node == NULL || start_node->type != OP)
         return;
 
@@ -869,21 +823,6 @@ void SubToAdd(Tree *tree, Node *start_node)                                     
         start_node->right = NewNode(tree, OP, {.op = MUL}, minus, start_node->right);
         start_node->val.op = ADD;
     }
-
-    // for (size_t i = 0; i < tree->size; i++)
-    // {
-    //     Node *cur_node = tree->node_ptrs[i];
-
-    //     if (cur_node == NULL)
-    //         continue;
-
-    //     if (CHECK_NODE_OP(cur_node, SUB))
-    //     {
-    //         Node *minus = NewNode(tree, NUM, {.num = -1}, NULL, NULL);
-    //         cur_node->right = NewNode(tree, OP, {.op = MUL}, minus, cur_node->right);
-    //         cur_node->val.op = ADD;
-    //     }
-    // }
 }
 
 void VarsToGeneralform(Tree *tree, Node *start_node)
@@ -896,7 +835,9 @@ void VarsToGeneralform(Tree *tree, Node *start_node)
     if (start_node->type == OP)
     {
         VarsToGeneralform(tree, start_node->left);
-        VarsToGeneralform(tree, start_node->right);
+
+        if (GetOperationByNode(start_node)->type == BINARY)
+            VarsToGeneralform(tree, start_node->right);
     }
 
     else if (start_node->type == VAR)
@@ -913,38 +854,11 @@ void VarsToGeneralform(Tree *tree, Node *start_node)
         start_node->type   = OP;
         start_node->val.op = MUL;
     }
-
-    // size_t start_tree_size = tree->size;
-
-    // for (size_t i = 0; i < start_tree_size; i++)
-    // {
-    //     Node *cur_node = tree->node_ptrs[i];
-
-    //     if (cur_node == NULL)
-    //         continue;
-
-    //     if (cur_node->type == VAR)
-    //     {
-    //         Node *cur_node_cpy = TreeCopyPaste(tree, tree, cur_node);
-
-    //         Node *degree     = NewNode(tree, NUM, {.num = 1}, NULL, NULL);
-    //         Node *multiplier = NewNode(tree, NUM, {.num = 1}, NULL, NULL);
-
-    //         Node *deg_node   = NewNode(tree, OP, {.op = DEG}, cur_node_cpy, degree);
-
-    //         cur_node->left   = multiplier;
-    //         cur_node->right  = deg_node;
-    //         cur_node->type   = OP;
-    //         cur_node->val.op = MUL;
-    //     }
-    // }
 }
 
 void VarsToNormalForm(Tree *tree, Node *start_node)
 {
     assert(tree);
-
-    fprintf(stderr, "in VarsToNormalForm()\n");
 
     if (start_node == NULL || start_node->type != OP)
         return;
@@ -958,9 +872,8 @@ void VarsToNormalForm(Tree *tree, Node *start_node)
     Node *multiplier = start_node->left;
     Node *deg_node   = start_node->right;
 
-    if (IsSimpleVarMember(start_node) && deg_node->right->type == NUM && deg_node->right->val.num == 1)
+    if (IsSimpleVarMember(start_node) && deg_node->right->type == NUM && ARE_EQUAL(deg_node->right->val.num, 1))
     {
-        fprintf(stderr, "\nGOVNO 11\n");
         Node new_node = *deg_node->left;
 
         RemoveNode(tree, &deg_node->left);
@@ -969,69 +882,15 @@ void VarsToNormalForm(Tree *tree, Node *start_node)
         *deg_node = new_node;
     }
     
-    if (multiplier->type == NUM && multiplier->val.num == 1)
+    if (multiplier->type == NUM && ARE_EQUAL(multiplier->val.num, 1))
     {
-        fprintf(stderr, "\nGOVNO 22\n");
-
         RemoveNode(tree, &multiplier);
-        // RemoveNode(tree, &add_node);
 
         Node *right = start_node->right;
 
         *start_node = *right;
         RemoveNode(tree, &right);
     }
-
-    // for (size_t i = 0; i < tree->size; i++)
-    // {
-    //     fprintf(stderr, "in VarsToNormalForm i = %lld\n", i);
-
-    //     Node *cur_node = tree->node_ptrs[i];
-
-    //     if (cur_node == NULL || cur_node->type != OP || !CHECK_NODE_OP(cur_node, MUL))
-    //         continue;
-
-    //     Node *multiplier = cur_node->left;
-    //     Node *deg_node   = cur_node->right;
-
-    //     if (IsSimpleVarMember(cur_node) && deg_node->right->type == NUM && deg_node->right->val.num == 1)
-    //     {
-    //         fprintf(stderr, "\nGOVNO 11\n");
-    //         Node new_node = *deg_node->left;
-
-    //         RemoveNode(tree, &deg_node->left);
-    //         RemoveNode(tree, &deg_node->right);
-
-    //         *deg_node = new_node;
-    //     }
-        
-    //     if (multiplier->type == NUM && multiplier->val.num == 1)
-    //     {
-    //         fprintf(stderr, "\nGOVNO 22\n");
-
-    //         RemoveNode(tree, &multiplier);
-    //         // RemoveNode(tree, &add_node);
-
-    //         Node *right = cur_node->right;
-
-    //         *cur_node = *right;
-    //         RemoveNode(tree, &right);
-    //     }
-
-    //     // if (mul_node->left->type == NUM && mul_node->left->val == 1)
-    //     // {
-    //     //     RemoveNode(tree, &mul_node->left);
-    //     //     // RemoveNode(tree, &add_node);
-
-    //     //     Node *right = mul_node->right;
-
-    //     //     *mul_node = *right;
-    //     //     RemoveNode(tree, &right);
-    //     // }
-    // }
-
-    // fprintf(stderr, "End of vars to norm form\n");    
-    // fprintf(LogFile, "End of vars to norm form\n");
 }
 
 void AddToSub(Tree *tree, Node *start_node)                                       // 8 + (-1) * x  =>  8 - x
@@ -1052,7 +911,7 @@ void AddToSub(Tree *tree, Node *start_node)                                     
         {
             start_node->val.op = SUB;
 
-            if (arg_2->left->val.num == -1)   // частный случай
+            if (ARE_EQUAL(arg_2->left->val.num, -1))   // частный случай
             {       
                 start_node->right = arg_2->right;
 
@@ -1070,51 +929,12 @@ void AddToSub(Tree *tree, Node *start_node)                                     
             arg_2->val.num  *= -1;   
         }
     }
-
-    // assert(tree);
-
-    // for (size_t i = 0; i < tree->size; i++)
-    // {
-    //     Node *cur_node = tree->node_ptrs[i];
-
-    //     if (cur_node == NULL)
-    //         continue;
-        
-    //     if (cur_node->type == OP && cur_node->val.op == ADD)
-    //     {
-    //         Node *arg_2 = cur_node->right;
-
-    //         if (arg_2->type == OP && arg_2->val.op == MUL && arg_2->left->type == NUM && arg_2->left->val.num < 0)
-    //         {
-    //             cur_node->val.op = SUB;
-
-    //             if (arg_2->left->val.num == -1)   // частный случай
-    //             {       
-    //                 cur_node->right = arg_2->right;
-
-    //                 RemoveNode(tree, &arg_2->left);
-    //                 RemoveNode(tree, &arg_2);
-    //             }
-
-    //             else
-    //                 arg_2->left->val.num *= -1;
-    //         }
-
-    //         else if (arg_2->type == NUM && arg_2->val.num < 0)
-    //         {
-    //             cur_node->val.op = SUB;
-    //             arg_2->val.num  *= -1;   
-    //         }
-    //     }
-    // }
 }
 
 void ExpandAddBrackets(Tree *tree, Node *mul_node)                 // a * (x + y)
 {
     assert(tree);
     assert(mul_node);
-
-    fprintf(stderr, "mul_node = %p\n", mul_node);
 
     Node *simple_multiplier = mul_node->left;
     Node *simple_multiplier_cpy = TreeCopyPaste(tree, tree, simple_multiplier);
@@ -1125,13 +945,9 @@ void ExpandAddBrackets(Tree *tree, Node *mul_node)                 // a * (x + y
     right_mul->val.op = MUL;
 
     right_mul->left = simple_multiplier_cpy;
-    // right_mul->right остаётся тем же, что и был до этого
 
     mul_node->val.op = ADD;
     mul_node->left = left_mul;
-    // mul_node->right остаётся тем же, что и был до этого
-
-    fprintf(stderr, "end of exp brack\n");
 }
 
 bool IsComplex(Node *node)
@@ -1150,7 +966,6 @@ void ExpandDegBrackets(Tree *tree, Node *deg_op_node)                 // (f * g)
     Node *res_node   = deg_op_node;
     res_node->val.op = MUL;
 
-    // Node *new_basis_1  = basis->left;
     Node *new_basis_2  = basis->right;
     Node *degree_cpy_1 = TreeCopyPaste(tree, tree, degree);
     Node *degree_cpy_2 = TreeCopyPaste(tree, tree, degree);
@@ -1235,7 +1050,6 @@ Node *FractionInDeg(Tree *tree, Node *pow_node)
     assert(IsSimpleFraction(pow_node->left));
     assert(!IsComplex(degree));
 
-    // Node *numerator   = fraction->left;
     Node *denominator = fraction->right;
 
     pow_node->val.op = DIV;
@@ -1293,5 +1107,5 @@ bool FractionsAreEqual(Node *div_1, Node *div_2)        // 3/2 != 6/4
     if (IsComplex(div_1) || IsComplex(div_2))
         return false;
 
-    return (div_1->left->val.num == div_2->left->val.num && div_1->right->val.num == div_2->right->val.num);
+    return (ARE_EQUAL(div_1->left->val.num, div_2->left->val.num) && ARE_EQUAL(div_1->right->val.num, div_2->right->val.num));
 }

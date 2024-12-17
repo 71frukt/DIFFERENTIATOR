@@ -8,10 +8,7 @@
 const int  EXPRESSION_LEN   = 400;
 const int  MAX_FUNCNAME_LEN = 20;
 
-const char END_OF_EXPR    = '$';
-const char BRACKET_OPEN   = '(';
-const char BRACKET_CLOSE  = ')';
-const char SEPARATOR      = ',';
+#define    END_OF_TRANSLATION  "$"
 
 #define GET_FUNC_SPECIFIER  "%[a-zA-Z-+^*/]"
 
@@ -21,17 +18,21 @@ struct Expression
     size_t ip;
 };
 
-Node *GetExpr           (Expression *expr, Tree *dest_tree);
-Node *GetSum            (Expression *expr, Tree *dest_tree);
-Node *GetMul            (Expression *expr, Tree *dest_tree);
-Node *GetFunc           (Expression *expr, Tree *dest_tree);
-Node *GetPow            (Expression *expr, Tree *dest_tree);
-Node *GetExprInBrackets (Expression *expr, Tree *dest_tree);
-Node *GetNumber         (Expression *expr, Tree *dest_tree);
+void GetTreeData (Tree *tree, FILE *source);
+void MakeTokens  (Tree *tree, char *str);
 
-void  SyntaxError (Expression *expr, const char *error, const char *file, int line, const char *func);
+Node *GetExpr           (Tree *dest_tree);
+Node *GetSum            (Tree *dest_tree, size_t *ip);
+Node *GetMul            (Tree *dest_tree, size_t *ip);
+Node *GetFunc           (Tree *dest_tree, size_t *ip);
+Node *GetPow            (Tree *dest_tree, size_t *ip);
+Node *GetExprInBrackets (Tree *dest_tree, size_t *ip);
+Node *GetNumber         (Tree *dest_tree, size_t *ip);
+
+void  SyntaxError (size_t ip, const char *error, const char *file, int line, const char *func);
 char *SkipSpaces  (Expression *expr);
+bool  IsBracket   (Node *node);
 
-#define SYNTAX_ERROR(expr, error)  SyntaxError(expr, error, __FILE__, __LINE__, __func__)
+#define SYNTAX_ERROR(ip, error)  SyntaxError(ip, error, __FILE__, __LINE__, __func__)
 
 #endif

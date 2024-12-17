@@ -49,6 +49,17 @@ const Operation *GetOperationBySymbol(char *sym)
     return NULL;
 }
 
+const Constant *GetConstantBySymbol(char sym)
+{
+    for (int i = 0; i < CONSTANTS_NUM; i++)
+    {
+        if (sym == Constants[i].sym)
+            return &Constants[i];
+    }
+
+    return NULL;
+}
+
 TreeElem_t Add(TreeElem_t arg1, TreeElem_t arg2)
 {
     return arg1 + arg2;
@@ -76,25 +87,21 @@ TreeElem_t Deg(TreeElem_t arg1, TreeElem_t arg2)
 
 TreeElem_t Sin(TreeElem_t arg1, TreeElem_t arg2)
 {
-    assert(arg1 == arg2);
     return (TreeElem_t) sin(arg1);
 }
 
 TreeElem_t Cos(TreeElem_t arg1, TreeElem_t arg2)
 {
-    assert(arg1 == arg2);
     return (TreeElem_t) cos(arg1);
 }
 
 TreeElem_t Tan(TreeElem_t arg1, TreeElem_t arg2)
 {
-    assert(arg1 == arg2);
     return (TreeElem_t) tan(arg1);
 }
 
 TreeElem_t Ln(TreeElem_t arg1, TreeElem_t arg2)
 {
-    assert(arg1 == arg2);
     return (TreeElem_t) log(arg1);
 }
 
@@ -192,10 +199,6 @@ Node *DiffDiv(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
 Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 {
-    fprintf(LogFile, "before DiffDeg():\n");
-    // DIFF_DUMP(expr_tree);
-    // DIFF_DUMP(solv_tree);
-
     Node *degree = expr_node->right;
     Node *basis = expr_node->left;
 
@@ -207,7 +210,6 @@ Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
         Node *expr_cpy = TreeCopyPaste(expr_tree, solv_tree, expr_node);
 
         Tree tmp_expr_tree = {};
-        fprintf(stderr, "ctor\n");
         TreeCtor(&tmp_expr_tree, START_TREE_SIZE ON_DIFF_DEBUG(, "tmp_expr_deg_diff"));
 
         Node *tmp_degree_cpy = TreeCopyPaste(expr_tree, &tmp_expr_tree, degree);
@@ -233,7 +235,6 @@ Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
         Node *deg_sub_one = NewNode(solv_tree, OP, {.op = SUB}, degree_cpy_1, NewNode(solv_tree, NUM, {.num = 1}, NULL, NULL));
 
         Node *deg_node = NewNode(solv_tree, OP, {.op = DEG}, basis_cpy, deg_sub_one);
-        // expr_node->right = deg_sub_one;
 
         Node *func_diff  = NewNode(solv_tree, OP, {.op = MUL}, degree_cpy_2, deg_node);
 
@@ -244,15 +245,8 @@ Node *DiffDeg(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
 
     else if (!basis_cont_var && degree_cont_var)         // a ^ g(x)
     {
-        fprintf(LogFile, "in DiffDeg():\n");
-    // DIFF_DUMP(expr_tree);
-    // DIFF_DUMP(solv_tree);
-
         Node *expr_cpy   = TreeCopyPaste(expr_tree, solv_tree, expr_node);
         Node *basis_cpy  = TreeCopyPaste(expr_tree, solv_tree, basis);
-
-        fprintf(LogFile, "here! DiffDeg():\n");
-        DIFF_DUMP(solv_tree);
 
         Node *ln_of_basis = NewNode(solv_tree, OP, {.op = LN}, basis_cpy, basis_cpy);
         Node *func_diff   = NewNode(solv_tree, OP, {.op = MUL}, expr_cpy, ln_of_basis);
@@ -347,7 +341,6 @@ Node *DiffLog(Tree *expr_tree, Node *expr_node, Tree *solv_tree)
     else
     {
         Tree tmp_expr_tree = {};
-        fprintf(stderr, "ctor\n");
         TreeCtor(&tmp_expr_tree, START_TREE_SIZE ON_DIFF_DEBUG(, "tmp_expr_deg_log"));
 
         Node *tmp_arg_cpy    = TreeCopyPaste(expr_tree, &tmp_expr_tree, arg); 

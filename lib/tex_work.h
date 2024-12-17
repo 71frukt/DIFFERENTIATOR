@@ -8,28 +8,27 @@
 #define TEX_FOLDER             "tex/"
 #define BASE_OUTPUT_FILE_NAME  "dest_file.tex"
 
-const size_t TEX_EXPRESSION_LEN  = 1000;
+enum StrDataType
+{
+    TEX,
+    GNUPLOT
+};
+
+const size_t STR_EXPRESSION_LEN  = 25000;
 const size_t TEX_CHANGE_NAME_LEN = 30;
 
 const char *OperationToTex     (int node_op);
-const char *GetTexTreeData     (Node *start_node, char *dest_str, bool need_brackets);
+const char *GetStrTreeData     (Node *start_node, char *dest_str, bool need_brackets, StrDataType type);
 void        ParamsNeedBrackets (Node *op_node, bool *param_1, bool *param_2);
 
-FILE *GetOutputFile   (const int argc, const char *argv[]);
+FILE *GetOutputFile (const int argc, const char *argv[]);
+FILE *GetInputFile  (const int argc, const char *argv[]);
+
 void  CloseOutputFile ();
+void  CloseInputFile  ();
 
 void PrintChangedVarsTex  (Tree *tree, FILE *output_file);
-void GetTexChangedVarName (Change *change, char *res_name);
-
-#define IN_BRACKETS(need_brackets, dest_str, ...)               \
-{                                                               \
-    if (need_brackets)                                          \
-        sprintf(dest_str + strlen(dest_str), "\\left(");        \
-                                                                \
-    __VA_ARGS__;                                                \
-                                                                \
-    if (need_brackets)                                          \
-        sprintf(dest_str + strlen(dest_str), "\\right)");       \
-}                                                           
+void DrawChart            (FILE *dest_file, char *chart_file_name);
+void GetTexChangedVarName (Change *change, char *res_name);                                                       
 
 #endif

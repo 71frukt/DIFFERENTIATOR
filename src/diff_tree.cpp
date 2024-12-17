@@ -7,6 +7,7 @@
 
 #include "diff_tree.h"
 #include "operations.h"
+#include "tex_work.h"
 #include "diff_debug.h"
 #include "diff_graph.h"
 
@@ -29,8 +30,6 @@ void TreeCtor(Tree *tree, size_t start_capacity ON_DIFF_DEBUG(, const char *name
 
         mkdir(path);
     );
-
-    // DIFF_DUMP(tree);
 }
 
 void TreeDtor(Tree *tree)
@@ -49,7 +48,6 @@ void TreeDtor(Tree *tree)
 
     ON_DIFF_DEBUG( 
         tree->name = NULL;
-        // remove(TMP_DOTFILE_NAME);
     );
 }
 
@@ -102,9 +100,6 @@ void RemoveNode(Tree *tree, Node **node)
     assert(node);
     assert(*node);
 
-    // if ((*node)->type == CHANGE)
-    //     RemoveSubtree(tree, &(*node)->val.change->target_node);
-
     (*node)->left    = NULL;
     (*node)->right   = NULL;
     (*node)->type    = POISON_TYPE;
@@ -127,12 +122,11 @@ void RemoveSubtree(Tree *tree, Node **start_node)
 
 char *NodeValToStr(Node *node, char *res_str)
 {
-// fprintf(stderr, "called NodeValToStr(), val = %d\n", val);
     assert(node);
     assert(res_str);
 
     if (node->type == NUM)
-        sprintf(res_str, TREE_ELEM_SPECIFIER, node->val.num);
+        sprintf(res_str, TREE_ELEM_PRINT_SPECIFIER, node->val.num);
     
     else if (node->type == VAR)
         sprintf(res_str, "%c", node->val.var);
@@ -157,7 +151,7 @@ void NodeValFromStr(char *dest_str, Node *node)
 {
     NodeVal val = {};
 
-    if (sscanf(dest_str, TREE_ELEM_SPECIFIER, &val.num) == 1)       // is NUM
+    if (sscanf(dest_str, TREE_ELEM_SCANF_SPECIFIER, &val.num) == 1)       // is NUM
     {
         node->type  = NUM;
         node->val   = val;
@@ -187,46 +181,6 @@ void NodeValFromStr(char *dest_str, Node *node)
     }
 }
 
-void GetStrTreeData(Node *start_node, char *dest_str)
-{
-    assert(start_node);
-
-    char node_val_str[LABEL_LENGTH] = {};
-    NodeValToStr(start_node, node_val_str);
-
-    if (start_node->type != OP)
-        sprintf(dest_str + strlen(dest_str), "%s", node_val_str);
-
-    else
-    {
-        const Operation *cur_op = GetOperationByNode(start_node);
-
-        if (cur_op->type == BINARY)
-        {
-            sprintf(dest_str + strlen(dest_str), "(");
-
-            GetStrTreeData(start_node->left, dest_str);
-
-            sprintf(dest_str + strlen(dest_str), " %s ", node_val_str);
-
-            GetStrTreeData(start_node->right, dest_str);
-
-            sprintf(dest_str + strlen(dest_str), ")");
-        }
-
-        else
-        {
-            sprintf(dest_str + strlen(dest_str), "%s", node_val_str);
-
-            sprintf(dest_str + strlen(dest_str), "(");
-
-            GetStrTreeData(start_node->left, dest_str);
-
-            sprintf(dest_str + strlen(dest_str), ") ");
-        }
-    }
-}
-
 void GetTreeFromFile(Tree *tree, const char *source_file_name)
 {
     FILE *source_file = fopen(source_file_name, "r");
@@ -236,14 +190,10 @@ void GetTreeFromFile(Tree *tree, const char *source_file_name)
 
 Node *GetNodeFamily_prefix(Tree *tree, FILE *source_file)
 {
-    // DIFF_DUMP(tree);
-
     char node_val_str[LABEL_LENGTH] = {};
 
     if (fscanf(source_file, "(%[^( )]", node_val_str) == 1)
     {
-    // fprintf(stderr, "in cycle, node_val_str = '%s'\n", node_val_str);
-
         NodeVal val = {.num = POISON_VAL};
 
         Node *cur_node = NewNode(tree, POISON_TYPE, val, NULL, NULL);
@@ -251,10 +201,7 @@ Node *GetNodeFamily_prefix(Tree *tree, FILE *source_file)
 
         if (cur_node->type == OP)
         {
-
-    // fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
             Node *left  = GetNodeFamily_prefix(tree, source_file);
-    // fprintf(stderr, "cursor before right = %ld\n", ftell(source_file));
             Node *right  = GetNodeFamily_prefix(tree, source_file);
 
             cur_node->left  = left;
@@ -263,13 +210,11 @@ Node *GetNodeFamily_prefix(Tree *tree, FILE *source_file)
 
         getc(source_file);   // съесть ')'
 
-        fprintf(stderr, "end of rec it\n");
         return cur_node;
     }
 
     else 
     {
-        fprintf(stderr, "doshel do ret.\n");
         return NULL;
     }
 }
@@ -280,12 +225,8 @@ Node *GetNodeFamily(Tree *tree, FILE *source_file)
 
     if (getc(source_file) == '(')       // это бинарная инфиксная функция
     {
-        // Node *op = NewNode(tree, OP, POISON_VAL, NULL, NULL);
-// fprintf(stderr, "cursor before left = %ld\n", ftell(source_file));
         Node *left  = GetNodeFamily(tree, source_file);
-// fprintf(stderr, "cursor before op = %ld\n", ftell(source_file));
         Node *op    = GetNodeFamily(tree, source_file);
-// fprintf(stderr, "cursor before right = %ld\n", ftell(source_file));
         Node *right = GetNodeFamily(tree, source_file);
 
         op->left  = left;
@@ -394,6 +335,17 @@ size_t GetTreeHeight(Node *cur_node)
     return (max_height + 1);
 }
 
+void MakeChanges(Tree *tree, Node *cur_node, FILE *output_file)
+{
+    SplitTree(tree, cur_node);
+
+    char tex_tree[STR_EXPRESSION_LEN] = {};
+    GetStrTreeData(cur_node, tex_tree, false, TEX);
+    
+    fprintf(output_file, "Lets make changes: \\[f(x) = %s\\]\n", tex_tree);
+    PrintChangedVarsTex(tree, output_file);
+}
+
 void SplitTree(Tree *tree, Node *cur_node)
 {
     if (cur_node->type != OP)
@@ -425,8 +377,6 @@ Node *ChangeToVar(Tree *tree, Node *cur_node)
     new_change->name = new_node_name;
     new_change->target_node = cur_node_cpy;
 
-    // Node *new_var = NewNode(tree, CHANGE, {.change = new_change}, NULL, NULL);
-    
     cur_node->type       = CHANGE;
     cur_node->val.change = new_change;
     cur_node->left       = NULL;

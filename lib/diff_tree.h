@@ -5,12 +5,12 @@
 
 #define DIFF_DEBUG
 
-typedef int  TreeElem_t;
-#define IS_INT_TREE  true
-#define TREE_ELEM_SPECIFIER  "%d"
+typedef float  TreeElem_t;
+#define IS_INT_TREE  false
+#define TREE_ELEM_PRINT_SPECIFIER  "%.2f"
+#define TREE_ELEM_SCANF_SPECIFIER  "%f"
 
-
-const int TREE_ALLOC_MARKS_NUM        = 20;            // конечная вместимость labels (START_TREE_SIZE)^20  минимум равна 2^20 = 1 048 576
+const int TREE_ALLOC_MARKS_NUM        = 20;
 const int START_TREE_SIZE             = 100;
 const int LABEL_LENGTH                = 50;
 const int MIN_SPLIT_HEIGHT            = 3;
@@ -22,6 +22,8 @@ const TreeElem_t POISON_VAL    = 0xDEB11;
 const char *const LEFT_MARK  = "L";
 const char *const RIGHT_MARK = "R";
 const char *const POISON_TYPE_MARK = "#POISON";
+
+#define BASE_INPUT_FILE_NAME  "source_file.txt"
 
 #ifdef DIFF_DEBUG
 #define ON_DIFF_DEBUG(...)  __VA_ARGS__
@@ -37,13 +39,6 @@ enum NodeType
     VAR,
     CHANGE,
     OP
-};
-
-enum Variable
-{
-    VAR_X = 23,
-    VAR_Y = 24,
-    VAR_Z = 25
 };
 
 struct Node;
@@ -108,13 +103,13 @@ Node   *NewNode         (Tree *tree, NodeType type, NodeVal val, Node *left, Nod
 void    RemoveNode      (Tree *tree, Node **node);
 void    RemoveSubtree   (Tree *tree, Node **start_node);
 char   *NodeValToStr    (Node *node, char *res_str);
-void    GetStrTreeData  (Node *start_node, char *dest_str);
 void    NodeValFromStr  (char *dest_str, Node *node);
 void    GetTreeFromFile (Tree *tree, const char *source_file_name);
 Node   *GetNodeFamily   (Tree *tree, FILE *source_file);
 Node   *TreeCopyPaste   (Tree *source_tree, Tree *dest_tree, Node *coping_node);
 size_t  GetTreeHeight   (Node *cur_node);
 void    SplitTree       (Tree *tree, Node *cur_node);
+void    MakeChanges     (Tree *tree, Node *cur_node, FILE *output_file);
 Node   *ChangeToVar     (Tree *tree, Node *start_node);
 Node   *GetNodeFamily_prefix   (Tree *tree, FILE *source_file);
 
