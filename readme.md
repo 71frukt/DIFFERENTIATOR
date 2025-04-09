@@ -67,40 +67,82 @@ sin (x / 2) ** 2 * x ** (3 / x) $
 По завершении программой будет создан <output_file> формата pdf. Вот пример его фрагментов для разложения функции $sin ((x + 5) ^ 2)$ до $o(x^5)$:
 
 _Вычисление производной и упрощение_
-<div style="width: 60%; margin: 0 auto;">
+
+<table align="center" width="60%">
+  <tr>
+    <td>
+      <img src="readme/pdf1.png" alt="Описание" style="width: 100%">
+    </td>
+  </tr>
+</table>
+
+<!-- <div style="width: 60%; margin: 0 auto;">
   <img src="readme/pdf1.png" alt="Описание" style="width: 100%;">
-</div>
+</div> -->
 
 _Итоговый многочлен Тейлора и график_
 
-<div style="width: 60%; margin: 0 auto;">
+
+<table align="center" width="60%">
+  <tr>
+    <td>
+      <img src="readme/plot.png" alt="Описание" style="width: 100%">
+    </td>
+  </tr>
+</table>
+
+<!-- <div style="width: 60%; margin: 0 auto;">
   <img src="readme/plot.png" alt="Описание" style="width: 100%;">
-</div>
+</div> -->
 
 
 ## Принцип работы
 Для вычисления производной строится дерево, соответствующее введённой функции. Для функции  $sin ((x + 5) ^ 2)$ он выглядит так:
 
-<div style="width: 15%; margin: 0 auto;">
+
+<table align="center" width="15%">
+  <tr>
+    <td>
+      <img src="readme/graph_3.png" alt="Описание" style="width: 100%">
+    </td>
+  </tr>
+</table>
+
+<!-- <div style="width: 15%; margin: 0 auto;">
   <img src="readme/graph_3.png" alt="Описание" style="width: 100%;">
-</div>
+</div> -->
 
 Каждый узел имеет своё правило дифференцирования, и при взятии производной он и его поддерево преобразуется по особым правилам. Если узел - константа, то при дифференцировании его значение становится 0, переменная превращается в константу со значением 1. Если узел - математическая операция, то производная рассчитывается по правилам дифференцирования: для `+` рассчитываются производные левого и правого поддерева; 
 
 Для `*` схема дифференцирования выглядит так: 
 
-<div style="width: 65%; margin: 0 auto;">
+<table align="center" width="65%">
+  <tr>
+    <td>
+      <img src="readme/how_to_der.png" alt="Описание" style="width: 100%">
+    </td>
+  </tr>
+</table>
+
+<!-- <div style="width: 65%; margin: 0 auto;">
   <img src="readme/how_to_der.png" alt="Описание" style="width: 100%;">
-</div>
+</div> -->
 
 Для других математических операций производная определяется аналогичным образом. Если это функция - то производная рассчитывается как производная сложной функции.
 
 Вот пример взятия производной от функции $f(x) = sin(x + x^2 + 3x^4)$
 
+<table align="center" width="75%">
+  <tr>
+    <td>
+      <img src="readme/deriv.png" alt="Описание" style="width: 100%">
+    </td>
+  </tr>
+</table>
 
-<div style="width: 75%; margin: 0 auto;">
+<!-- <div style="width: 75%; margin: 0 auto;">
   <img src="readme/deriv.png" alt="Описание" style="width: 100%;">
-</div>
+</div> -->
 
 
 ## Упрощение выражений
@@ -115,12 +157,28 @@ _Итоговый многочлен Тейлора и график_
 
 Таким образом, программа умеет осуществлять упрощение таких конструкций: 
 
-<div style="width: 65%; margin: 0 auto;">
-  <img src="readme/simpl.png" alt="Описание" style="width: 100%;">
-</div>
+<table align="center" width="65%">
+  <tr>
+    <td>
+      <img src="readme/simpl.png" alt="Описание" style="width: 100%">
+    </td>
+  </tr>
+</table>
 
-<div style="width: 65%; margin: 0 auto;">
+<!-- <div style="width: 65%; margin: 0 auto;">
+  <img src="readme/simpl.png" alt="Описание" style="width: 100%;">
+</div> -->
+
+<table align="center" width="65%">
+  <tr>
+    <td>
+      <img src="readme/simpl2.png" alt="Описание" style="width: 100%">
+    </td>
+  </tr>
+</table>
+
+<!-- <div style="width: 65%; margin: 0 auto;">
   <img src="readme/simpl2.png" alt="Описание" style="width: 100%;">
-</div>
+</div> -->
 
 ---
