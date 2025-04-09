@@ -65,9 +65,9 @@ void InitNodesInDot(Tree *tree, FILE *dot_file)
                 NODE_NAME_PREFIX, cur_node, CHANGE_NODE_SHAPE, CHANGE_NODE_POINTER_COLOR, node_val_str);
         }
 
-        else
-            fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"%s\"]\n",
-                NODE_NAME_PREFIX, cur_node, NUM_NODE_SHAPE, NUM_NODE_COLOR, "POISON");
+        // else
+        //     fprintf(dot_file, "%s%p [shape = \"%s\", style = filled, fillcolor = \"%s\", label = \"%s\"]\n",
+        //         NODE_NAME_PREFIX, cur_node, NUM_NODE_SHAPE, NUM_NODE_COLOR, "POISON");
     }
 }
 

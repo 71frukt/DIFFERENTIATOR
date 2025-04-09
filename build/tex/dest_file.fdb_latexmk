@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1734449605.03538 "c:/Users/71fru/Documents/GitHub/DIFF/build/tex/dest_file.tex" "dest_file.pdf" "dest_file" 1734449605.5265 0
+["pdflatex"] 1744231926.59374 "c:/Users/71fru/Documents/GitHub/DIFF/build/tex/dest_file.tex" "dest_file.pdf" "dest_file" 1744231928.10198 0
   "C:/Users/71fru/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1733601746 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/71fru/AppData/Local/MiKTeX/fonts/pk/ljfour/lh/lh-t2a/dpi600/larm1000.pk" 1732278041 22324 d0e02a2ad2e9227089917586c0628f26 ""
   "C:/Users/71fru/AppData/Local/MiKTeX/fonts/tfm/lh/lh-t2a/larm1000.tfm" 1732278038 3220 0e417eaf233b160335902e97259a6c77 ""
@@ -11,6 +11,7 @@
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msbm10.tfm" 1233951854 908 2921f8a10601f252058503cc6570e581 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msbm5.tfm" 1233951854 940 75ac932a52f80982a9f8ea75d03a34cf ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msbm7.tfm" 1233951854 940 228d6584342e91276bf566bcf9716b83 ""
+  "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb" 1247596667 30251 6afa5cb1d0204815a708a080681d4674 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1247596667 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb" 1247596667 36281 c355509802a035cadc5f15869451dcee ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1247596667 35752 024fb6c41858982481f6968b5fc26508 ""
@@ -44,9 +45,10 @@
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/tex/latex/graphics/keyval.sty" 1730544106 2671 70891d50dac933918b827d326687c6e8 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/tex/latex/graphics/trig.sty" 1730544106 4023 2c9f39712cf7b43d3eb93a8bbd5c8f67 ""
   "C:/Users/71fru/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3backend-pdftex.def" 1716480499 29785 9f93ab201fe5dd053afcc6c1bcf7d266 ""
-  "c:/Users/71fru/Documents/GitHub/DIFF/build/tex/dest_file.tex" 1734449604 2785 b8eb9e97615e9b18694c56e8db1b18f4 ""
-  "dest_file.aux" 1734449605 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
-  "dest_file.tex" 1734449604 2785 b8eb9e97615e9b18694c56e8db1b18f4 ""
+  "c:/Users/71fru/Documents/GitHub/DIFF/build/tex/dest_file.tex" 1744231889 200414 7af2405b4274f65d20760f6c91efb367 ""
+  "chart.png" 1744231889 24186 35197cf373cf2dd7f118ada2a7c6b62a ""
+  "dest_file.aux" 1744231927 33 3874e8931301f694f39f57cb0d8ecc5f "pdflatex"
+  "dest_file.tex" 1744231889 200414 7af2405b4274f65d20760f6c91efb367 ""
   (generated)
   "dest_file.aux"
   "dest_file.log"

@@ -14,17 +14,20 @@ FILE *OutputFile = NULL;
 FILE *InputFile  = NULL;
 
 void DerivativeMode (FILE *source, FILE *dest);
-void TailorMode     (FILE *source, FILE *dest);
+void TailorMode(FILE *source, FILE *dest, size_t order);
 
 int main(const int argc, const char *argv[])
 {
     fprintf(stderr, "START!\n");
 
-    OutputFile = GetOutputFile (argc, argv);
     InputFile  = GetInputFile  (argc, argv);
+    OutputFile = GetOutputFile (argc, argv);
 
+    #if defined(TAYLOR)
+    TailorMode(InputFile, OutputFile, 5);
+    #elif defined(DERIVATIVE)
     DerivativeMode(InputFile, OutputFile);
-    // TailorMode(InputFile, OutputFile);
+    #endif
 
     fprintf(stderr, "END!\n");
     return 0;
@@ -55,6 +58,10 @@ void DerivativeMode(FILE *source, FILE *dest)
     diff_tree.root_ptr = TakeDerivative(&orig_simpl, orig_simpl.root_ptr, &diff_tree);
 
     SimplifyExpr(&orig_simpl, orig_simpl.root_ptr);
+    SimplifyExpr(&orig_simpl, orig_simpl.root_ptr);
+    SimplifyExpr(&orig_simpl, orig_simpl.root_ptr);
+
+    DIFF_DUMP(&orig_simpl);
 
     char tex_diff[STR_EXPRESSION_LEN] = {};
     GetStrTreeData(diff_tree.root_ptr, tex_diff, false, TEX);
@@ -66,7 +73,7 @@ void DerivativeMode(FILE *source, FILE *dest)
     TreeDtor(&orig_simpl);
 }
 
-void TailorMode(FILE *source, FILE *dest)
+void TailorMode(FILE *source, FILE *dest, size_t order)
 {
     Tree orig = {};
     TreeCtor(&orig, START_TREE_SIZE ON_DIFF_DEBUG(, "orig_expression"));
@@ -80,12 +87,14 @@ void TailorMode(FILE *source, FILE *dest)
     Tree orig_simpl = {};
     TreeCtor(&orig_simpl, START_TREE_SIZE, "orig_simpl");
     orig_simpl.root_ptr = TreeCopyPaste(&orig, &orig_simpl, orig.root_ptr);
-
+    
+    DIFF_DUMP(&orig_simpl);
     SimplifyExpr(&orig_simpl, orig_simpl.root_ptr);
+    DIFF_DUMP(&orig_simpl);
 
     Tree tailor = {};
     TreeCtor(&tailor, START_TREE_SIZE ON_DIFF_DEBUG(, "tailor"));
-    CalculateTailor(&orig_simpl, orig_simpl.root_ptr, &tailor, 3);
+    CalculateTailor(&orig_simpl, orig_simpl.root_ptr, &tailor, order);
 
     MakeTailorChart(&orig_simpl, &tailor, TEX_FOLDER CHART_NAME);
 

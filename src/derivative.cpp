@@ -117,7 +117,7 @@ Node *TakeDerivative(Tree *expr_tree, Node *expr_node, Tree *diff_tree)
         char *res_diff_tex = (char *) calloc (1, STR_EXPRESSION_LEN);
         GetStrTreeData(res_node, res_diff_tex, false, TEX);
 
-        fprintf(OutputFile, "Having counted the most obvious derivative, which the Soviet spermatozoa were actually able to calculate in their minds, we get:\n$(%s)'(x) = %s$\\newline\n\\newline\n", differentiated_tex, res_diff_tex);
+        fprintf(OutputFile, "Having counted the most obvious derivative, which the Soviet children were actually able to calculate in their minds, we get:\n$(%s)'(x) = %s$\\newline\n\\newline\n", differentiated_tex, res_diff_tex);
 
         free(differentiated_tex);
         free(res_diff_tex);
@@ -140,23 +140,29 @@ Node *CalculateTailor(Tree *expr_tree, Node *start_node, Tree *tailor_tree, size
     tmp_diff_tree.root_ptr   = TreeCopyPaste(expr_tree, &tmp_diff_tree,   expr_tree->root_ptr);
     tmp_res_of_diff.root_ptr = TreeCopyPaste(expr_tree, &tmp_res_of_diff, expr_tree->root_ptr);
 
+DIFF_DUMP(&tmp_res_of_diff);
     PutNumInsteadVar(&tmp_res_of_diff, 0);
+fprintf(LogFile, "after PutNumInsteadVar\n");
+DIFF_DUMP(&tmp_res_of_diff);
     SimplifyConstants(&tmp_res_of_diff, tmp_res_of_diff.root_ptr);
     assert(tmp_res_of_diff.root_ptr->type == NUM);
-
     TreeElem_t res_coeff = tmp_res_of_diff.root_ptr->val.num;
 
     tailor_tree->root_ptr = NewNode(tailor_tree, NUM, {.num = res_coeff}, NULL, NULL);
     RemoveSubtree(&tmp_res_of_diff,   &tmp_res_of_diff.root_ptr);
+    tmp_res_of_diff.capacity = START_TREE_SIZE;
+    tmp_res_of_diff.size = 0;
 
     for (size_t i = 1; i <= order; i++)
     {
         fprintf(LogFile, "before der\n");
 
         tmp_res_of_diff.root_ptr = TakeDerivative(&tmp_diff_tree, tmp_diff_tree.root_ptr, &tmp_res_of_diff);
-    fprintf(LogFile, "after der\n");
+fprintf(LogFile, "after der\n");
+DIFF_DUMP(&tmp_res_of_diff);
 
         SimplifyExpr(&tmp_res_of_diff, tmp_res_of_diff.root_ptr);
+DIFF_DUMP(&tmp_res_of_diff);
 
         RemoveSubtree(&tmp_diff_tree,   &tmp_diff_tree.root_ptr);
         tmp_diff_tree.root_ptr = TreeCopyPaste(&tmp_res_of_diff, &tmp_diff_tree, tmp_res_of_diff.root_ptr);          // скопировать результат
@@ -180,6 +186,8 @@ Node *CalculateTailor(Tree *expr_tree, Node *start_node, Tree *tailor_tree, size
         new_add->right = new_member;
 
         RemoveSubtree(&tmp_res_of_diff, &tmp_res_of_diff.root_ptr);
+        tmp_res_of_diff.capacity = START_TREE_SIZE;
+        tmp_res_of_diff.size = 0;
     }
 
     SimplifyExpr(tailor_tree, tailor_tree->root_ptr);

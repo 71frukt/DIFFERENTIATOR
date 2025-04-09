@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.22)  17 DEC 2024 18:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.22)  9 APR 2025 23:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -385,92 +385,3427 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 11.
  (C:\Users\71fru\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (23.80566pt too wide) in paragraph at lines 13--48
-[]\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 = []$ 
+Overfull \hbox (49.85437pt too wide) in paragraph at lines 13--1320
+[]\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] [] \OT1/cmr/m/n/10 = [] []$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--48
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 13--48
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--48
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--48
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--48
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--48
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
 
  []
 
 
-Overfull \hbox (67.47215pt too wide) in paragraph at lines 13--48
-\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 = []$ 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 13--48
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--48
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
 
  []
 
 
-Overfull \hbox (75.6667pt too wide) in paragraph at lines 13--48
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (29.68758pt too wide) in paragraph at lines 13--1320
 \T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--48
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--48
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
 
  []
 
 
-Overfull \hbox (8.80566pt too wide) in paragraph at lines 13--48
-\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 = []$ 
+Overfull \hbox (29.68758pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--48
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 50--53
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 50--53
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 50--53
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (69.13203pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (272.39568pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (53.15305pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (272.39568pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (197.10597pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (74.55746pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (34.0019pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (29.68758pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (231.84012pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (23.19409pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (52.04195pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (23.19409pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (526.65225pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (318.00623pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (132.75708pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (318.00623pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (579.15227pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (333.56183pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (173.31264pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (333.56183pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (69.13203pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (94.13199pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (759.916pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (535.71437pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (295.86115pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (535.71437pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (744.3604pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (535.71437pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (669.0707pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (466.91815pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (29.68758pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (231.84012pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (23.19409pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (52.04195pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (23.19409pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (284.34013pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (92.5975pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (249.21pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (156.55042pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (29.68758pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (54.68753pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (35.113pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (69.13203pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (272.39568pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (53.15305pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (568.31891pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (359.67288pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (133.86818pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (359.67288pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (771.58255pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (562.93652pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (255.30559pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (562.93652pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (1281.60278pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (1061.0123pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (347.96518pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (1061.0123pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (1702.57457pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (1497.53969pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (565.67332pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (1497.53969pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (29.68758pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (231.84012pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (23.19409pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (52.04195pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (23.19409pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (268.78453pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (48.19405pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (77.0419pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (48.19405pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (2123.54636pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (1918.51147pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (767.82587pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (1918.51147pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (2127.1575pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (1918.51147pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (2051.8678pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (1630.89601pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (197.10597pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (29.68758pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (70.24313pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (11.88237pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (60.11296pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (35.113pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (69.13203pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (272.39568pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (53.15305pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (568.31891pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (359.67288pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (133.86818pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (359.67288pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (605.26332pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (384.67284pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (158.86813pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (384.67284pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (824.08257pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (619.04768pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (295.86115pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (619.04768pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (1209.92422pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (197.10597pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (29.68758pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (70.24313pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (11.88237pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (60.11296pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (35.113pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (69.13203pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (272.39568pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (53.15305pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (568.31891pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (359.67288pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (133.86818pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (359.67288pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (605.26332pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (384.67284pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (158.86813pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (384.67284pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (824.08257pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (619.04768pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (295.86115pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (619.04768pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (788.95244pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (696.29285pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (69.13203pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (272.39568pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (53.15305pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (309.34009pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (78.153pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (493.0292pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (69.13203pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (272.39568pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (53.15305pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (309.34009pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (78.153pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (289.76556pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (197.10597pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (74.55746pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (34.0019pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (29.68758pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (231.84012pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (23.19409pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (52.04195pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (23.19409pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (526.65225pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (318.00623pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (132.75708pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (318.00623pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (579.15227pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (333.56183pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (173.31264pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (333.56183pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (69.13203pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (94.13199pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (759.916pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (535.71437pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (295.86115pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (535.71437pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (1294.93619pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (1049.34575pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (388.52074pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (1049.34575pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (1678.96356pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (1470.31754pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (591.78438pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (1470.31754pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (2099.93535pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (1891.28932pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (795.04802pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (1891.28932pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (3149.69801pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (2929.10753pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (887.70761pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (2929.10753pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (4125.96783pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (3936.48856pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (1308.6794pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (3936.48856pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (5121.4044pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (4912.75838pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (1729.65118pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (4912.75838pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (197.10597pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (29.68758pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (70.24313pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (11.88237pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (60.11296pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (35.113pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 Trying to take a deriva-tive of $[]$... 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (13.93085pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (69.13203pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (272.39568pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (53.15305pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (63.74965pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (568.31891pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (359.67288pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (133.86818pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (359.67288pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (605.26332pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (384.67284pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (158.86813pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (384.67284pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (824.08257pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (619.04768pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (295.86115pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (619.04768pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (6097.67422pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (5889.0282pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (2150.62297pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 tu-ally able to cal-cu-late in their minds, we get: $\OT1/cmr/m/n/10 ([])[](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) =
+ []
+
+
+Overfull \hbox (5889.0282pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (6097.67422pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (5889.0282pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
+
+ []
+
+
+Overfull \hbox (239.16672pt too wide) in paragraph at lines 13--1320
+\T2A/cmr/m/n/10 By too sim-ple math-e-mat-i-cal trans-for-ma-tions: $[] \OT1/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (15.6873pt too wide) in paragraph at lines 13--1320
+[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--1320
 
  []
 
@@ -478,24 +3813,90 @@ Underfull \hbox (badness 10000) in paragraph at lines 50--53
 
 [1
 
-{C:/Users/71fru/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] (dest_file.aux)
+{C:/Users/71fru/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
+
+[2]
+
+[3]
+
+[4]
+
+[5]
+
+[6]
+
+[7]
+
+[8]
+
+[9]
+
+[10]
+
+[11]
+
+[12]
+
+[13]
+
+[14]
+
+[15]
+
+[16]
+
+[17]
+
+[18]
+
+[19]
+
+[20]
+
+[21]
+
+[22]
+
+[23]
+
+[24]
+
+[25]
+
+[26]
+
+[27]
+Overfull \hbox (48.48586pt too wide) detected at line 1320
+\OML/cmm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []
+ []
+
+<chart.png, id=95, 642.4pt x 481.8pt>
+File: chart.png Graphic file (type png)
+<use chart.png>
+Package pdftex.def Info: chart.png  used on input line 1323.
+(pdftex.def)             Requested size: 276.00105pt x 207.00821pt.
+
+
+[28]
+
+[29 <./chart.png>] (dest_file.aux)
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-11-02>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 3441 strings out of 473682
- 50676 string characters out of 5719215
- 433026 words of memory out of 5000000
- 26515 multiletter control sequences out of 15000+600000
+ 3451 strings out of 473682
+ 50853 string characters out of 5719215
+ 947500 words of memory out of 5000000
+ 26525 multiletter control sequences out of 15000+600000
  560565 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,9n,65p,361b,204s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\71fru\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\larm1000.pk><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on dest_file.pdf (1 page, 69301 bytes).
+ 57i,25n,65p,8381b,240s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\71fru\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\larm1000.pk><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/71fru/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on dest_file.pdf (29 pages, 164753 bytes).
 PDF statistics:
- 72 PDF objects out of 1000 (max. 8388607)
+ 176 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
