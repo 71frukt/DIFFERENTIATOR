@@ -68,7 +68,7 @@ sin (x / 2) ** 2 * x ** (3 / x) $
 
 _Вычисление производной и упрощение_
 
-<table align="center" width="60%">
+<table align="center" width="45%">
   <tr>
     <td>
       <img src="readme/pdf1.png" alt="Описание" style="width: 100%">
@@ -83,7 +83,7 @@ _Вычисление производной и упрощение_
 _Итоговый многочлен Тейлора и график_
 
 
-<table align="center" width="60%">
+<table align="center" width="45%">
   <tr>
     <td>
       <img src="readme/plot.png" alt="Описание" style="width: 100%">
@@ -116,7 +116,7 @@ _Итоговый многочлен Тейлора и график_
 
 Для `*` схема дифференцирования выглядит так: 
 
-<table align="center" width="65%">
+<table align="center" width="50%">
   <tr>
     <td>
       <img src="readme/how_to_der.png" alt="Описание" style="width: 100%">
@@ -132,7 +132,7 @@ _Итоговый многочлен Тейлора и график_
 
 Вот пример взятия производной от функции $f(x) = sin(x + x^2 + 3x^4)$
 
-<table align="center" width="75%">
+<table align="center" width="60%">
   <tr>
     <td>
       <img src="readme/deriv.png" alt="Описание" style="width: 100%">
@@ -157,7 +157,7 @@ _Итоговый многочлен Тейлора и график_
 
 Таким образом, программа умеет осуществлять упрощение таких конструкций: 
 
-<table align="center" width="65%">
+<table align="center" width="50%">
   <tr>
     <td>
       <img src="readme/simpl.png" alt="Описание" style="width: 100%">
@@ -169,7 +169,7 @@ _Итоговый многочлен Тейлора и график_
   <img src="readme/simpl.png" alt="Описание" style="width: 100%;">
 </div> -->
 
-<table align="center" width="65%">
+<table align="center" width="50%">
   <tr>
     <td>
       <img src="readme/simpl2.png" alt="Описание" style="width: 100%">
